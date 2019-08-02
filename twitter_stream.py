@@ -13,11 +13,40 @@ from datetime import datetime, timedelta
 
 # TODO: add logging
 
+init_script_converter = """#!/usr/bin/env bash
+sudo timedatectl set-timezone UTC
+cd ~
+mkdir utils
+wget http://repo1.maven.org/maven2/org/apache/orc/orc-tools/1.5.6/orc-tools-1.5.6-uber.jar -P ./utils/
+sudo apt update -y
+sudo apt install -y python3-pip openjdk-8-jre
+wget https://raw.githubusercontent.com/internet-scholar/twitter_stream_converter/master/requirements.txt
+wget https://raw.githubusercontent.com/internet-scholar/twitter_stream_converter/master/twitter_stream_converter.py
+wget https://raw.githubusercontent.com/internet-scholar/internet_scholar/master/internet_scholar.py
+pip3 install --trusted-host pypi.python.org -r ~/requirements.txt
+export AWS_DEFAULT_REGION={region}
+python3 twitter_stream_converter.py -c {config} -k {key} --logfile {prod}
+sudo shutdown -h now"""
+
+init_script_stream = """#!/usr/bin/env bash
+sudo timedatectl set-timezone UTC
+cd ~
+sudo apt update -y
+sudo apt install -y python3-pip
+wget https://raw.githubusercontent.com/internet-scholar/twitter_stream/master/requirements.txt
+wget https://raw.githubusercontent.com/internet-scholar/twitter_stream/master/twitter_stream.py
+wget https://raw.githubusercontent.com/internet-scholar/internet_scholar/master/internet_scholar.py
+pip3 install --trusted-host pypi.python.org -r ~/requirements.txt
+export AWS_DEFAULT_REGION={region}
+crontab -l | {{ cat; echo "5 0 * * * python3 twitter_stream upload --config {config} --convert_remotely --logfile {prod}"; }} | crontab -
+python3 twitter_stream track --config {config} --name {filter_name} --terms {terms} {languages} --logfile --index {index} {prod} {tweepy}"""
+
 create_table_twitter_filter = """
 CREATE EXTERNAL TABLE if not exists twitter_filter (
   name string,
   track string,
   languages array<string>,
+  method string,
   created_at timestamp
 )
 ROW FORMAT SERDE 'org.openx.data.jsonserde.JsonSerDe'
@@ -93,15 +122,17 @@ class TwitterStream (InternetScholar):
         self.odd = sqlite3.connect(self.odd_db, isolation_level=None)
         self.odd.execute(create_table_tweet)
 
-    def save_filter_arguments(self, filter_name, track, languages=None):
+    def save_filter_arguments(self, filter_name, track, languages=None, method="twarc"):
         self.filter_name = filter_name
         self.track = track
         self.languages = languages
+        self.method = method
         # create a string with all the information that we want to upload
         filter_json = {
             'name': filter_name,
             'track': track,
             'languages': languages,
+            'method': method,
             'created_at': time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime())
         }
         json_line = json.dumps(filter_json)
@@ -113,23 +144,24 @@ class TwitterStream (InternetScholar):
         with open(filename_json, 'w') as json_file:
             json_file.write("{}\n".format(json_line))
 
-        s3_filename = 'twitter_filter/{}.json.bz2'.format(filter_name)
-        self.logger.info('Upload new twitter filter arguments to S3')
-        self.upload_raw_file(local_filename=filename_json, s3_filename=s3_filename, delete_original=True)
+        s3_filename = "twitter_filter/{}.json.bz2".format(filter_name)
+        filename_bz2 = self.compress(filename=filename_json, delete_original=True)
+        self.s3.Bucket(self.config['s3']['raw']).upload_file(filename_bz2, s3_filename)
+        os.remove(filename_bz2)
 
         # creates table twitter_filter on Amazon Athena
         self.query_athena_and_wait(query_string='drop table if exists twitter_filter')
         self.query_athena_and_wait(query_string=create_table_twitter_filter.format(bucket=self.config['s3']['raw']))
 
-    def listen_to_tweets_tweepy(self):
+    def listen_to_tweets_tweepy(self, index=0):
         global num_exceptions_tweepy
         try:
             # Authenticate with Twitter Stream API
             self.logger.info('Read parameters.')
-            auth = tweepy.OAuthHandler(consumer_key=self.credentials['twitter']['consumer_key'],
-                                       consumer_secret=self.credentials['twitter']['consumer_secret'])
-            auth.set_access_token(key=self.credentials['twitter']['access_token'],
-                                  secret=self.credentials['twitter']['access_token_secret'])
+            auth = tweepy.OAuthHandler(consumer_key=self.credentials['twitter'][index]['consumer_key'],
+                                       consumer_secret=self.credentials['twitter'][index]['consumer_secret'])
+            auth.set_access_token(key=self.credentials['twitter'][index]['access_token'],
+                                  secret=self.credentials['twitter'][index]['access_token_secret'])
             api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
             self.logger.info('Twitter authenticated.')
             track_terms = [x.strip() for x in self.track.split(',')]
@@ -149,13 +181,13 @@ class TwitterStream (InternetScholar):
                 self.logger.info('Exception number %d: %s', num_exceptions_tweepy, repr(e))
                 self.listen_to_tweets_tweepy()
 
-    def listen_to_tweets_twarc(self, num_exceptions=0):
+    def listen_to_tweets_twarc(self, index=0, num_exceptions=0):
         try:
             self.logger.info('Authenticate on Twitter.')
-            twitter = Twarc(self.credentials['twitter']['consumer_key'],
-                            self.credentials['twitter']['consumer_secret'],
-                            self.credentials['twitter']['access_token'],
-                            self.credentials['twitter']['access_token_secret'])
+            twitter = Twarc(self.credentials['twitter'][index]['consumer_key'],
+                            self.credentials['twitter'][index]['consumer_secret'],
+                            self.credentials['twitter'][index]['access_token'],
+                            self.credentials['twitter'][index]['access_token_secret'])
 
             self.logger.info('Listen to tweets')
             for tweet in twitter.filter(track=self.track, lang=self.languages):
@@ -182,15 +214,19 @@ class TwitterStream (InternetScholar):
                 self.logger.info('Exception number %d: %s', num_exceptions, repr(e))
                 self.listen_to_tweets_twarc(num_exceptions + 1)
 
-    def listen_to_tweets(self, filter_name, track, languages=None, tweepy=False):
+    def listen_to_tweets(self, filter_name, track, languages=None, tweepy=False, index=0):
         track_terms = ' '.join(track)
-        self.save_filter_arguments(filter_name=filter_name, track=track_terms, languages=languages)
         if tweepy:
-            self.listen_to_tweets_tweepy()
+            method = "tweepy"
         else:
-            self.listen_to_tweets_twarc()
+            method = "twarc"
+        self.save_filter_arguments(filter_name=filter_name, track=track_terms, languages=languages, method=method)
+        if tweepy:
+            self.listen_to_tweets_tweepy(index)
+        else:
+            self.listen_to_tweets_twarc(index)
 
-    def upload_database_to_s3(self):
+    def upload_database_to_s3(self, convert_remotely=False):
         # if the number of days since Jan 1, 1970 is an even number, sends the data on database "odd" to S3
         # (since database "odd" is probably idle now)
         s3_filename = "twitter_stream_sqlite/{}/{}".format(
@@ -210,10 +246,27 @@ class TwitterStream (InternetScholar):
             self.even.execute('drop table tweet')
             self.logger.info("Recreate table 'tweet' in even.sqlite")
             self.even.execute(create_table_tweet)
+        if convert_remotely:
+            self.logger.info("Instantiate EC2 that will generate ORC file")
+            init_script = init_script_converter.format(region=self.credentials['aws']['default_region'],
+                                                       config=self.config_bucket,
+                                                       key=s3_filename,
+                                                       prod="--prod" if self.prod else "")
+            self.logger.info("Script: %s", init_script)
+            self.instantiate_ec2(instance_type="t3a.micro", init_script=init_script, name="twitter_stream_converter")
         self.logger.info("END - Upload to S3")
 
-    def remote_track(self, filter_name, track, languages=None, tweepy=False):
-        print("Remote track!")
+    def remote_track(self, filter_name, track, languages=[], tweepy=False, index=0):
+        init_script = init_script_stream.format(region=self.credentials['aws']['default_region'],
+                                                config=self.config_bucket,
+                                                prod="--prod" if self.prod else "",
+                                                filter_name=filter_name,
+                                                index=index,
+                                                terms=' '.join(track),
+                                                languages=("--languages " if languages else "") + " ".join(languages),
+                                                tweepy="--tweepy" if tweepy else "")
+        print(init_script)
+        #self.instantiate_ec2(init_script=init_script, name="{} ({})".format(filter_name,"twitter_stream"))
 
 
 def main():
@@ -222,6 +275,7 @@ def main():
     sp = parser.add_subparsers(dest='command')
     sp_track = sp.add_parser('track', help='Track tweets')
     sp_track.add_argument('-c', '--config', help='<Required> S3 Bucket with config', required=True)
+    sp_track.add_argument('-i', '--index', type=int, help="Credentials' index", default=0)
     sp_track.add_argument('-n', '--name', help='<Required> Filter name', required=True)
     sp_track.add_argument('-t', '--terms', nargs='+', help='<Required> Track terms', required=True)
     sp_track.add_argument('-l', '--languages', nargs='+', help='Languages', default=[])
@@ -231,10 +285,12 @@ def main():
     sp_track.add_argument('--logfile', help='Output log to file (not console)', action='store_true')
     sp_upload = sp.add_parser('upload', help='Upload tweets to S3 bucket')
     sp_upload.add_argument('-c', '--config', help='<Required> S3 Bucket with config', required=True)
+    sp_upload.add_argument('--convert_remotely', help='Convert to ORC in a EC2 instance', action='store_true')
     sp_upload.add_argument('--prod', help='Save data on production database (not dev)', action='store_true')
     sp_upload.add_argument('--logfile', help='Output log to file (not console)', action='store_true')
     sp_remote = sp.add_parser('remote', help='Create an EC2 instance to track Twitter stream')
     sp_remote.add_argument('-c', '--config', help='<Required> S3 Bucket with config', required=True)
+    sp_remote.add_argument('-i', '--index', type=int, help="Credentials' index", default=0)
     sp_remote.add_argument('-n', '--name', help='<Required> Filter name', required=True)
     sp_remote.add_argument('-t', '--terms', nargs='+', help='<Required> Track terms', required=True)
     sp_remote.add_argument('-l', '--languages', nargs='+', help='Languages', default=[])
@@ -245,7 +301,7 @@ def main():
     args = parser.parse_args()
 
     twitter_stream = None
-    if args.command == "remote":
+    if args.command == "track":
         try:
             twitter_stream = TwitterStream(config_bucket=args.config, logger_name="track_tweets",
                                            prod=args.prod, log_file=args.logfile)
@@ -259,7 +315,7 @@ def main():
         try:
             twitter_stream = TwitterStream(config_bucket=args.config, logger_name="upload_tweets",
                                            prod=args.prod, log_file=args.logfile)
-            twitter_stream.upload_database_to_s3()
+            twitter_stream.upload_database_to_s3(convert_remotely=args.convert_remotely)
         except Exception:
             twitter_stream.logger.exception("Error!")
         finally:
