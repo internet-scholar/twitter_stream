@@ -113,14 +113,14 @@ class TwitterStream (InternetScholar):
         self.languages = None
         # create both even and odd databases.
         self.database_dir = os.path.join(self.local_path, 'db')
-        self.logger.info("Create directory for database: %s", self.database_dir)
+        self.logger.info("Create directory for database if does not exist: %s", self.database_dir)
         os.makedirs(self.database_dir, exist_ok=True)
         self.even_db = os.path.join(self.database_dir, 'even.sqlite')
-        self.logger.info("Create sqlite db for even days: %s", self.even_db)
+        self.logger.info("Create sqlite db for even days if does not exist: %s", self.even_db)
         self.even = sqlite3.connect(self.even_db, isolation_level=None)
         self.even.execute(create_table_tweet)
         self.odd_db = os.path.join(self.database_dir, 'odd.sqlite')
-        self.logger.info("Create sqlite db for odd days: %s", self.odd_db)
+        self.logger.info("Create sqlite db for odd days if does not exist: %s", self.odd_db)
         self.odd = sqlite3.connect(self.odd_db, isolation_level=None)
         self.odd.execute(create_table_tweet)
 
