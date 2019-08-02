@@ -258,7 +258,9 @@ class TwitterStream (InternetScholar):
             self.instantiate_ec2(instance_type="t3a.micro", init_script=init_script, name="twitter_stream_converter")
         self.logger.info("END - Upload to S3")
 
-    def remote_track(self, filter_name, track, languages=[], tweepy=False, index=0):
+    def remote_track(self, filter_name, track, languages=None, tweepy=False, index=0):
+        if languages is None:
+            languages = []
         init_script = init_script_stream.format(region=self.credentials['aws']['default_region'],
                                                 config=self.config_bucket,
                                                 prod="--prod" if self.prod else "",
