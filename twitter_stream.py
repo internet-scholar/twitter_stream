@@ -15,7 +15,7 @@ from datetime import datetime, timedelta
 
 init_script_converter = """#!/usr/bin/env bash
 sudo timedatectl set-timezone UTC
-cd ~
+cd /home/ubuntu
 mkdir utils
 wget http://repo1.maven.org/maven2/org/apache/orc/orc-tools/1.5.6/orc-tools-1.5.6-uber.jar -P ./utils/
 sudo apt update -y
@@ -31,7 +31,7 @@ sudo shutdown -h now"""
 
 init_script_stream = """#!/usr/bin/env bash
 sudo timedatectl set-timezone UTC
-cd ~
+cd /home/ubuntu
 sudo apt update -y
 sudo apt install -y python3-pip
 wget https://raw.githubusercontent.com/internet-scholar/twitter_stream/master/requirements.txt
