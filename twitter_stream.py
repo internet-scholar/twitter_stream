@@ -24,7 +24,8 @@ wget https://raw.githubusercontent.com/internet-scholar/twitter_stream_converter
 wget https://raw.githubusercontent.com/internet-scholar/twitter_stream_converter/master/twitter_stream_converter.py
 wget https://raw.githubusercontent.com/internet-scholar/internet_scholar/master/internet_scholar.py
 pip3 install --trusted-host pypi.python.org -r ~/requirements.txt
-export AWS_DEFAULT_REGION={region}
+mkdir .aws
+printf "[default]\\nregion={region}" > ~/.aws/config
 python3 twitter_stream_converter.py -c {config} -k {key} --logfile {prod}
 sudo shutdown -h now"""
 
@@ -37,9 +38,10 @@ wget https://raw.githubusercontent.com/internet-scholar/twitter_stream/master/re
 wget https://raw.githubusercontent.com/internet-scholar/twitter_stream/master/twitter_stream.py
 wget https://raw.githubusercontent.com/internet-scholar/internet_scholar/master/internet_scholar.py
 pip3 install --trusted-host pypi.python.org -r ~/requirements.txt
-export AWS_DEFAULT_REGION={region}
-crontab -l | {{ cat; echo "5 0 * * * python3 twitter_stream upload --config {config} --convert_remotely --logfile {prod}"; }} | crontab -
-python3 twitter_stream track --config {config} --name {filter_name} --terms {terms} {languages} --logfile --index {index} {prod} {tweepy}"""
+mkdir .aws
+printf "[default]\\nregion={region}" > ~/.aws/config
+crontab -l | {{ cat; echo "11 5 * * * python3 twitter_stream.py upload --config {config} --convert_remotely --logfile {prod}"; }} | crontab -
+python3 twitter_stream.py track --config {config} --name {filter_name} --terms {terms} {languages} --logfile --index {index} {prod} {tweepy}"""
 
 create_table_twitter_filter = """
 CREATE EXTERNAL TABLE if not exists twitter_filter (
