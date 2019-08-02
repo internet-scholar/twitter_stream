@@ -40,7 +40,7 @@ wget https://raw.githubusercontent.com/internet-scholar/internet_scholar/master/
 pip3 install --trusted-host pypi.python.org -r ~/requirements.txt
 mkdir .aws
 printf "[default]\\nregion={region}" > ~/.aws/config
-crontab -l | {{ cat; echo "11 5 * * * python3 twitter_stream.py upload --config {config} --convert_remotely --logfile {prod}"; }} | crontab -
+crontab -l | {{ cat; echo "5 0 * * * python3 twitter_stream.py upload --config {config} --convert_remotely --logfile {prod}"; }} | crontab -
 python3 twitter_stream.py track --config {config} --name {filter_name} --terms {terms} {languages} --logfile --index {index} {prod} {tweepy}"""
 
 create_table_twitter_filter = """
@@ -267,8 +267,7 @@ class TwitterStream (InternetScholar):
                                                 terms=' '.join(track),
                                                 languages=("--languages " if languages else "") + " ".join(languages),
                                                 tweepy="--tweepy" if tweepy else "")
-        print(init_script)
-        #self.instantiate_ec2(init_script=init_script, name="{} ({})".format(filter_name,"twitter_stream"))
+        self.instantiate_ec2(init_script=init_script, name="{} ({})".format(filter_name,"twitter_stream"))
 
 
 def main():
