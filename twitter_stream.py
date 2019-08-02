@@ -15,18 +15,18 @@ from datetime import datetime, timedelta
 
 init_script_converter = """#!/usr/bin/env bash
 sudo timedatectl set-timezone UTC
-cd /home/ubuntu
-mkdir utils
-wget http://repo1.maven.org/maven2/org/apache/orc/orc-tools/1.5.6/orc-tools-1.5.6-uber.jar -P ./utils/
 sudo apt update -y
 sudo apt install -y python3-pip openjdk-8-jre
-wget https://raw.githubusercontent.com/internet-scholar/twitter_stream_converter/master/requirements.txt
-wget https://raw.githubusercontent.com/internet-scholar/twitter_stream_converter/master/twitter_stream_converter.py
-wget https://raw.githubusercontent.com/internet-scholar/internet_scholar/master/internet_scholar.py
-pip3 install --trusted-host pypi.python.org -r ~/requirements.txt
-mkdir .aws
-printf "[default]\\nregion={region}" > ~/.aws/config
-python3 twitter_stream_converter.py -c {config} -k {key} --logfile {prod}
+cd /home/ubuntu
+su ubuntu -c 'mkdir utils'
+su ubuntu -c 'wget http://repo1.maven.org/maven2/org/apache/orc/orc-tools/1.5.6/orc-tools-1.5.6-uber.jar -P ./utils/'
+su ubuntu -c 'wget https://raw.githubusercontent.com/internet-scholar/twitter_stream_converter/master/requirements.txt'
+su ubuntu -c 'wget https://raw.githubusercontent.com/internet-scholar/twitter_stream_converter/master/twitter_stream_converter.py'
+su ubuntu -c 'wget https://raw.githubusercontent.com/internet-scholar/internet_scholar/master/internet_scholar.py'
+su ubuntu -c 'pip3 install --trusted-host pypi.python.org -r /home/ubuntu/requirements.txt'
+su ubuntu -c 'mkdir /home/ubuntu/.aws'
+su ubuntu -c 'printf "[default]\\nregion={region}" > /home/ubuntu/.aws/config'
+su ubuntu -c 'python3 /home/ubuntu/twitter_stream_converter.py -c {config} -k {key} --logfile {prod}'
 sudo shutdown -h now"""
 
 init_script_stream = """#!/usr/bin/env bash
@@ -34,14 +34,14 @@ sudo timedatectl set-timezone UTC
 cd /home/ubuntu
 sudo apt update -y
 sudo apt install -y python3-pip
-wget https://raw.githubusercontent.com/internet-scholar/twitter_stream/master/requirements.txt
-wget https://raw.githubusercontent.com/internet-scholar/twitter_stream/master/twitter_stream.py
-wget https://raw.githubusercontent.com/internet-scholar/internet_scholar/master/internet_scholar.py
-pip3 install --trusted-host pypi.python.org -r ~/requirements.txt
-mkdir .aws
-printf "[default]\\nregion={region}" > ~/.aws/config
-crontab -l | {{ cat; echo "5 0 * * * python3 twitter_stream.py upload --config {config} --convert_remotely --logfile {prod}"; }} | crontab -
-python3 twitter_stream.py track --config {config} --name {filter_name} --terms {terms} {languages} --logfile --index {index} {prod} {tweepy}"""
+su ubuntu -c 'wget https://raw.githubusercontent.com/internet-scholar/twitter_stream/master/requirements.txt'
+su ubuntu -c 'wget https://raw.githubusercontent.com/internet-scholar/twitter_stream/master/twitter_stream.py'
+su ubuntu -c 'wget https://raw.githubusercontent.com/internet-scholar/internet_scholar/master/internet_scholar.py'
+su ubuntu -c 'pip3 install --trusted-host pypi.python.org -r /home/ubuntu/requirements.txt'
+su ubuntu -c 'mkdir /home/ubuntu/.aws'
+su ubuntu -c 'printf "[default]\\nregion={region}" > /home/ubuntu/.aws/config'
+su ubuntu -c 'crontab -l | {{ cat; echo "5 0 * * * python3 /home/ubuntu/twitter_stream.py upload --config {config} --convert_remotely --logfile {prod}"; }} | crontab -'
+su ubuntu -c 'python3 /home/ubuntu/twitter_stream.py track --config {config} --name {filter_name} --terms {terms} {languages} --logfile --index {index} {prod} {tweepy}'"""
 
 create_table_twitter_filter = """
 CREATE EXTERNAL TABLE if not exists twitter_filter (
