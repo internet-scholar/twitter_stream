@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="f3bc41d4-ae4f-4747-9ed2-c33e010f170b" name="test-server" url="http://ec2-18-237-204-235.us-west-2.compute.amazonaws.com">
+        <fileTransfer host="ec2-18-237-204-235.us-west-2.compute.amazonaws.com" port="22" privateKey="C:\Users\alex\.ssh\webscholar.pem" rootFolder="/home/ubuntu" accessType="SFTP" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
