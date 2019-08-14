@@ -779,7 +779,7 @@ class TwitterStream:
         # start_saving_time = time(hour=0, minute=0, second=0, microsecond=0)
         # duration_saving = timedelta(days=1)
         # delay_end = timedelta(minutes=1)
-        start_saving_time = time(hour=20, minute=20, second=0, microsecond=0)
+        start_saving_time = time(hour=20, minute=33, second=0, microsecond=0)
         duration_saving = timedelta(minutes=1)
         delay_end = timedelta(seconds=30)
 
@@ -814,8 +814,8 @@ class TwitterStream:
 
         self.db_name = Path(Path(__file__).parent, 'tmp', 'tweets.sqlite')
         Path(self.db_name).parent.mkdir(parents=True, exist_ok=True)
-        logging.info("Create SQLite file if does not exist at %s", str(self.db_name))
-        self.database = sqlite3.connect(self.db_name, isolation_level=None)
+        logging.info("Create SQLite file if does not exist at %s", self.db_name)
+        self.database = sqlite3.connect(str(self.db_name), isolation_level=None)
         logging.info("Create table for Tweets if not exist with query: %s", self.__CREATE_TABLE_TWEET)
         self.database.execute(self.__CREATE_TABLE_TWEET)
         self.database.close()
@@ -844,7 +844,7 @@ class TwitterStream:
                 self.__recursive_listen()
 
     def listen_to_tweets(self):
-        self.database = sqlite3.connect(self.db_name, isolation_level=None)
+        self.database = sqlite3.connect(str(self.db_name), isolation_level=None)
         self.__recursive_listen()
         self.database.close()
 
@@ -864,7 +864,7 @@ class TwitterStream:
     def save_to_s3(self):
         logging.info("BEGIN: Save twitter_stream to S3")
         logging.info("Open database again: %s", self.db_name)
-        self.database = sqlite3.connect(self.db_name, isolation_level=None)
+        self.database = sqlite3.connect(str(self.db_name), isolation_level=None)
         self.database.row_factory = sqlite3.Row
         cursor_records = self.database.cursor()
 
