@@ -779,7 +779,7 @@ class TwitterStream:
         # start_saving_time = time(hour=0, minute=0, second=0, microsecond=0)
         # duration_saving = timedelta(days=1)
         # delay_end = timedelta(minutes=1)
-        start_saving_time = time(hour=19, minute=40, second=0, microsecond=0)
+        start_saving_time = time(hour=20, minute=20, second=0, microsecond=0)
         duration_saving = timedelta(minutes=1)
         delay_end = timedelta(seconds=30)
 
