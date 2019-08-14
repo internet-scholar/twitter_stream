@@ -1,338 +1,976 @@
-from internet_scholar import InternetScholar
-import uuid
-import argparse
-import json
-import os
-from twarc import Twarc
-import sqlite3
-import time
+from datetime import datetime, time, timedelta
 import tweepy
-from datetime import timezone
-from datetime import datetime, timedelta
+import json
+import sqlite3
+from internet_scholar import read_dict_from_s3_url, AthenaLogger, AthenaDatabase, compress, generate_orc_file
+from pathlib import Path
+import argparse
+import logging
+import uuid
+import boto3
+import shutil
 
 
-# TODO: add logging
+num_exceptions = 0
 
-init_script_converter = """#!/usr/bin/env bash
-sudo timedatectl set-timezone UTC
-sudo apt update -y
-sudo apt install -y python3-pip openjdk-8-jre
-cd /home/ubuntu
-su ubuntu -c 'mkdir utils'
-su ubuntu -c 'wget http://repo1.maven.org/maven2/org/apache/orc/orc-tools/1.5.6/orc-tools-1.5.6-uber.jar -P ./utils/'
-su ubuntu -c 'wget https://raw.githubusercontent.com/internet-scholar/twitter_stream_converter/master/requirements.txt'
-su ubuntu -c 'wget https://raw.githubusercontent.com/internet-scholar/twitter_stream_converter/master/twitter_stream_converter.py'
-su ubuntu -c 'wget https://raw.githubusercontent.com/internet-scholar/internet_scholar/master/internet_scholar.py'
-su ubuntu -c 'pip3 install --trusted-host pypi.python.org -r /home/ubuntu/requirements.txt'
-su ubuntu -c 'mkdir /home/ubuntu/.aws'
-su ubuntu -c 'printf "[default]\\nregion={region}" > /home/ubuntu/.aws/config'
-su ubuntu -c 'python3 /home/ubuntu/twitter_stream_converter.py -c {config} -k {key} --logfile {prod}'
-sudo shutdown -h now"""
+STRUCTURE_TWEET_ORC = """
+struct<
+    created_at: timestamp,
+    id: bigint,
+    id_str: string,
+    text: string,
+    source: string,
+    truncated: boolean,
+    in_reply_to_status_id: bigint,
+    in_reply_to_status_id_str: string,
+    in_reply_to_user_id: bigint,
+    in_reply_to_user_id_str: string,
+    in_reply_to_screen_name: string,
+    quoted_status_id: bigint,
+    quoted_status_id_str: string,
+    is_quote_status: boolean,
+    retweet_count: int,
+    favorite_count: int,
+    favorited: boolean,
+    retweeted: boolean,
+    possibly_sensitive: boolean,
+    filter_level: string,
+    lang: string,
+    user: struct<
+        id: bigint,
+        id_str: string,
+        name: string,
+        screen_name: string,
+        location: string,
+        url: string,
+        description: string,
+        protected: boolean,
+        verified: boolean,
+        followers_count: int,
+        friends_count: int,
+        listed_count: int,
+        favourites_count: int,
+        statuses_count: int,
+        created_at: timestamp,
+        profile_banner_url: string,
+        profile_image_url_https: string,
+        default_profile: boolean,
+        default_profile_image: boolean,
+        withheld_in_countries: array<string>,
+        withheld_scope: string
+    >,
+    coordinates: struct<
+        coordinates: array<float>,
+        type: string
+    >,
+    place: struct<
+        id: string,
+        url: string,
+        place_type: string,
+        name: string,
+        full_name: string,
+        country_code: string,
+        country: string,
+        bounding_box: struct<
+            coordinates: array<array<array<float>>>,
+            type: string
+        >
+    >,
+    entities: struct<
+        hashtags: array<
+            struct<
+                indices: array<smallint>,
+                text: string
+            >
+        >,
+        urls: array<
+            struct<
+                display_url: string,
+                expanded_url: string,
+                indices: array<smallint>,
+                url: string
+            >
+        >,
+        user_mentions: array<
+            struct<
+                id: bigint,
+                id_str: string,
+                indices: array<smallint>,
+                name: string,
+                screen_name: string
+            >
+        >,
+        symbols: array<
+            struct<
+                indices: array<smallint>,
+                text: string
+            >
+        >,
+        media: array<
+            struct<
+                display_url: string,
+                expanded_url: string,
+                id: bigint,
+                id_str: string,
+                indices: array<smallint>,
+                media_url: string,
+                media_url_https: string,
+                source_status_id: bigint,
+                source_status_id_str: string,
+                type: string,
+                url: string
+            >
+        >
+    >,
+    quoted_status: struct<
+        created_at: timestamp,
+        id: bigint,
+        id_str: string,
+        text: string,
+        source: string,
+        truncated: boolean,
+        in_reply_to_status_id: bigint,
+        in_reply_to_status_id_str: string,
+        in_reply_to_user_id: bigint,
+        in_reply_to_user_id_str: string,
+        in_reply_to_screen_name: string,
+        quoted_status_id: bigint,
+        quoted_status_id_str: string,
+        is_quote_status: boolean,
+        retweet_count: int,
+        favorite_count: int,
+        favorited: boolean,
+        retweeted: boolean,
+        possibly_sensitive: boolean,
+        filter_level: string,
+        lang: string,
+        user: struct<
+            id: bigint,
+            id_str: string,
+            name: string,
+            screen_name: string,
+            location: string,
+            url: string,
+            description: string,
+            protected: boolean,
+            verified: boolean,
+            followers_count: int,
+            friends_count: int,
+            listed_count: int,
+            favourites_count: int,
+            statuses_count: int,
+            created_at: timestamp,
+            profile_banner_url: string,
+            profile_image_url_https: string,
+            default_profile: boolean,
+            default_profile_image: boolean,
+            withheld_in_countries: array<string>,
+            withheld_scope: string
+        >,
+        coordinates: struct<
+            coordinates: array<float>,
+            type: string
+        >,
+        place: struct<
+            id: string,
+            url: string,
+            place_type: string,
+            name: string,
+            full_name: string,
+            country_code: string,
+            country: string,
+            bounding_box: struct<
+                coordinates: array<array<array<float>>>,
+                type: string
+            >
+        >,
+        entities: struct<
+            hashtags: array<
+                struct<
+                    indices: array<smallint>,
+                    text: string
+                >
+            >,
+            urls: array<
+                struct<
+                    display_url: string,
+                    expanded_url: string,
+                    indices: array<smallint>,
+                    url: string
+                >
+            >,
+            user_mentions: array<
+                struct<
+                    id: bigint,
+                    id_str: string,
+                    indices: array<smallint>,
+                    name: string,
+                    screen_name: string
+                >
+            >,
+            symbols: array<
+                struct<
+                    indices: array<smallint>,
+                    text: string
+                >
+            >,
+            media: array<
+                struct<
+                    display_url: string,
+                    expanded_url: string,
+                    id: bigint,
+                    id_str: string,
+                    indices: array<smallint>,
+                    media_url: string,
+                    media_url_https: string,
+                    source_status_id: bigint,
+                    source_status_id_str: string,
+                    type: string,
+                    url: string
+                >
+            >
+        >
+    >,
+    retweeted_status: struct<
+        created_at: timestamp,
+        id: bigint,
+        id_str: string,
+        text: string,
+        source: string,
+        truncated: boolean,
+        in_reply_to_status_id: bigint,
+        in_reply_to_status_id_str: string,
+        in_reply_to_user_id: bigint,
+        in_reply_to_user_id_str: string,
+        in_reply_to_screen_name: string,
+        quoted_status_id: bigint,
+        quoted_status_id_str: string,
+        is_quote_status: boolean,
+        retweet_count: int,
+        favorite_count: int,
+        favorited: boolean,
+        retweeted: boolean,
+        possibly_sensitive: boolean,
+        filter_level: string,
+        lang: string,
+        user: struct<
+            id: bigint,
+            id_str: string,
+            name: string,
+            screen_name: string,
+            location: string,
+            url: string,
+            description: string,
+            protected: boolean,
+            verified: boolean,
+            followers_count: int,
+            friends_count: int,
+            listed_count: int,
+            favourites_count: int,
+            statuses_count: int,
+            created_at: timestamp,
+            profile_banner_url: string,
+            profile_image_url_https: string,
+            default_profile: boolean,
+            default_profile_image: boolean,
+            withheld_in_countries: array<string>,
+            withheld_scope: string
+        >,
+        coordinates: struct<
+            coordinates: array<float>,
+            type: string
+        >,
+        place: struct<
+            id: string,
+            url: string,
+            place_type: string,
+            name: string,
+            full_name: string,
+            country_code: string,
+            country: string,
+            bounding_box: struct<
+                coordinates: array<array<array<float>>>,
+                type: string
+            >
+        >,
+        entities: struct<
+            hashtags: array<
+                struct<
+                    indices: array<smallint>,
+                    text: string
+                >
+            >,
+            urls: array<
+                struct<
+                    display_url: string,
+                    expanded_url: string,
+                    indices: array<smallint>,
+                    url: string
+                >
+            >,
+            user_mentions: array<
+                struct<
+                    id: bigint,
+                    id_str: string,
+                    indices: array<smallint>,
+                    name: string,
+                    screen_name: string
+                >
+            >,
+            symbols: array<
+                struct<
+                    indices: array<smallint>,
+                    text: string
+                >
+            >,
+            media: array<
+                struct<
+                    display_url: string,
+                    expanded_url: string,
+                    id: bigint,
+                    id_str: string,
+                    indices: array<smallint>,
+                    media_url: string,
+                    media_url_https: string,
+                    source_status_id: bigint,
+                    source_status_id_str: string,
+                    type: string,
+                    url: string
+                >
+            >
+        >
+    >
+>
+"""
 
-init_script_stream = """#!/usr/bin/env bash
-sudo timedatectl set-timezone UTC
-cd /home/ubuntu
-sudo apt update -y
-sudo apt install -y python3-pip
-su ubuntu -c 'wget https://raw.githubusercontent.com/internet-scholar/twitter_stream/master/requirements.txt'
-su ubuntu -c 'wget https://raw.githubusercontent.com/internet-scholar/twitter_stream/master/twitter_stream.py'
-su ubuntu -c 'wget https://raw.githubusercontent.com/internet-scholar/internet_scholar/master/internet_scholar.py'
-su ubuntu -c 'pip3 install --trusted-host pypi.python.org -r /home/ubuntu/requirements.txt'
-su ubuntu -c 'mkdir /home/ubuntu/.aws'
-su ubuntu -c 'printf "[default]\\nregion={region}" > /home/ubuntu/.aws/config'
-su ubuntu -c 'crontab -l | {{ cat; echo "5 0 * * * python3 /home/ubuntu/twitter_stream.py upload --config {config} --convert_remotely --logfile {prod}"; }} | crontab -'
-su ubuntu -c 'python3 /home/ubuntu/twitter_stream.py track --config {config} --name {filter_name} --terms {terms} {languages} --logfile --index {index} {prod} {tweepy}'"""
+STRUCTURE_TWEET_ATHENA = """
+created_at timestamp,
+id bigint,
+id_str string,
+text string,
+source string,
+truncated boolean,
+in_reply_to_status_id bigint,
+in_reply_to_status_id_str string,
+in_reply_to_user_id bigint,
+in_reply_to_user_id_str string,
+in_reply_to_screen_name string,
+quoted_status_id bigint,
+quoted_status_id_str string,
+is_quote_status boolean,
+retweet_count int,
+favorite_count int,
+favorited boolean,
+retweeted boolean,
+possibly_sensitive boolean,
+filter_level string,
+lang string,
+user struct<
+    id: bigint,
+    id_str: string,
+    name: string,
+    screen_name: string,
+    location: string,
+    url: string,
+    description: string,
+    protected: boolean,
+    verified: boolean,
+    followers_count: int,
+    friends_count: int,
+    listed_count: int,
+    favourites_count: int,
+    statuses_count: int,
+    created_at: timestamp,
+    profile_banner_url: string,
+    profile_image_url_https: string,
+    default_profile: boolean,
+    default_profile_image: boolean,
+    withheld_in_countries: array<string>,
+    withheld_scope: string
+>,
+coordinates struct<
+    coordinates: array<float>,
+    type: string
+>,
+place struct<
+    id: string,
+    url: string,
+    place_type: string,
+    name: string,
+    full_name: string,
+    country_code: string,
+    country: string,
+    bounding_box: struct<
+        coordinates: array<array<array<float>>>,
+        type: string
+    >
+>,
+entities struct<
+    hashtags: array<
+        struct<
+            indices: array<smallint>,
+            text: string
+        >
+    >,
+    urls: array<
+        struct<
+            display_url: string,
+            expanded_url: string,
+            indices: array<smallint>,
+            url: string
+        >
+    >,
+    user_mentions: array<
+        struct<
+            id: bigint,
+            id_str: string,
+            indices: array<smallint>,
+            name: string,
+            screen_name: string
+        >
+    >,
+    symbols: array<
+        struct<
+            indices: array<smallint>,
+            text: string
+        >
+    >,
+    media: array<
+        struct<
+            display_url: string,
+            expanded_url: string,
+            id: bigint,
+            id_str: string,
+            indices: array<smallint>,
+            media_url: string,
+            media_url_https: string,
+            source_status_id: bigint,
+            source_status_id_str: string,
+            type: string,
+            url: string
+        >
+    >
+>,
+quoted_status struct<
+    created_at: timestamp,
+    id: bigint,
+    id_str: string,
+    text: string,
+    source: string,
+    truncated: boolean,
+    in_reply_to_status_id: bigint,
+    in_reply_to_status_id_str: string,
+    in_reply_to_user_id: bigint,
+    in_reply_to_user_id_str: string,
+    in_reply_to_screen_name: string,
+    quoted_status_id: bigint,
+    quoted_status_id_str: string,
+    is_quote_status: boolean,
+    retweet_count: int,
+    favorite_count: int,
+    favorited: boolean,
+    retweeted: boolean,
+    possibly_sensitive: boolean,
+    filter_level: string,
+    lang: string,
+    user: struct<
+        id: bigint,
+        id_str: string,
+        name: string,
+        screen_name: string,
+        location: string,
+        url: string,
+        description: string,
+        protected: boolean,
+        verified: boolean,
+        followers_count: int,
+        friends_count: int,
+        listed_count: int,
+        favourites_count: int,
+        statuses_count: int,
+        created_at: timestamp,
+        profile_banner_url: string,
+        profile_image_url_https: string,
+        default_profile: boolean,
+        default_profile_image: boolean,
+        withheld_in_countries: array<string>,
+        withheld_scope: string
+    >,
+    coordinates: struct<
+        coordinates: array<float>,
+        type: string
+    >,
+    place: struct<
+        id: string,
+        url: string,
+        place_type: string,
+        name: string,
+        full_name: string,
+        country_code: string,
+        country: string,
+        bounding_box: struct<
+            coordinates: array<array<array<float>>>,
+            type: string
+        >
+    >,
+    entities: struct<
+        hashtags: array<
+            struct<
+                indices: array<smallint>,
+                text: string
+            >
+        >,
+        urls: array<
+            struct<
+                display_url: string,
+                expanded_url: string,
+                indices: array<smallint>,
+                url: string
+            >
+        >,
+        user_mentions: array<
+            struct<
+                id: bigint,
+                id_str: string,
+                indices: array<smallint>,
+                name: string,
+                screen_name: string
+            >
+        >,
+        symbols: array<
+            struct<
+                indices: array<smallint>,
+                text: string
+            >
+        >,
+        media: array<
+            struct<
+                display_url: string,
+                expanded_url: string,
+                id: bigint,
+                id_str: string,
+                indices: array<smallint>,
+                media_url: string,
+                media_url_https: string,
+                source_status_id: bigint,
+                source_status_id_str: string,
+                type: string,
+                url: string
+            >
+        >
+    >
+>,
+retweeted_status struct<
+    created_at: timestamp,
+    id: bigint,
+    id_str: string,
+    text: string,
+    source: string,
+    truncated: boolean,
+    in_reply_to_status_id: bigint,
+    in_reply_to_status_id_str: string,
+    in_reply_to_user_id: bigint,
+    in_reply_to_user_id_str: string,
+    in_reply_to_screen_name: string,
+    quoted_status_id: bigint,
+    quoted_status_id_str: string,
+    is_quote_status: boolean,
+    retweet_count: int,
+    favorite_count: int,
+    favorited: boolean,
+    retweeted: boolean,
+    possibly_sensitive: boolean,
+    filter_level: string,
+    lang: string,
+    user: struct<
+        id: bigint,
+        id_str: string,
+        name: string,
+        screen_name: string,
+        location: string,
+        url: string,
+        description: string,
+        protected: boolean,
+        verified: boolean,
+        followers_count: int,
+        friends_count: int,
+        listed_count: int,
+        favourites_count: int,
+        statuses_count: int,
+        created_at: timestamp,
+        profile_banner_url: string,
+        profile_image_url_https: string,
+        default_profile: boolean,
+        default_profile_image: boolean,
+        withheld_in_countries: array<string>,
+        withheld_scope: string
+    >,
+    coordinates: struct<
+        coordinates: array<float>,
+        type: string
+    >,
+    place: struct<
+        id: string,
+        url: string,
+        place_type: string,
+        name: string,
+        full_name: string,
+        country_code: string,
+        country: string,
+        bounding_box: struct<
+            coordinates: array<array<array<float>>>,
+            type: string
+        >
+    >,
+    entities: struct<
+        hashtags: array<
+            struct<
+                indices: array<smallint>,
+                text: string
+            >
+        >,
+        urls: array<
+            struct<
+                display_url: string,
+                expanded_url: string,
+                indices: array<smallint>,
+                url: string
+            >
+        >,
+        user_mentions: array<
+            struct<
+                id: bigint,
+                id_str: string,
+                indices: array<smallint>,
+                name: string,
+                screen_name: string
+            >
+        >,
+        symbols: array<
+            struct<
+                indices: array<smallint>,
+                text: string
+            >
+        >,
+        media: array<
+            struct<
+                display_url: string,
+                expanded_url: string,
+                id: bigint,
+                id_str: string,
+                indices: array<smallint>,
+                media_url: string,
+                media_url_https: string,
+                source_status_id: bigint,
+                source_status_id_str: string,
+                type: string,
+                url: string
+            >
+        >
+    >
+>
+"""
 
-create_table_twitter_filter = """
-CREATE EXTERNAL TABLE if not exists twitter_filter (
-  name string,
-  track string,
-  languages array<string>,
-  method string,
-  created_at timestamp
+ATHENA_CREATE_TWITTER_STREAM = """
+CREATE EXTERNAL TABLE IF NOT EXISTS twitter_stream (
+{structure}
 )
+PARTITIONED BY (filter String, creation_date String)
+STORED AS ORC
+LOCATION '{bucket}'
+tblproperties ("orc.compress"="ZLIB");
+"""
+
+ATHENA_CREATE_TWITTER_STREAM_RAW = """
+CREATE EXTERNAL TABLE IF NOT EXISTS twitter_stream_raw (
+{structure}
+)
+PARTITIONED BY (filter String, creation_date String)
 ROW FORMAT SERDE 'org.openx.data.jsonserde.JsonSerDe'
-LOCATION 's3://{bucket}/twitter_filter/'
+WITH SERDEPROPERTIES (
+  'serialization.format' = '1',
+  'ignore.malformed.json' = 'true'
+) LOCATION '{bucket}'
+TBLPROPERTIES ('has_encrypted_data'='false');
 """
 
-create_table_tweet = """
-create table if not exists tweet
-    (filter_name string,
-    creation_date timestamp,
-    tweet_id string,
-    tweet_json string)
-"""
 
-insert_tweet = """
-insert into tweet
-(filter_name, creation_date, tweet_id, tweet_json)
-values (?, ? ,?, ?)
-"""
+class TwitterFilter:
+    __CREATE_ATHENA_TABLE = """
+    CREATE EXTERNAL TABLE if not exists twitter_filter (
+      name string,
+      track string,
+      languages array<string>
+    )
+    ROW FORMAT SERDE 'org.openx.data.jsonserde.JsonSerDe'
+    LOCATION 's3://{s3_location}/twitter_filter/'
+    """
 
-num_exceptions_tweepy = 0
+    def __init__(self, twitter_filter, s3_bucket, athena_db):
+        self.filter = twitter_filter
+        self.s3_bucket = s3_bucket
+        self.athena_db = athena_db
+
+    def save_to_s3(self):
+        s3_filename = "twitter_filter/{filter_name}.json".format(filter_name=self.filter['name'])
+        s3 = boto3.resource('s3')
+        logging.info("Save twitter filter parameters to bucket %s at %s", self.s3_bucket, s3_filename)
+        s3.Object(self.s3_bucket, s3_filename).put(Body=json.dumps(self.filter))
+
+    def recreate_athena_table(self):
+        logging.info("Create Athena instance.")
+        athena = AthenaDatabase(s3_output=self.s3_bucket, database=self.athena_db)
+        logging.info("Delete table twitter_filter if exists")
+        athena.query_athena_and_wait(query_string='DROP TABLE if exists twitter_filter')
+        logging.info("Recreate table twitter_filter on %s", self.s3_bucket)
+        athena.query_athena_and_wait(query_string=self.__CREATE_ATHENA_TABLE.format(s3_location=self.s3_bucket))
 
 
-class MyStreamListener(tweepy.StreamListener):
-    # the constructor receives the filter_name because it will be part of the record that will store each tweet
-    # and will serve to partition the table twitter_streaming
-    def __init__(self, filter_name, even, odd):
+class TwitterListener(tweepy.StreamListener):
+    __INSERT_TWEET = """
+    insert into tweet
+    (tweet_id, tweet_json)
+    values (?, ?)
+    """
+
+    def __init__(self, database, start_saving, end_saving, end_execution):
         super().__init__()
-        self.filter_name = filter_name
-        self.even = even
-        self.odd = odd
+        self.start_saving = start_saving
+        self.end_saving = end_saving
+        self.end_execution = end_execution
+        self.database = database
 
-    # method that is executed for each tweet that arrives through the stream
-    def on_status(self, status):
-        # if the number of days since Jan 1, 1970 is an even number, inserts new tweet on database "even"
-        if int(status.created_at.replace(tzinfo=timezone.utc).timestamp() / 86400) % 2 == 0:
-            self.even.execute(insert_tweet, (self.filter_name,
-                                             datetime.strftime(status.created_at, '%Y-%m-%d'),
-                                             status.id_str,
-                                             json.dumps(status._json)))
-        # otherwise, inserts new tweet on database "odd"
-        else:
-            self.odd.execute(insert_tweet, (self.filter_name,
-                                            datetime.strftime(status.created_at, '%Y-%m-%d'),
-                                            status.id_str,
-                                            json.dumps(status._json)))
-
-        # If it is able to receive at least one tweet, reinitialize global variable num_exceptions.
-        global num_exceptions_tweepy
-        num_exceptions_tweepy = 0
+    def on_data(self, raw_data):
+        data = json.loads(raw_data)
+        if 'in_reply_to_status_id' in data:
+            created_at = datetime.strptime(data['created_at'], '%a %b %d %H:%M:%S +0000 %Y')
+            if self.start_saving <= created_at < self.end_saving:
+                self.database.execute(self.__INSERT_TWEET, (data['id_str'], raw_data))
+                global num_exceptions
+                num_exceptions = 0
+            elif created_at >= self.end_execution:
+                return False
 
 
-class TwitterStream (InternetScholar):
+class TwitterStream:
     MAX_ATTEMPTS_TWITTER_STREAM = 10
 
-    def __init__(self, config_bucket, location="twitter_stream",
-                 logger_name="twitter_stream", prod=True, log_file=True):
-        super(TwitterStream, self).__init__(config_bucket, location=location, logger_name=logger_name,
-                                            prod=prod, log_file=log_file)
-        self.filter_name = None
-        self.track = None
-        self.languages = None
-        # create both even and odd databases.
-        self.database_dir = os.path.join(self.local_path, 'db')
-        self.logger.info("Create directory for database if does not exist: %s", self.database_dir)
-        os.makedirs(self.database_dir, exist_ok=True)
-        self.even_db = os.path.join(self.database_dir, 'even.sqlite')
-        self.logger.info("Create sqlite db for even days if does not exist: %s", self.even_db)
-        self.even = sqlite3.connect(self.even_db, isolation_level=None)
-        self.even.execute(create_table_tweet)
-        self.odd_db = os.path.join(self.database_dir, 'odd.sqlite')
-        self.logger.info("Create sqlite db for odd days if does not exist: %s", self.odd_db)
-        self.odd = sqlite3.connect(self.odd_db, isolation_level=None)
-        self.odd.execute(create_table_tweet)
+    __CREATE_TABLE_TWEET = """
+    create table if not exists tweet
+        (tweet_id string,
+        tweet_json string)
+    """
 
-    def save_filter_arguments(self, filter_name, track, languages=None, method="twarc"):
-        self.filter_name = filter_name
-        self.track = track
-        self.languages = languages
-        self.method = method
-        # create a string with all the information that we want to upload
-        filter_json = {
-            'name': filter_name,
-            'track': track,
-            'languages': languages,
-            'method': method,
-            'created_at': time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime())
-        }
-        json_line = json.dumps(filter_json)
-        self.logger.info('New filter: %s', json_line)
+    __SELECT_INDIVIDUAL_TWEETS = """
+    select tweet_id, tweet_json
+    from tweet
+    where rowid in (
+        select min(rowid)
+        from tweet
+        group by tweet_id
+    )
+    order by tweet_id
+    """
 
-        # save the information to local file
-        filename_json = os.path.join(self.temp_dir, '{}.json'.format(filter_name))
-        self.logger.info('Temporary file with info about new filter: %s', filename_json)
-        with open(filename_json, 'w') as json_file:
-            json_file.write("{}\n".format(json_line))
+    def __init__(self, twitter_filter, credentials, s3_bucket, athena_db):
+        logging.info('Create TwitterStream object')
 
-        s3_filename = "twitter_filter/{}.json.bz2".format(filter_name)
-        filename_bz2 = self.compress(filename=filename_json, delete_original=True)
-        self.s3.Bucket(self.config['s3']['raw']).upload_file(filename_bz2, s3_filename)
-        os.remove(filename_bz2)
+        # The default options for the time frame are below... in case they are changed for debugging purposes
+        # start_saving_time = time(hour=0, minute=0, second=0, microsecond=0)
+        # duration_saving = timedelta(days=1)
+        # delay_end = timedelta(minutes=1)
+        start_saving_time = time(hour=16, minute=9, second=0, microsecond=0)
+        duration_saving = timedelta(minutes=1)
+        delay_end = timedelta(seconds=30)
 
-        # creates table twitter_filter on Amazon Athena
-        self.query_athena_and_wait(query_string='drop table if exists twitter_filter')
-        self.query_athena_and_wait(query_string=create_table_twitter_filter.format(bucket=self.config['s3']['raw']))
+        self.start_saving = datetime.combine(datetime.utcnow().date(), start_saving_time)
+        if self.start_saving <= datetime.utcnow():
+            self.start_saving = self.start_saving + timedelta(days=1)
+        self.end_saving = self.start_saving + duration_saving
+        self.end_execution = self.end_saving + delay_end
+        logging.info("Collect tweets from %s to %s. End execution at %s",
+                     self.start_saving, self.end_saving, self.end_execution)
 
-    def listen_to_tweets_tweepy(self, index=0):
-        global num_exceptions_tweepy
+        self.creation_date = self.start_saving.strftime("%Y-%m-%d")
+
+        self.s3_bucket = s3_bucket
+        self.athena_db = athena_db
+
+        which_credentials = int(datetime.utcnow().timestamp() / 86400) % 2
+        if which_credentials == 1:
+            logging.info("Use odd days' Twitter credentials")
+            credentials = credentials['odd_days']
+        else:
+            logging.info("Use even days' Twitter credentials")
+            credentials = credentials['even_days']
+        self.consumer_key = credentials['consumer_key']
+        self.consumer_secret = credentials['consumer_secret']
+        self.access_token = credentials['access_token']
+        self.access_token_secret = credentials['access_token_secret']
+
+        self.filter = twitter_filter
+        self.filter['track_terms'] = [x.strip() for x in self.filter['track'].split(',')]
+        logging.info("Track terms: %s", self.filter)
+
+        self.db_name = Path(Path(__file__).parent, 'tmp', 'tweets.sqlite')
+        Path(self.db_name).parent.mkdir(parents=True, exist_ok=True)
+        logging.info("Create SQLite file if does not exist at %s", str(self.db_name))
+        self.database = sqlite3.connect(self.db_name, isolation_level=None)
+        logging.info("Create table for Tweets if not exist with query: %s", self.__CREATE_TABLE_TWEET)
+        self.database.execute(self.__CREATE_TABLE_TWEET)
+        self.database.close()
+
+    def __recursive_listen(self):
         try:
-            # Authenticate with Twitter Stream API
-            self.logger.info('Read parameters.')
-            auth = tweepy.OAuthHandler(consumer_key=self.credentials['twitter'][index]['consumer_key'],
-                                       consumer_secret=self.credentials['twitter'][index]['consumer_secret'])
-            auth.set_access_token(key=self.credentials['twitter'][index]['access_token'],
-                                  secret=self.credentials['twitter'][index]['access_token_secret'])
+            logging.info("Authenticate and listen to tweets...")
+            auth = tweepy.OAuthHandler(consumer_key=self.consumer_key, consumer_secret=self.consumer_secret)
+            auth.set_access_token(key=self.access_token, secret=self.access_token_secret)
             api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
-            self.logger.info('Twitter authenticated.')
-            track_terms = [x.strip() for x in self.track.split(',')]
-
-            # Initialize stream
-            my_stream_listener = MyStreamListener(filter_name=self.filter_name, even=self.even, odd=self.odd)
+            my_stream_listener = TwitterListener(database=self.database,
+                                                 start_saving=self.start_saving,
+                                                 end_saving=self.end_saving,
+                                                 end_execution=self.end_execution)
             my_stream = tweepy.Stream(auth=api.auth, listener=my_stream_listener)
-            self.logger.info('Listening tweets...')
-            my_stream.filter(track=track_terms, languages=self.languages)
-        # For any exception try to reinitialize the stream MAX_ATTEMPTS times before exiting
+            my_stream.filter(track=self.filter['track_terms'], languages=self.filter['languages'])
         except Exception as e:
-            if num_exceptions_tweepy > self.MAX_ATTEMPTS_TWITTER_STREAM:
-                self.logger.info('It is going to terminate: %s.', repr(e))
-                raise
-            else:
-                num_exceptions_tweepy = num_exceptions_tweepy + 1
-                self.logger.info('Exception number %d: %s', num_exceptions_tweepy, repr(e))
-                self.listen_to_tweets_tweepy()
-
-    def listen_to_tweets_twarc(self, index=0, num_exceptions=0):
-        try:
-            self.logger.info('Authenticate on Twitter.')
-            twitter = Twarc(self.credentials['twitter'][index]['consumer_key'],
-                            self.credentials['twitter'][index]['consumer_secret'],
-                            self.credentials['twitter'][index]['access_token'],
-                            self.credentials['twitter'][index]['access_token_secret'])
-
-            self.logger.info('Listen to tweets')
-            for tweet in twitter.filter(track=self.track, lang=self.languages):
-                # if the number of days since Jan 1, 1970 is an even number, inserts new tweet on database "even"
-                created_at = datetime.strptime(tweet['created_at'], '%a %b %d %H:%M:%S +0000 %Y')
-                if int(created_at.timestamp() / 86400) % 2 == 0:
-                    self.even.execute(insert_tweet, (self.filter_name,
-                                                     datetime.strftime(created_at, '%Y-%m-%d'),
-                                                     tweet['id_str'],
-                                                     json.dumps(tweet)))
-                # otherwise, inserts new tweet on database "odd"
-                else:
-                    self.odd.execute(insert_tweet, (self.filter_name,
-                                                    datetime.strftime(created_at, '%Y-%m-%d'),
-                                                    tweet['id_str'],
-                                                    json.dumps(tweet)))
-                num_exceptions = 0
-        # For any exception try to reinitialize the stream MAX_ATTEMPTS times before exiting
-        except Exception as e:
+            global num_exceptions
             if num_exceptions > self.MAX_ATTEMPTS_TWITTER_STREAM:
-                self.logger.info('It is going to terminate: %s', repr(e))
+                logging.info("Exceeded maximum number of exceptions (%d) while listening to tweets: TERMINATE",
+                             self.MAX_ATTEMPTS_TWITTER_STREAM)
                 raise
             else:
-                self.logger.info('Exception number %d: %s', num_exceptions, repr(e))
-                self.listen_to_tweets_twarc(num_exceptions + 1)
+                num_exceptions = num_exceptions + 1
+                logging.info("Exception number %d while listening to tweets: resume listening", num_exceptions)
+                self.__recursive_listen()
 
-    def listen_to_tweets(self, filter_name, track, languages=None, tweepy=False, index=0):
-        track_terms = ' '.join(track)
-        if tweepy:
-            method = "tweepy"
-        else:
-            method = "twarc"
-        self.save_filter_arguments(filter_name=filter_name, track=track_terms, languages=languages, method=method)
-        if tweepy:
-            self.listen_to_tweets_tweepy(index)
-        else:
-            self.listen_to_tweets_twarc(index)
+    def listen_to_tweets(self):
+        self.database = sqlite3.connect(self.db_name, isolation_level=None)
+        self.__recursive_listen()
+        self.database.close()
 
-    def upload_database_to_s3(self, convert_remotely=False):
-        # if the number of days since Jan 1, 1970 is an even number, sends the data on database "odd" to S3
-        # (since database "odd" is probably idle now)
-        s3_filename = "twitter_stream_sqlite/{}/{}".format(
-            datetime.strftime(datetime.utcnow() - timedelta(1), '%Y-%m-%d'), str(uuid.uuid4()))
-        if int(datetime.utcnow().timestamp() / 86400) % 2 == 0:
-            self.logger.info('Upload odd.sqlite as {} to {}'.format(s3_filename, self.config['s3']['raw']))
-            self.s3.Bucket(self.config['s3']['raw']).upload_file(self.odd_db, s3_filename)
-            self.logger.info("Delete table 'tweet' in odd.sqlite")
-            self.odd.execute('drop table tweet')
-            self.logger.info("Recreate table 'tweet' in odd.sqlite")
-            self.odd.execute(create_table_tweet)
-        # otherwise, send the data on database "even" to S3
-        else:
-            self.logger.info('Upload even.sqlite as {} to {}'.format(s3_filename, self.config['s3']['raw']))
-            self.s3.Bucket(self.config['s3']['raw']).upload_file(self.even_db, s3_filename)
-            self.logger.info("Delete table 'tweet' in even.sqlite")
-            self.even.execute('drop table tweet')
-            self.logger.info("Recreate table 'tweet' in even.sqlite")
-            self.even.execute(create_table_tweet)
-        if convert_remotely:
-            self.logger.info("Instantiate EC2 that will generate ORC file")
-            init_script = init_script_converter.format(region=self.credentials['aws']['default_region'],
-                                                       config=self.config_bucket,
-                                                       key=s3_filename,
-                                                       prod="--prod" if self.prod else "")
-            self.logger.info("Script: %s", init_script)
-            self.instantiate_ec2(instance_type="t3a.micro", init_script=init_script, name="twitter_stream_converter")
-        self.logger.info("END - Upload to S3")
+    def __gen_dict_extract(self, key, var):
+        if hasattr(var, 'items'):
+            for k, v in var.items():
+                if k == key:
+                    yield v
+                if isinstance(v, dict):
+                    for result in self.__gen_dict_extract(key, v):
+                        yield result
+                elif isinstance(v, list):
+                    for d in v:
+                        for result in self.__gen_dict_extract(key, d):
+                            yield result
 
-    def remote_track(self, filter_name, track, languages=None, tweepy=False, index=0):
-        if languages is None:
-            languages = []
-        init_script = init_script_stream.format(region=self.credentials['aws']['default_region'],
-                                                config=self.config_bucket,
-                                                prod="--prod" if self.prod else "",
-                                                filter_name=filter_name,
-                                                index=index,
-                                                terms=' '.join(track),
-                                                languages=("--languages " if languages else "") + " ".join(languages),
-                                                tweepy="--tweepy" if tweepy else "")
-        self.instantiate_ec2(init_script=init_script, name="{} ({})".format(filter_name,"twitter_stream"))
+    def save_to_s3(self):
+        logging.info("BEGIN: Save twitter_stream to S3")
+        logging.info("Open database again: %s", self.db_name)
+        self.database = sqlite3.connect(self.db_name, isolation_level=None)
+        self.database.row_factory = sqlite3.Row
+        cursor_records = self.database.cursor()
+
+        json_file = Path(Path(__file__).parent, 'tmp', 'twitter_stream.json')
+        logging.info("Create JSON file %s", json_file)
+        with open(json_file, 'w') as json_writer:
+            logging.info("Execute query to eliminate duplicated tweets and sort by ID: %s",
+                         self.__SELECT_INDIVIDUAL_TWEETS)
+            cursor_records.execute(self.__SELECT_INDIVIDUAL_TWEETS)
+            logging.info("Fill JSON file with tweets")
+            for record in cursor_records:
+                # standardize all dates to PrestoDB/Athena format
+                json_line = record['tweet_json']
+                tweet_json = json.loads(json_line)
+                for created_at in self.__gen_dict_extract('created_at', tweet_json):
+                    json_line = json_line.replace(created_at,
+                                                  datetime.strftime(datetime.strptime(created_at,
+                                                                                      '%a %b %d %H:%M:%S +0000 %Y'),
+                                                                    '%Y-%m-%d %H:%M:%S'),
+                                                  1)
+                json_writer.write(json_line.rstrip("\n"))
+
+        logging.info("Close database to release memory resources")
+        self.database.close()
+
+        s3 = boto3.resource('s3')
+
+        logging.info("Compress JSON file before uploading to S3")
+        bz2_file = compress(json_file, delete_original=False)
+        s3_filename = "twitter_stream_raw/filter={}/creation_date={}/{}.json.bz2".format(self.filter['name'],
+                                                                                         self.creation_date,
+                                                                                         uuid.uuid4().hex)
+        logging.info("Upload file %s to bucket %s at %s", bz2_file, self.s3_bucket, s3_filename)
+        s3.Bucket(self.s3_bucket).upload_file(str(bz2_file), s3_filename)
+
+        orc_file = Path(Path(__file__).parent, 'tmp', 'twitter_stream.orc')
+        logging.info("Convert JSON file %s to ORC file %s", json_file, orc_file)
+        generate_orc_file(filename_json=str(json_file), filename_orc=str(orc_file), structure=STRUCTURE_TWEET_ORC)
+        s3_filename = "twitter_stream/filter={}/creation_date={}/{}.orc".format(self.filter['name'],
+                                                                                self.creation_date,
+                                                                                uuid.uuid4().hex)
+        logging.info("Upload file %s to bucket %s at %s", orc_file, self.s3_bucket, s3_filename)
+        s3.Bucket(self.s3_bucket).upload_file(str(orc_file), s3_filename)
+
+        logging.info("File sizes - SQLite: %.1f Mb - JSON: %.1f Mb - BZIP2: %.1f Mb - ORC: %.1f Mb",
+                     self.db_name.stat().st_size / 2**20,
+                     json_file.stat().st_size / 2**20,
+                     bz2_file.stat().st_size / 2**20,
+                     orc_file.stat().st_size / 2**20)
+        logging.info("END: Save twitter_stream to S3")
+
+    def recreate_athena_table(self):
+        logging.info("BEGIN: Recreate Athena tables for twitter_stream")
+        athena = AthenaDatabase(s3_output=self.s3_bucket, database=self.athena_db)
+
+        logging.info("Drop tables if they exist")
+        athena.query_athena_and_wait(query_string="drop table if exists twitter_stream")
+        athena.query_athena_and_wait(query_string="drop table if exists twitter_stream_raw")
+
+        logging.info("Recreate tables")
+        athena.query_athena_and_wait(
+            query_string=ATHENA_CREATE_TWITTER_STREAM.format(
+                structure=STRUCTURE_TWEET_ATHENA,
+                bucket="s3://{}/twitter_stream/".format(self.s3_bucket)))
+        athena.query_athena_and_wait(
+            query_string=ATHENA_CREATE_TWITTER_STREAM_RAW.format(
+                structure=STRUCTURE_TWEET_ATHENA,
+                bucket="s3://{}/twitter_stream_raw/".format(self.s3_bucket)))
+
+        logging.info("Add new partitions")
+        athena.query_athena_and_wait(query_string="MSCK REPAIR TABLE twitter_stream")
+        athena.query_athena_and_wait(query_string="MSCK REPAIR TABLE twitter_stream_raw")
+        logging.info("END: Recreate Athena tables for twitter_stream")
 
 
 def main():
-    # Configures argparse arguments
     parser = argparse.ArgumentParser()
-    sp = parser.add_subparsers(dest='command')
-    sp_track = sp.add_parser('track', help='Track tweets')
-    sp_track.add_argument('-c', '--config', help='<Required> S3 Bucket with config', required=True)
-    sp_track.add_argument('-i', '--index', type=int, help="Credentials' index", default=0)
-    sp_track.add_argument('-n', '--name', help='<Required> Filter name', required=True)
-    sp_track.add_argument('-t', '--terms', nargs='+', help='<Required> Track terms', required=True)
-    sp_track.add_argument('-l', '--languages', nargs='+', help='Languages', default=[])
-    sp_track.add_argument('--tweepy', help='Collect tweets using Tweepy (otherwise it defaults to Twarc)',
-                          action='store_true')
-    sp_track.add_argument('--prod', help='Save data on production database (not dev)', action='store_true')
-    sp_track.add_argument('--logfile', help='Output log to file (not console)', action='store_true')
-    sp_upload = sp.add_parser('upload', help='Upload tweets to S3 bucket')
-    sp_upload.add_argument('-c', '--config', help='<Required> S3 Bucket with config', required=True)
-    sp_upload.add_argument('--convert_remotely', help='Convert to ORC in a EC2 instance', action='store_true')
-    sp_upload.add_argument('--prod', help='Save data on production database (not dev)', action='store_true')
-    sp_upload.add_argument('--logfile', help='Output log to file (not console)', action='store_true')
-    sp_remote = sp.add_parser('remote', help='Create an EC2 instance to track Twitter stream')
-    sp_remote.add_argument('-c', '--config', help='<Required> S3 Bucket with config', required=True)
-    sp_remote.add_argument('-i', '--index', type=int, help="Credentials' index", default=0)
-    sp_remote.add_argument('-n', '--name', help='<Required> Filter name', required=True)
-    sp_remote.add_argument('-t', '--terms', nargs='+', help='<Required> Track terms', required=True)
-    sp_remote.add_argument('-l', '--languages', nargs='+', help='Languages', default=[])
-    sp_remote.add_argument('--tweepy', help='Collect tweets using Tweepy (otherwise it defaults to Twarc)',
-                           action='store_true')
-    sp_remote.add_argument('--prod', help='Save data on production database (not dev)', action='store_true')
-    sp_remote.add_argument('--logfile', help='Output log to file (not console)', action='store_true')
+    parser.add_argument('-c', '--config', help='S3 Bucket with configuration', required=True)
     args = parser.parse_args()
 
-    twitter_stream = None
-    if args.command == "track":
-        try:
-            twitter_stream = TwitterStream(config_bucket=args.config, logger_name="track_tweets",
-                                           prod=args.prod, log_file=args.logfile)
-            twitter_stream.listen_to_tweets(filter_name=args.name, track=args.terms,
-                                            languages=args.languages, tweepy=args.tweepy)
-        except Exception:
-            twitter_stream.logger.exception("Error!")
-        finally:
-            twitter_stream.save_logs()
-    elif args.command == "upload":
-        try:
-            twitter_stream = TwitterStream(config_bucket=args.config, logger_name="upload_tweets",
-                                           prod=args.prod, log_file=args.logfile)
-            twitter_stream.upload_database_to_s3(convert_remotely=args.convert_remotely)
-        except Exception:
-            twitter_stream.logger.exception("Error!")
-        finally:
-            twitter_stream.save_logs(recreate_log_table=False)
-    elif args.command == "remote":
-        try:
-            twitter_stream = TwitterStream(config_bucket=args.config, logger_name="remote_track",
-                                           prod=args.prod, log_file=args.logfile)
-            twitter_stream.remote_track(filter_name=args.name, track=args.terms,
-                                        languages=args.languages, tweepy=args.tweepy)
-        except Exception:
-            twitter_stream.logger.exception("Error!")
-        finally:
-            twitter_stream.save_logs()
+    config = read_dict_from_s3_url(url=args.config)
+    logger = AthenaLogger(app_name="twitter_stream",
+                          s3_bucket=config['aws']['s3-admin'],
+                          athena_db=config['aws']['athena-admin'])
+    try:
+        twitter_stream = TwitterStream(twitter_filter=config['twitter_filter'],
+                                       credentials=config['twitter_credentials'],
+                                       s3_bucket=config['aws']['s3-data'],
+                                       athena_db=config['aws']['athena-data'])
+        twitter_stream.listen_to_tweets()
+        twitter_stream.save_to_s3()
+
+        twitter_filter = TwitterFilter(twitter_filter=config['twitter_filter'],
+                                       s3_bucket=config['aws']['s3-data'],
+                                       athena_db=config['aws']['athena-data'])
+        twitter_filter.save_to_s3()
+
+        twitter_stream.recreate_athena_table()
+        twitter_filter.recreate_athena_table()
+
+        total, used, free = shutil.disk_usage("/")
+        logging.info("Disk Usage: total: %.1f Gb - used: %.1f Gb - free: %.1f Gb",
+                     total / (2**30), used / (2**30), free / (2**30))
+    finally:
+        logger.save_to_s3()
+        logger.recreate_athena_table()
 
 
 if __name__ == '__main__':
