@@ -1,0 +1,38 @@
+{
+  "twitter_filter": {
+    "name": "pick_your_name",
+    "track": "word1,word2,word3,word4",
+    "languages": [
+      "en"
+    ]
+  },
+  "twitter_credentials": {
+    "odd_days": {
+      "consumer_key": "",
+      "consumer_secret": "",
+      "access_token": "",
+      "access_token_secret": ""
+    },
+    "even_days": {
+      "consumer_key": "",
+      "consumer_secret": "",
+      "access_token": "",
+      "access_token_secret": ""
+    }
+  },
+  "aws": {
+    "s3-admin": "",
+    "s3-data": "",
+    "athena-admin": "",
+    "athena-data": "",
+    "default_region": "us-west-2",
+    "key_name": "",
+    "security_group": "",
+    "iam": "",
+    "instance_type": "t3a.nano",
+    "volume_size": 15,
+    "name": "twitter_stream",
+    "init_script": "https://raw.githubusercontent.com/internet-scholar/twitter_stream/master/init_script.sh",
+    "ami": "ami-06f2f779464715dc5"
+  }
+}
