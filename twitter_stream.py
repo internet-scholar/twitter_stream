@@ -2,728 +2,13 @@ from datetime import datetime, time, timedelta
 import tweepy
 import json
 import sqlite3
-from internet_scholar import read_dict_from_s3_url, AthenaLogger, AthenaDatabase, compress, generate_orc_file
+from internet_scholar import read_dict_from_s3_url, AthenaLogger
 from pathlib import Path
 import argparse
 import logging
-import uuid
-import boto3
-import shutil
 
 
 num_exceptions = 0
-
-STRUCTURE_TWEET_ORC = """
-struct<
-    created_at: timestamp,
-    id: bigint,
-    id_str: string,
-    text: string,
-    source: string,
-    truncated: boolean,
-    in_reply_to_status_id: bigint,
-    in_reply_to_status_id_str: string,
-    in_reply_to_user_id: bigint,
-    in_reply_to_user_id_str: string,
-    in_reply_to_screen_name: string,
-    quoted_status_id: bigint,
-    quoted_status_id_str: string,
-    is_quote_status: boolean,
-    retweet_count: int,
-    favorite_count: int,
-    favorited: boolean,
-    retweeted: boolean,
-    possibly_sensitive: boolean,
-    filter_level: string,
-    lang: string,
-    user: struct<
-        id: bigint,
-        id_str: string,
-        name: string,
-        screen_name: string,
-        location: string,
-        url: string,
-        description: string,
-        protected: boolean,
-        verified: boolean,
-        followers_count: int,
-        friends_count: int,
-        listed_count: int,
-        favourites_count: int,
-        statuses_count: int,
-        created_at: timestamp,
-        profile_banner_url: string,
-        profile_image_url_https: string,
-        default_profile: boolean,
-        default_profile_image: boolean,
-        withheld_in_countries: array<string>,
-        withheld_scope: string
-    >,
-    coordinates: struct<
-        coordinates: array<float>,
-        type: string
-    >,
-    place: struct<
-        id: string,
-        url: string,
-        place_type: string,
-        name: string,
-        full_name: string,
-        country_code: string,
-        country: string,
-        bounding_box: struct<
-            coordinates: array<array<array<float>>>,
-            type: string
-        >
-    >,
-    entities: struct<
-        hashtags: array<
-            struct<
-                indices: array<smallint>,
-                text: string
-            >
-        >,
-        urls: array<
-            struct<
-                display_url: string,
-                expanded_url: string,
-                indices: array<smallint>,
-                url: string
-            >
-        >,
-        user_mentions: array<
-            struct<
-                id: bigint,
-                id_str: string,
-                indices: array<smallint>,
-                name: string,
-                screen_name: string
-            >
-        >,
-        symbols: array<
-            struct<
-                indices: array<smallint>,
-                text: string
-            >
-        >,
-        media: array<
-            struct<
-                display_url: string,
-                expanded_url: string,
-                id: bigint,
-                id_str: string,
-                indices: array<smallint>,
-                media_url: string,
-                media_url_https: string,
-                source_status_id: bigint,
-                source_status_id_str: string,
-                type: string,
-                url: string
-            >
-        >
-    >,
-    quoted_status: struct<
-        created_at: timestamp,
-        id: bigint,
-        id_str: string,
-        text: string,
-        source: string,
-        truncated: boolean,
-        in_reply_to_status_id: bigint,
-        in_reply_to_status_id_str: string,
-        in_reply_to_user_id: bigint,
-        in_reply_to_user_id_str: string,
-        in_reply_to_screen_name: string,
-        quoted_status_id: bigint,
-        quoted_status_id_str: string,
-        is_quote_status: boolean,
-        retweet_count: int,
-        favorite_count: int,
-        favorited: boolean,
-        retweeted: boolean,
-        possibly_sensitive: boolean,
-        filter_level: string,
-        lang: string,
-        user: struct<
-            id: bigint,
-            id_str: string,
-            name: string,
-            screen_name: string,
-            location: string,
-            url: string,
-            description: string,
-            protected: boolean,
-            verified: boolean,
-            followers_count: int,
-            friends_count: int,
-            listed_count: int,
-            favourites_count: int,
-            statuses_count: int,
-            created_at: timestamp,
-            profile_banner_url: string,
-            profile_image_url_https: string,
-            default_profile: boolean,
-            default_profile_image: boolean,
-            withheld_in_countries: array<string>,
-            withheld_scope: string
-        >,
-        coordinates: struct<
-            coordinates: array<float>,
-            type: string
-        >,
-        place: struct<
-            id: string,
-            url: string,
-            place_type: string,
-            name: string,
-            full_name: string,
-            country_code: string,
-            country: string,
-            bounding_box: struct<
-                coordinates: array<array<array<float>>>,
-                type: string
-            >
-        >,
-        entities: struct<
-            hashtags: array<
-                struct<
-                    indices: array<smallint>,
-                    text: string
-                >
-            >,
-            urls: array<
-                struct<
-                    display_url: string,
-                    expanded_url: string,
-                    indices: array<smallint>,
-                    url: string
-                >
-            >,
-            user_mentions: array<
-                struct<
-                    id: bigint,
-                    id_str: string,
-                    indices: array<smallint>,
-                    name: string,
-                    screen_name: string
-                >
-            >,
-            symbols: array<
-                struct<
-                    indices: array<smallint>,
-                    text: string
-                >
-            >,
-            media: array<
-                struct<
-                    display_url: string,
-                    expanded_url: string,
-                    id: bigint,
-                    id_str: string,
-                    indices: array<smallint>,
-                    media_url: string,
-                    media_url_https: string,
-                    source_status_id: bigint,
-                    source_status_id_str: string,
-                    type: string,
-                    url: string
-                >
-            >
-        >
-    >,
-    retweeted_status: struct<
-        created_at: timestamp,
-        id: bigint,
-        id_str: string,
-        text: string,
-        source: string,
-        truncated: boolean,
-        in_reply_to_status_id: bigint,
-        in_reply_to_status_id_str: string,
-        in_reply_to_user_id: bigint,
-        in_reply_to_user_id_str: string,
-        in_reply_to_screen_name: string,
-        quoted_status_id: bigint,
-        quoted_status_id_str: string,
-        is_quote_status: boolean,
-        retweet_count: int,
-        favorite_count: int,
-        favorited: boolean,
-        retweeted: boolean,
-        possibly_sensitive: boolean,
-        filter_level: string,
-        lang: string,
-        user: struct<
-            id: bigint,
-            id_str: string,
-            name: string,
-            screen_name: string,
-            location: string,
-            url: string,
-            description: string,
-            protected: boolean,
-            verified: boolean,
-            followers_count: int,
-            friends_count: int,
-            listed_count: int,
-            favourites_count: int,
-            statuses_count: int,
-            created_at: timestamp,
-            profile_banner_url: string,
-            profile_image_url_https: string,
-            default_profile: boolean,
-            default_profile_image: boolean,
-            withheld_in_countries: array<string>,
-            withheld_scope: string
-        >,
-        coordinates: struct<
-            coordinates: array<float>,
-            type: string
-        >,
-        place: struct<
-            id: string,
-            url: string,
-            place_type: string,
-            name: string,
-            full_name: string,
-            country_code: string,
-            country: string,
-            bounding_box: struct<
-                coordinates: array<array<array<float>>>,
-                type: string
-            >
-        >,
-        entities: struct<
-            hashtags: array<
-                struct<
-                    indices: array<smallint>,
-                    text: string
-                >
-            >,
-            urls: array<
-                struct<
-                    display_url: string,
-                    expanded_url: string,
-                    indices: array<smallint>,
-                    url: string
-                >
-            >,
-            user_mentions: array<
-                struct<
-                    id: bigint,
-                    id_str: string,
-                    indices: array<smallint>,
-                    name: string,
-                    screen_name: string
-                >
-            >,
-            symbols: array<
-                struct<
-                    indices: array<smallint>,
-                    text: string
-                >
-            >,
-            media: array<
-                struct<
-                    display_url: string,
-                    expanded_url: string,
-                    id: bigint,
-                    id_str: string,
-                    indices: array<smallint>,
-                    media_url: string,
-                    media_url_https: string,
-                    source_status_id: bigint,
-                    source_status_id_str: string,
-                    type: string,
-                    url: string
-                >
-            >
-        >
-    >
->
-"""
-
-STRUCTURE_TWEET_ATHENA = """
-created_at timestamp,
-id bigint,
-id_str string,
-text string,
-source string,
-truncated boolean,
-in_reply_to_status_id bigint,
-in_reply_to_status_id_str string,
-in_reply_to_user_id bigint,
-in_reply_to_user_id_str string,
-in_reply_to_screen_name string,
-quoted_status_id bigint,
-quoted_status_id_str string,
-is_quote_status boolean,
-retweet_count int,
-favorite_count int,
-favorited boolean,
-retweeted boolean,
-possibly_sensitive boolean,
-filter_level string,
-lang string,
-user struct<
-    id: bigint,
-    id_str: string,
-    name: string,
-    screen_name: string,
-    location: string,
-    url: string,
-    description: string,
-    protected: boolean,
-    verified: boolean,
-    followers_count: int,
-    friends_count: int,
-    listed_count: int,
-    favourites_count: int,
-    statuses_count: int,
-    created_at: timestamp,
-    profile_banner_url: string,
-    profile_image_url_https: string,
-    default_profile: boolean,
-    default_profile_image: boolean,
-    withheld_in_countries: array<string>,
-    withheld_scope: string
->,
-coordinates struct<
-    coordinates: array<float>,
-    type: string
->,
-place struct<
-    id: string,
-    url: string,
-    place_type: string,
-    name: string,
-    full_name: string,
-    country_code: string,
-    country: string,
-    bounding_box: struct<
-        coordinates: array<array<array<float>>>,
-        type: string
-    >
->,
-entities struct<
-    hashtags: array<
-        struct<
-            indices: array<smallint>,
-            text: string
-        >
-    >,
-    urls: array<
-        struct<
-            display_url: string,
-            expanded_url: string,
-            indices: array<smallint>,
-            url: string
-        >
-    >,
-    user_mentions: array<
-        struct<
-            id: bigint,
-            id_str: string,
-            indices: array<smallint>,
-            name: string,
-            screen_name: string
-        >
-    >,
-    symbols: array<
-        struct<
-            indices: array<smallint>,
-            text: string
-        >
-    >,
-    media: array<
-        struct<
-            display_url: string,
-            expanded_url: string,
-            id: bigint,
-            id_str: string,
-            indices: array<smallint>,
-            media_url: string,
-            media_url_https: string,
-            source_status_id: bigint,
-            source_status_id_str: string,
-            type: string,
-            url: string
-        >
-    >
->,
-quoted_status struct<
-    created_at: timestamp,
-    id: bigint,
-    id_str: string,
-    text: string,
-    source: string,
-    truncated: boolean,
-    in_reply_to_status_id: bigint,
-    in_reply_to_status_id_str: string,
-    in_reply_to_user_id: bigint,
-    in_reply_to_user_id_str: string,
-    in_reply_to_screen_name: string,
-    quoted_status_id: bigint,
-    quoted_status_id_str: string,
-    is_quote_status: boolean,
-    retweet_count: int,
-    favorite_count: int,
-    favorited: boolean,
-    retweeted: boolean,
-    possibly_sensitive: boolean,
-    filter_level: string,
-    lang: string,
-    user: struct<
-        id: bigint,
-        id_str: string,
-        name: string,
-        screen_name: string,
-        location: string,
-        url: string,
-        description: string,
-        protected: boolean,
-        verified: boolean,
-        followers_count: int,
-        friends_count: int,
-        listed_count: int,
-        favourites_count: int,
-        statuses_count: int,
-        created_at: timestamp,
-        profile_banner_url: string,
-        profile_image_url_https: string,
-        default_profile: boolean,
-        default_profile_image: boolean,
-        withheld_in_countries: array<string>,
-        withheld_scope: string
-    >,
-    coordinates: struct<
-        coordinates: array<float>,
-        type: string
-    >,
-    place: struct<
-        id: string,
-        url: string,
-        place_type: string,
-        name: string,
-        full_name: string,
-        country_code: string,
-        country: string,
-        bounding_box: struct<
-            coordinates: array<array<array<float>>>,
-            type: string
-        >
-    >,
-    entities: struct<
-        hashtags: array<
-            struct<
-                indices: array<smallint>,
-                text: string
-            >
-        >,
-        urls: array<
-            struct<
-                display_url: string,
-                expanded_url: string,
-                indices: array<smallint>,
-                url: string
-            >
-        >,
-        user_mentions: array<
-            struct<
-                id: bigint,
-                id_str: string,
-                indices: array<smallint>,
-                name: string,
-                screen_name: string
-            >
-        >,
-        symbols: array<
-            struct<
-                indices: array<smallint>,
-                text: string
-            >
-        >,
-        media: array<
-            struct<
-                display_url: string,
-                expanded_url: string,
-                id: bigint,
-                id_str: string,
-                indices: array<smallint>,
-                media_url: string,
-                media_url_https: string,
-                source_status_id: bigint,
-                source_status_id_str: string,
-                type: string,
-                url: string
-            >
-        >
-    >
->,
-retweeted_status struct<
-    created_at: timestamp,
-    id: bigint,
-    id_str: string,
-    text: string,
-    source: string,
-    truncated: boolean,
-    in_reply_to_status_id: bigint,
-    in_reply_to_status_id_str: string,
-    in_reply_to_user_id: bigint,
-    in_reply_to_user_id_str: string,
-    in_reply_to_screen_name: string,
-    quoted_status_id: bigint,
-    quoted_status_id_str: string,
-    is_quote_status: boolean,
-    retweet_count: int,
-    favorite_count: int,
-    favorited: boolean,
-    retweeted: boolean,
-    possibly_sensitive: boolean,
-    filter_level: string,
-    lang: string,
-    user: struct<
-        id: bigint,
-        id_str: string,
-        name: string,
-        screen_name: string,
-        location: string,
-        url: string,
-        description: string,
-        protected: boolean,
-        verified: boolean,
-        followers_count: int,
-        friends_count: int,
-        listed_count: int,
-        favourites_count: int,
-        statuses_count: int,
-        created_at: timestamp,
-        profile_banner_url: string,
-        profile_image_url_https: string,
-        default_profile: boolean,
-        default_profile_image: boolean,
-        withheld_in_countries: array<string>,
-        withheld_scope: string
-    >,
-    coordinates: struct<
-        coordinates: array<float>,
-        type: string
-    >,
-    place: struct<
-        id: string,
-        url: string,
-        place_type: string,
-        name: string,
-        full_name: string,
-        country_code: string,
-        country: string,
-        bounding_box: struct<
-            coordinates: array<array<array<float>>>,
-            type: string
-        >
-    >,
-    entities: struct<
-        hashtags: array<
-            struct<
-                indices: array<smallint>,
-                text: string
-            >
-        >,
-        urls: array<
-            struct<
-                display_url: string,
-                expanded_url: string,
-                indices: array<smallint>,
-                url: string
-            >
-        >,
-        user_mentions: array<
-            struct<
-                id: bigint,
-                id_str: string,
-                indices: array<smallint>,
-                name: string,
-                screen_name: string
-            >
-        >,
-        symbols: array<
-            struct<
-                indices: array<smallint>,
-                text: string
-            >
-        >,
-        media: array<
-            struct<
-                display_url: string,
-                expanded_url: string,
-                id: bigint,
-                id_str: string,
-                indices: array<smallint>,
-                media_url: string,
-                media_url_https: string,
-                source_status_id: bigint,
-                source_status_id_str: string,
-                type: string,
-                url: string
-            >
-        >
-    >
->
-"""
-
-ATHENA_CREATE_TWITTER_STREAM = """
-CREATE EXTERNAL TABLE IF NOT EXISTS twitter_stream (
-{structure}
-)
-PARTITIONED BY (filter String, creation_date String)
-STORED AS ORC
-LOCATION '{bucket}'
-tblproperties ("orc.compress"="ZLIB");
-"""
-
-ATHENA_CREATE_TWITTER_STREAM_RAW = """
-CREATE EXTERNAL TABLE IF NOT EXISTS twitter_stream_raw (
-{structure}
-)
-PARTITIONED BY (filter String, creation_date String)
-ROW FORMAT SERDE 'org.openx.data.jsonserde.JsonSerDe'
-WITH SERDEPROPERTIES (
-  'serialization.format' = '1',
-  'ignore.malformed.json' = 'true'
-) LOCATION '{bucket}'
-TBLPROPERTIES ('has_encrypted_data'='false');
-"""
-
-
-class TwitterFilter:
-    __CREATE_ATHENA_TABLE = """
-    CREATE EXTERNAL TABLE if not exists twitter_filter (
-      name string,
-      track string,
-      languages array<string>
-    )
-    ROW FORMAT SERDE 'org.openx.data.jsonserde.JsonSerDe'
-    LOCATION 's3://{s3_location}/twitter_filter/'
-    """
-
-    def __init__(self, twitter_filter, s3_bucket, athena_db):
-        self.filter = twitter_filter
-        self.s3_bucket = s3_bucket
-        self.athena_db = athena_db
-
-    def save_to_s3(self):
-        s3_filename = "twitter_filter/{filter_name}.json".format(filter_name=self.filter['name'])
-        s3 = boto3.resource('s3')
-        logging.info("Save twitter filter parameters to bucket %s at %s", self.s3_bucket, s3_filename)
-        s3.Object(self.s3_bucket, s3_filename).put(Body=json.dumps(self.filter))
-
-    def recreate_athena_table(self):
-        logging.info("Create Athena instance.")
-        athena = AthenaDatabase(s3_output=self.s3_bucket, database=self.athena_db)
-        logging.info("Delete table twitter_filter if exists")
-        athena.query_athena_and_wait(query_string='DROP TABLE if exists twitter_filter')
-        logging.info("Recreate table twitter_filter on %s", self.s3_bucket)
-        athena.query_athena_and_wait(query_string=self.__CREATE_ATHENA_TABLE.format(s3_location=self.s3_bucket))
 
 
 class TwitterListener(tweepy.StreamListener):
@@ -756,29 +41,52 @@ class TwitterStream:
     MAX_ATTEMPTS_TWITTER_STREAM = 10
 
     __CREATE_TABLE_TWEET = """
-    create table if not exists tweet
+    create table tweet
         (tweet_id string,
         tweet_json string)
     """
 
-    __SELECT_INDIVIDUAL_TWEETS = """
+    __CREATE_TABLE_UNIQUE_TWEET = """
+    create table unique_tweet
+        (tweet_id string primary key,
+        tweet_json string)
+    """
+
+    __INSERT_UNIQUE_TWEET = """
+    insert or ignore into unique_tweet
+    (tweet_id, tweet_json)
     select tweet_id, tweet_json
     from tweet
-    where rowid in (
-        select min(rowid)
-        from tweet
-        group by tweet_id
-    )
+    """
+
+    __CREATE_TABLE_ATHENA_PREFIX = """
+    create table athena_prefix
+        (filter string,
+        creation_date string)
+    """
+
+    __INSERT_ATHENA_PREFIX = """
+    insert into athena_prefix
+    (filter, creation_date)
+    values (?, ?)
+    """
+
+    __SELECT_UNIQUE_TWEETS = """
+    select tweet_json
+    from unique_tweet
     order by tweet_id
     """
 
-    def __init__(self, twitter_filter, credentials, s3_bucket, athena_db):
+    def __init__(self, twitter_filter, credentials):
         logging.info('Create TwitterStream object')
 
         # The default options for the time frame are below... in case they are changed for debugging purposes
-        start_saving_time = time(hour=0, minute=0, second=0, microsecond=0)
-        duration_saving = timedelta(days=1)
-        delay_end = timedelta(minutes=1)
+        start_saving_time = time(hour=18, minute=53, second=0, microsecond=0)
+        duration_saving = timedelta(minutes=1)
+        delay_end = timedelta(seconds=30)
+        # start_saving_time = time(hour=0, minute=0, second=0, microsecond=0)
+        # duration_saving = timedelta(days=1)
+        # delay_end = timedelta(minutes=1)
 
         self.start_saving = datetime.combine(datetime.utcnow().date(), start_saving_time)
         if self.start_saving <= datetime.utcnow():
@@ -789,9 +97,6 @@ class TwitterStream:
                      self.start_saving, self.end_saving, self.end_execution)
 
         self.creation_date = self.start_saving.strftime("%Y-%m-%d")
-
-        self.s3_bucket = s3_bucket
-        self.athena_db = athena_db
 
         which_credentials = int(datetime.utcnow().timestamp() / 86400) % 2
         if which_credentials == 1:
@@ -815,6 +120,9 @@ class TwitterStream:
         self.database = sqlite3.connect(str(self.db_name), isolation_level=None)
         logging.info("Create table for Tweets if not exist with query: %s", self.__CREATE_TABLE_TWEET)
         self.database.execute(self.__CREATE_TABLE_TWEET)
+        self.database.execute(self.__CREATE_TABLE_UNIQUE_TWEET)
+        self.database.execute(self.__CREATE_TABLE_ATHENA_PREFIX)
+        self.database.execute(self.__INSERT_ATHENA_PREFIX, (self.filter['name'], self.creation_date))
         self.database.close()
 
     def __recursive_listen(self):
@@ -858,19 +166,22 @@ class TwitterStream:
                         for result in self.__gen_dict_extract(key, d):
                             yield result
 
-    def save_to_s3(self):
-        logging.info("BEGIN: Save twitter_stream to S3")
+    def prepare_database(self):
+        logging.info("BEGIN: prepare database for conversion")
+
         logging.info("Open database again: %s", self.db_name)
         self.database = sqlite3.connect(str(self.db_name), isolation_level=None)
         self.database.row_factory = sqlite3.Row
-        cursor_records = self.database.cursor()
+
+        self.database.execute(self.__INSERT_UNIQUE_TWEET)
 
         json_file = Path(Path(__file__).parent, 'tmp', 'twitter_stream.json')
         logging.info("Create JSON file %s", json_file)
         with open(json_file, 'w') as json_writer:
             logging.info("Execute query to eliminate duplicated tweets and sort by ID: %s",
-                         self.__SELECT_INDIVIDUAL_TWEETS)
-            cursor_records.execute(self.__SELECT_INDIVIDUAL_TWEETS)
+                         self.__SELECT_UNIQUE_TWEETS)
+            cursor_records = self.database.cursor()
+            cursor_records.execute(self.__SELECT_UNIQUE_TWEETS)
             logging.info("Fill JSON file with tweets")
             for record in cursor_records:
                 # standardize all dates to PrestoDB/Athena format
@@ -882,59 +193,10 @@ class TwitterStream:
                                                                                       '%a %b %d %H:%M:%S +0000 %Y'),
                                                                     '%Y-%m-%d %H:%M:%S'),
                                                   1)
-                json_writer.write(json_line.rstrip("\n"))
+                json_writer.write("{}\n".format(json_line.strip("\r\n")))
 
-        logging.info("Close database to release memory resources")
         self.database.close()
-
-        s3 = boto3.resource('s3')
-
-        logging.info("Compress JSON file before uploading to S3")
-        bz2_file = compress(json_file, delete_original=False)
-        s3_filename = "twitter_stream_raw/filter={}/creation_date={}/{}.json.bz2".format(self.filter['name'],
-                                                                                         self.creation_date,
-                                                                                         uuid.uuid4().hex)
-        logging.info("Upload file %s to bucket %s at %s", bz2_file, self.s3_bucket, s3_filename)
-        s3.Bucket(self.s3_bucket).upload_file(str(bz2_file), s3_filename)
-
-        orc_file = Path(Path(__file__).parent, 'tmp', 'twitter_stream.orc')
-        logging.info("Convert JSON file %s to ORC file %s", json_file, orc_file)
-        generate_orc_file(filename_json=str(json_file), filename_orc=str(orc_file), structure=STRUCTURE_TWEET_ORC)
-        s3_filename = "twitter_stream/filter={}/creation_date={}/{}.orc".format(self.filter['name'],
-                                                                                self.creation_date,
-                                                                                uuid.uuid4().hex)
-        logging.info("Upload file %s to bucket %s at %s", orc_file, self.s3_bucket, s3_filename)
-        s3.Bucket(self.s3_bucket).upload_file(str(orc_file), s3_filename)
-
-        logging.info("File sizes - SQLite: %.1f Mb - JSON: %.1f Mb - BZIP2: %.1f Mb - ORC: %.1f Mb",
-                     self.db_name.stat().st_size / 2**20,
-                     json_file.stat().st_size / 2**20,
-                     bz2_file.stat().st_size / 2**20,
-                     orc_file.stat().st_size / 2**20)
-        logging.info("END: Save twitter_stream to S3")
-
-    def recreate_athena_table(self):
-        logging.info("BEGIN: Recreate Athena tables for twitter_stream")
-        athena = AthenaDatabase(s3_output=self.s3_bucket, database=self.athena_db)
-
-        logging.info("Drop tables if they exist")
-        athena.query_athena_and_wait(query_string="drop table if exists twitter_stream")
-        athena.query_athena_and_wait(query_string="drop table if exists twitter_stream_raw")
-
-        logging.info("Recreate tables")
-        athena.query_athena_and_wait(
-            query_string=ATHENA_CREATE_TWITTER_STREAM.format(
-                structure=STRUCTURE_TWEET_ATHENA,
-                bucket="s3://{}/twitter_stream/".format(self.s3_bucket)))
-        athena.query_athena_and_wait(
-            query_string=ATHENA_CREATE_TWITTER_STREAM_RAW.format(
-                structure=STRUCTURE_TWEET_ATHENA,
-                bucket="s3://{}/twitter_stream_raw/".format(self.s3_bucket)))
-
-        logging.info("Add new partitions")
-        athena.query_athena_and_wait(query_string="MSCK REPAIR TABLE twitter_stream")
-        athena.query_athena_and_wait(query_string="MSCK REPAIR TABLE twitter_stream_raw")
-        logging.info("END: Recreate Athena tables for twitter_stream")
+        logging.info("END: prepare database for conversion")
 
 
 def main():
@@ -948,26 +210,11 @@ def main():
                           athena_db=config['aws']['athena-admin'])
     try:
         twitter_stream = TwitterStream(twitter_filter=config['twitter_filter'],
-                                       credentials=config['twitter_credentials'],
-                                       s3_bucket=config['aws']['s3-data'],
-                                       athena_db=config['aws']['athena-data'])
+                                       credentials=config['twitter_credentials'])
         twitter_stream.listen_to_tweets()
-        twitter_stream.save_to_s3()
-
-        twitter_filter = TwitterFilter(twitter_filter=config['twitter_filter'],
-                                       s3_bucket=config['aws']['s3-data'],
-                                       athena_db=config['aws']['athena-data'])
-        twitter_filter.save_to_s3()
-
-        twitter_stream.recreate_athena_table()
-        twitter_filter.recreate_athena_table()
-
-        total, used, free = shutil.disk_usage("/")
-        logging.info("Disk Usage: total: %.1f Gb - used: %.1f Gb - free: %.1f Gb",
-                     total / (2**30), used / (2**30), free / (2**30))
+        twitter_stream.prepare_database()
     finally:
         logger.save_to_s3()
-        logger.recreate_athena_table()
 
 
 if __name__ == '__main__':
