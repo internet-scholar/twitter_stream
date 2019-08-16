@@ -1,6 +1,6 @@
 import argparse
 import uuid
-from internet_scholar import AthenaLogger, read_dict_from_s3_url, AthenaDatabase, compress
+from internet_scholar import AthenaLogger, read_dict_from_s3_url, AthenaDatabase
 import logging
 import shutil
 import boto3
