@@ -81,7 +81,7 @@ class TwitterStream:
         logging.info('Create TwitterStream object')
 
         # The default options for the time frame are below... in case they are changed for debugging purposes
-        start_saving_time = time(hour=18, minute=53, second=0, microsecond=0)
+        start_saving_time = time(hour=19, minute=3, second=0, microsecond=0)
         duration_saving = timedelta(minutes=1)
         delay_end = timedelta(seconds=30)
         # start_saving_time = time(hour=0, minute=0, second=0, microsecond=0)
