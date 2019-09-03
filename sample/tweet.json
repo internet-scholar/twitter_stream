@@ -1,50 +1,50 @@
 {
-  "created_at": "2019-08-23 00:00:00",
-  "id": 1164688702150512640,
-  "id_str": "1164688702150512640",
-  "text": "RT @CarlaZambelli17: No meio de uma gigantesca campanha internacional de difama\u00e7\u00e3o contra o Brasil, eis que a REDE - o partido que queria u\u2026",
-  "source": "<a href=\"http://twitter.com/download/android\" rel=\"nofollow\">Twitter for Android</a>",
-  "truncated": false,
-  "in_reply_to_status_id": 1164688308531806213,
-  "in_reply_to_status_id_str": "1164688308531806213",
-  "in_reply_to_user_id": 250202811,
-  "in_reply_to_user_id_str": "250202811",
-  "in_reply_to_screen_name": "Hugorysdyk",
+  "created_at": "2019-08-23 23:59:59",
+  "id": 1165051089365979136,
+  "id_str": "1165051089365979136",
+  "text": "\ud83e\udd76\ud83e\udd23 \nN\u00e3o vamos perder o acordo do com\u00e9rcio\ud83c\udf33\ud83d\udca8\ud83d\udd25 \nParab\u00e9ns @jairbolsonaro",
+  "source": "<a href=\"https://zapier.com/\" rel=\"nofollow\">Zapier.com</a>",
+  "truncated": true,
+  "in_reply_to_status_id": 1165050786428178434,
+  "in_reply_to_status_id_str": "983165383271174144",
+  "in_reply_to_user_id": 1165007433816846336,
+  "in_reply_to_user_id_str": "999969143624433664",
+  "in_reply_to_screen_name": "zxxd24y",
   "user": {
-    "id": 1012042400880001025,
-    "id_str": "1012042400880001025",
-    "name": "Sandra Henriques\ud83c\udde7\ud83c\uddf7\ud83c\udde7\ud83c\uddf7",
-    "screen_name": "MariaSandraHen2",
-    "location": "Ponta da Praia, Santos",
-    "url": "http://www.correio.com.br",
-    "description": "As pessoas tem medo de mudan\u00e7a \ud83d\ude0e\nJ\u00e1 eu tenho medo que as coisas nunca mude \u2764",
-    "translator_type": "none",
+    "id": 1165047811718766601,
+    "id_str": "999999891899404290",
+    "name": "\udb40\udc02\udb40\udc02 \udb40\udc02\udb40\udc02\udb40\udc02\udb40\udc02\udb40\udc02\udb40\udc02 \udb40\udc02\udb40\udc02\udb40\udc02\udb40\udc02\udb40\udc02\udb40\udc02\udb40\udc02\udb40\udc02\udb40\udc02\udb40\udc02 \udb40\udc02\udb40\udc02\udb40\udc02\udb40\udc02\udb40\udc02",
+    "screen_name": "zzzyas_",
+    "location": "\ud83e\udddc\ud83c\udffd\u200d\u2640",
+    "url": "https://zonabissal.com",
+    "description": "\ud83e\uddfd kulustursun@gmail.com \ud83e\uddfd",
+    "translator_type": "regular",
     "protected": false,
-    "verified": false,
-    "followers_count": 558,
-    "friends_count": 1044,
-    "listed_count": 0,
-    "favourites_count": 35377,
-    "statuses_count": 12216,
-    "created_at": "2018-06-27 18:38:05",
+    "verified": true,
+    "followers_count": 17541579,
+    "friends_count": 1002846,
+    "listed_count": 32490,
+    "favourites_count": 1542501,
+    "statuses_count": 3594133,
+    "created_at": "2019-08-23 23:47:16",
     "utc_offset": null,
     "time_zone": null,
-    "geo_enabled": false,
+    "geo_enabled": true,
     "lang": null,
     "contributors_enabled": false,
-    "is_translator": false,
-    "profile_background_color": "F5F8FA",
-    "profile_background_image_url": "",
-    "profile_background_image_url_https": "",
-    "profile_background_tile": false,
-    "profile_link_color": "1DA1F2",
-    "profile_sidebar_border_color": "C0DEED",
-    "profile_sidebar_fill_color": "DDEEF6",
-    "profile_text_color": "333333",
+    "is_translator": true,
+    "profile_background_color": "FFFFFF",
+    "profile_background_image_url": "http://abs.twimg.com/images/themes/theme9/bg.gif",
+    "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme9/bg.gif",
+    "profile_background_tile": true,
+    "profile_link_color": "FFFFFF",
+    "profile_sidebar_border_color": "FFFFFF",
+    "profile_sidebar_fill_color": "FFFFFF",
+    "profile_text_color": "FFFFFF",
     "profile_use_background_image": true,
-    "profile_image_url": "http://pbs.twimg.com/profile_images/1151660891290636288/Utvr8LlC_normal.jpg",
-    "profile_image_url_https": "https://pbs.twimg.com/profile_images/1151660891290636288/Utvr8LlC_normal.jpg",
-    "profile_banner_url": "https://pbs.twimg.com/profile_banners/1012042400880001025/1544201318",
+    "profile_image_url": "http://pbs.twimg.com/profile_images/999993789333884928/_vmO-Y9W_normal.jpg",
+    "profile_image_url_https": "https://pbs.twimg.com/profile_images/999993789333884928/_vmO-Y9W_normal.jpg",
+    "profile_banner_url": "https://pbs.twimg.com/profile_banners/999999891899404290/1562020596",
     "default_profile": true,
     "default_profile_image": false,
     "following": null,
@@ -54,29 +54,29 @@
   "geo": {
     "type": "Point",
     "coordinates": [
-      -3.08367653
+      42.3577
     ]
   },
   "coordinates": {
     "type": "Point",
     "coordinates": [
-      -60.02205107
+      42.3577
     ]
   },
   "place": {
-    "id": "f82af1e2ebdb0f2e",
-    "url": "https://api.twitter.com/1.1/geo/id/f82af1e2ebdb0f2e.json",
-    "place_type": "admin",
-    "name": "Santa Catarina",
-    "full_name": "Santa Catarina, Brazil",
-    "country_code": "BR",
-    "country": "Brazil",
+    "id": "ffbca1b16b50edbb",
+    "url": "https://api.twitter.com/1.1/geo/id/ffbca1b16b50edbb.json",
+    "place_type": "poi",
+    "name": "\uac15\ub0a8\uad6c",
+    "full_name": "\ub300\ud55c\ubbfc\uad6d \uac15\ub0a8\uad6c",
+    "country_code": "US",
+    "country": "\ub300\ud55c\ubbfc\uad6d",
     "bounding_box": {
       "type": "Polygon",
       "coordinates": [
         [
           [
-            -53.8371
+            153.31787
           ]
         ]
       ]
@@ -85,53 +85,53 @@
   },
   "contributors": null,
   "retweeted_status": {
-    "created_at": "2019-08-22 22:18:38",
-    "id": 1164663194750767105,
-    "id_str": "1164663194750767105",
-    "text": "No meio de uma gigantesca campanha internacional de difama\u00e7\u00e3o contra o Brasil, eis que a REDE - o partido que queri\u2026 https://t.co/bND41LmHVX",
-    "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
+    "created_at": "2019-08-23 23:59:30",
+    "id": 1165050964577009665,
+    "id_str": "997497920764174336",
+    "text": "\ud83e\udd70Novas amizades do pop: \n\u2764\ufe0fBolsonaro ,Toffoli e Gilmar Mendes \u2764\ufe0f https://t.co/QYLt0KSZ6T",
+    "source": "<a href=\"https://zapier.com/\" rel=\"nofollow\">Zapier.com</a>",
     "truncated": true,
-    "in_reply_to_status_id": 1164364636659048448,
-    "in_reply_to_status_id_str": "1164364636659048448",
-    "in_reply_to_user_id": 1111882691484491776,
-    "in_reply_to_user_id_str": "1111882691484491776",
-    "in_reply_to_screen_name": "Maalves44573009",
+    "in_reply_to_status_id": 1165049621879689218,
+    "in_reply_to_status_id_str": "978700658298761217",
+    "in_reply_to_user_id": 1163836807986987008,
+    "in_reply_to_user_id_str": "999762786342391809",
+    "in_reply_to_screen_name": "zotam2",
     "user": {
-      "id": 975127727501185025,
-      "id_str": "975127727501185025",
-      "name": "Carla Zambelli",
-      "screen_name": "CarlaZambelli17",
-      "location": "S\u00e3o Paulo, Brasil",
-      "url": "https://www.facebook.com/ZambelliOficial",
-      "description": "Deputada Federal pelo PSL-SP.\nEstou concorrendo ao Pr\u00eamio Congresso em Foco.\nVOTEM! https://premio.congressoemfoco.com.br/polls/free/25",
-      "translator_type": "none",
+      "id": 1165032879090556928,
+      "id_str": "999998164781490177",
+      "name": "\ud83e\uddf8\u2744",
+      "screen_name": "zzzgaleno",
+      "location": "\ud83e\uddda\u200d\u2640\ufe0f",
+      "url": "https://zonabissal.com",
+      "description": "\ud83e\uddf3 viajante e concurseiro nas horas vagas",
+      "translator_type": "regular",
       "protected": false,
       "verified": true,
-      "followers_count": 274314,
-      "friends_count": 207,
-      "listed_count": 402,
-      "favourites_count": 64034,
-      "statuses_count": 8303,
-      "created_at": "2018-03-17 21:52:22",
+      "followers_count": 17542119,
+      "friends_count": 406927,
+      "listed_count": 44545,
+      "favourites_count": 563837,
+      "statuses_count": 2033034,
+      "created_at": "2019-08-23 22:47:49",
       "utc_offset": null,
       "time_zone": null,
       "geo_enabled": true,
       "lang": null,
       "contributors_enabled": false,
-      "is_translator": false,
-      "profile_background_color": "000000",
-      "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
-      "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
-      "profile_background_tile": false,
-      "profile_link_color": "1B95E0",
-      "profile_sidebar_border_color": "000000",
-      "profile_sidebar_fill_color": "000000",
-      "profile_text_color": "000000",
-      "profile_use_background_image": false,
-      "profile_image_url": "http://pbs.twimg.com/profile_images/1160337574180904966/b4QHWam3_normal.jpg",
-      "profile_image_url_https": "https://pbs.twimg.com/profile_images/1160337574180904966/b4QHWam3_normal.jpg",
-      "profile_banner_url": "https://pbs.twimg.com/profile_banners/975127727501185025/1565481327",
-      "default_profile": false,
+      "is_translator": true,
+      "profile_background_color": "FFFFFF",
+      "profile_background_image_url": "http://abs.twimg.com/images/themes/theme9/bg.gif",
+      "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme9/bg.gif",
+      "profile_background_tile": true,
+      "profile_link_color": "FFFFFF",
+      "profile_sidebar_border_color": "FFFFFF",
+      "profile_sidebar_fill_color": "FFFFFF",
+      "profile_text_color": "FFFFFF",
+      "profile_use_background_image": true,
+      "profile_image_url": "http://pbs.twimg.com/profile_images/999983249228292097/PyL2qw4l_normal.jpg",
+      "profile_image_url_https": "https://pbs.twimg.com/profile_images/999983249228292097/PyL2qw4l_normal.jpg",
+      "profile_banner_url": "https://pbs.twimg.com/profile_banners/999998164781490177/1565653626",
+      "default_profile": true,
       "default_profile_image": false,
       "following": null,
       "follow_request_sent": null,
@@ -140,29 +140,29 @@
     "geo": {
       "type": "Point",
       "coordinates": [
-        -15.8019015
+        42.3577
       ]
     },
     "coordinates": {
       "type": "Point",
       "coordinates": [
-        -47.861802
+        42.3577
       ]
     },
     "place": {
-      "id": "4029837e46e8e369",
-      "url": "https://api.twitter.com/1.1/geo/id/4029837e46e8e369.json",
-      "place_type": "city",
-      "name": "Nova Igua\u00e7u",
-      "full_name": "Nova Igua\u00e7u, Brasil",
-      "country_code": "BR",
-      "country": "Brasil",
+      "id": "fe493fecfdccaf98",
+      "url": "https://api.twitter.com/1.1/geo/id/fe493fecfdccaf98.json",
+      "place_type": "poi",
+      "name": "\uac15\ub0a8\uad6c",
+      "full_name": "\ub300\ud55c\ubbfc\uad6d \uac15\ub0a8\uad6c",
+      "country_code": "US",
+      "country": "\ub300\ud55c\ubbfc\uad6d",
       "bounding_box": {
         "type": "Polygon",
         "coordinates": [
           [
             [
-              -43.681932
+              153.997697
             ]
           ]
         ]
@@ -170,86 +170,86 @@
       "attributes": {}
     },
     "contributors": null,
-    "is_quote_status": false,
+    "is_quote_status": true,
     "extended_tweet": {
-      "full_text": "No meio de uma gigantesca campanha internacional de difama\u00e7\u00e3o contra o Brasil, eis que a REDE - o partido que queria uma CPI contra o Ministro Moro - quer derrubar o Ministro @rsallesmma.\n\nAli\u00e1s, a REDE j\u00e1 desistiu de derrubar a MP que ECONOMIZA PAPEL?\n\n#SomosTodosRicardoSalles",
+      "full_text": "\ud83e\udd23\ud83e\udd23\ud83e\udd23 Sigam a linha e vejam a mat\u00e9ria, IMPERD\u00cdVEL.\n\nEpis\u00f3dio de hoje:\n\nDesmascarando a esquerda pela 13.210.293.454.882 vez.\n\n(Nenhum desmame ocorre sem choro.)\n\n#SomosTodosRicardoSalles https://t.co/LOaaU41zuw",
       "display_text_range": [
-        0
+        904
       ],
       "entities": {
         "hashtags": [
           {
-            "text": "SomosTodosRicardoSalles",
+            "text": "\u00f3dio",
             "indices": [
-              254
+              867
             ]
           }
         ],
         "urls": [
           {
-            "url": "https://t.co/cNinCuDJfa",
-            "expanded_url": "https://sustentabilidade.estadao.com.br/noticias/geral,fundo-amazonia-paga-de-camisetas-dos-brigadistas-a-caminhoes-do-ibama,70002977354?utm_source=estadao:twitter&utm_medium=link",
-            "display_url": "sustentabilidade.estadao.com.br/noticias/geral\u2026",
+            "url": "https://t.co/zzKq29jZkn",
+            "expanded_url": "https://zapbolsonaro.com/coletiva-de-bolsonaro-em-rede-nacional-hoje-23-08-as-2030h-horario-de-brasilia/",
+            "display_url": "\u2026theuspichonelli.blogosfera.uol.com.br/2019/08/22/aos\u2026",
             "indices": [
-              211
+              369
             ]
           }
         ],
         "user_mentions": [
           {
-            "screen_name": "rsallesmma",
-            "name": "Ricardo Salles MMA",
-            "id": 971822131024748545,
-            "id_str": "971822131024748545",
+            "screen_name": "zotam2",
+            "name": "\ud83e\udde0 Felipe Kosloski\ud83c\udf93\ud83d\udea9\ud83d\udea9",
+            "id": 1164541344095887362,
+            "id_str": "999762786342391809",
             "indices": [
-              175
+              634
             ]
           }
         ],
         "symbols": [
           {
-            "text": "erah",
+            "text": "ilas",
             "indices": [
-              0
+              193
             ]
           }
         ],
         "media": [
           {
-            "id": 1164653694878662662,
-            "id_str": "1164653694878662662",
+            "id": 1165050434425360384,
+            "id_str": "988575390515032064",
             "indices": [
-              279
+              928
             ],
             "additional_media_info": {
-              "monetizable": false,
-              "title": "Bolsonaro fala sobre Amaz\u00f4nia",
-              "description": "",
+              "monetizable": true,
+              "title": "\u00c1udio: Deltan comemora proibi\u00e7\u00e3o de entrevista de Lula",
+              "description": "UOL Trends \u00e9 o programa do @uol que te conta tudo o que est\u00e1 bombando por a\u00ed!",
               "embeddable": true
             },
-            "media_url": "http://pbs.twimg.com/ext_tw_video_thumb/1164653694878662662/pu/img/in1PkxkPG8CpT5WH.jpg",
-            "media_url_https": "https://pbs.twimg.com/ext_tw_video_thumb/1164653694878662662/pu/img/in1PkxkPG8CpT5WH.jpg",
-            "url": "https://t.co/wYyeeHI3T1",
-            "display_url": "pic.twitter.com/wYyeeHI3T1",
-            "expanded_url": "https://twitter.com/abdalafarah/status/1164653715770531841/video/1",
+            "media_url": "http://pbs.twimg.com/tweet_video_thumb/ECsW1zNWsAAAuWO.jpg",
+            "media_url_https": "https://pbs.twimg.com/tweet_video_thumb/ECsW1zNWsAAAuWO.jpg",
+            "url": "https://t.co/zvoTxwTKDU",
+            "display_url": "pic.twitter.com/zvoTxwTKDU",
+            "expanded_url": "https://twitter.com/zkyliejenner/status/1163627191898378240/photo/1",
             "type": "video",
             "video_info": {
               "aspect_ratio": [
-                1
+                640
               ],
-              "duration_millis": 24758,
+              "duration_millis": 519000,
               "variants": [
                 {
-                  "content_type": "application/x-mpegURL",
-                  "url": "https://video.twimg.com/ext_tw_video/1164653694878662662/pu/pl/niuARSwxVBWm05Ld.m3u8?tag=10",
-                  "bitrate": 432000
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/tweet_video/ECsW1zNWsAAAuWO.mp4",
+                  "bitrate": 2176000
                 }
               ]
             },
             "sizes": {
               "small": {
-                "w": 320,
-                "h": 320,
+                "w": 680,
+                "h": 680,
                 "resize": "fit"
               },
               "thumb": {
@@ -258,61 +258,61 @@
                 "resize": "crop"
               },
               "medium": {
-                "w": 320,
-                "h": 320,
+                "w": 1200,
+                "h": 1200,
                 "resize": "fit"
               },
               "large": {
-                "w": 320,
-                "h": 320,
+                "w": 2048,
+                "h": 2048,
                 "resize": "fit"
               }
             },
-            "source_status_id": 1162090975805739008,
-            "source_status_id_str": "1162090975805739008",
-            "source_user_id": 966112742666104832,
-            "source_user_id_str": "966112742666104832",
-            "description": "print de manchete: bolsonaro diz que as institui\u00e7\u00f5es est\u00e3o aparelhadas"
+            "source_status_id": 1164997821889753088,
+            "source_status_id_str": "985970996711776258",
+            "source_user_id": 1156586862561157120,
+            "source_user_id_str": "974310058900295680",
+            "description": "print de v\u00e1rias manchetes em que o bolsonaro aparelha ou tenta interferir nas seguintes institui\u00e7\u00f5es: Receita Federal, Pol\u00edcia Federal, Procuradoria-Geral de Justi\u00e7a, COAF, IBGE, INPE, ANVISA, IBAMA, ICMBio e ANCINE"
           }
         ]
       },
       "extended_entities": {
         "media": [
           {
-            "id": 1164653694878662662,
-            "id_str": "1164653694878662662",
+            "id": 1165050434425360384,
+            "id_str": "988575390515032064",
             "indices": [
-              279
+              928
             ],
             "additional_media_info": {
-              "monetizable": false,
-              "title": "Bolsonaro fala sobre Amaz\u00f4nia",
-              "description": "",
+              "monetizable": true,
+              "title": "\u00c1udio: Deltan comemora proibi\u00e7\u00e3o de entrevista de Lula",
+              "description": "UOL Trends \u00e9 o programa do @uol que te conta tudo o que est\u00e1 bombando por a\u00ed!",
               "embeddable": true
             },
-            "media_url": "http://pbs.twimg.com/ext_tw_video_thumb/1164653694878662662/pu/img/in1PkxkPG8CpT5WH.jpg",
-            "media_url_https": "https://pbs.twimg.com/ext_tw_video_thumb/1164653694878662662/pu/img/in1PkxkPG8CpT5WH.jpg",
-            "url": "https://t.co/wYyeeHI3T1",
-            "display_url": "pic.twitter.com/wYyeeHI3T1",
-            "expanded_url": "https://twitter.com/abdalafarah/status/1164653715770531841/video/1",
+            "media_url": "http://pbs.twimg.com/tweet_video_thumb/ECsW1zNWsAAAuWO.jpg",
+            "media_url_https": "https://pbs.twimg.com/tweet_video_thumb/ECsW1zNWsAAAuWO.jpg",
+            "url": "https://t.co/zvoTxwTKDU",
+            "display_url": "pic.twitter.com/zvoTxwTKDU",
+            "expanded_url": "https://twitter.com/zkyliejenner/status/1163627191898378240/photo/1",
             "type": "video",
             "video_info": {
               "aspect_ratio": [
-                1
+                640
               ],
-              "duration_millis": 24758,
+              "duration_millis": 519000,
               "variants": [
                 {
-                  "content_type": "application/x-mpegURL",
-                  "url": "https://video.twimg.com/ext_tw_video/1164653694878662662/pu/pl/niuARSwxVBWm05Ld.m3u8?tag=10",
-                  "bitrate": 432000
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/tweet_video/ECsW1zNWsAAAuWO.mp4",
+                  "bitrate": 2176000
                 }
               ]
             },
             "sizes": {
               "small": {
-                "w": 320,
-                "h": 320,
+                "w": 680,
+                "h": 680,
                 "resize": "fit"
               },
               "thumb": {
@@ -321,56 +321,56 @@
                 "resize": "crop"
               },
               "medium": {
-                "w": 320,
-                "h": 320,
+                "w": 1200,
+                "h": 1200,
                 "resize": "fit"
               },
               "large": {
-                "w": 320,
-                "h": 320,
+                "w": 2048,
+                "h": 2048,
                 "resize": "fit"
               }
             },
-            "source_status_id": 1162090975805739008,
-            "source_status_id_str": "1162090975805739008",
-            "source_user_id": 966112742666104832,
-            "source_user_id_str": "966112742666104832",
-            "description": "print de manchete: bolsonaro diz que as institui\u00e7\u00f5es est\u00e3o aparelhadas"
+            "source_status_id": 1164997821889753088,
+            "source_status_id_str": "985970996711776258",
+            "source_user_id": 1156586862561157120,
+            "source_user_id_str": "974310058900295680",
+            "description": "print de v\u00e1rias manchetes em que o bolsonaro aparelha ou tenta interferir nas seguintes institui\u00e7\u00f5es: Receita Federal, Pol\u00edcia Federal, Procuradoria-Geral de Justi\u00e7a, COAF, IBGE, INPE, ANVISA, IBAMA, ICMBio e ANCINE"
           }
         ]
       }
     },
-    "quote_count": 112,
-    "reply_count": 273,
-    "retweet_count": 1072,
-    "favorite_count": 3473,
+    "quote_count": 16897,
+    "reply_count": 21756,
+    "retweet_count": 68230,
+    "favorite_count": 198320,
     "entities": {
       "hashtags": [
         {
-          "text": "AmazoniaSemONG",
+          "text": "\u00f3dio",
           "indices": [
-            113
+            140
           ]
         }
       ],
       "urls": [
         {
-          "url": "https://t.co/bND41LmHVX",
-          "expanded_url": "https://twitter.com/i/web/status/1164663194750767105",
-          "display_url": "twitter.com/i/web/status/1\u2026",
+          "url": "https://t.co/zzF8Dy2lz8",
+          "expanded_url": "https://zapbolsonaro.com/coletiva-de-bolsonaro-em-rede-nacional-hoje-23-08-as-2030h-horario-de-brasilia/",
+          "display_url": "zpr.io/tUq8j",
           "indices": [
-            117
+            164
           ]
         }
       ],
       "user_mentions": [
         {
-          "screen_name": "Maalves44573009",
-          "name": "Ma Bolsonaro Moro",
-          "id": 1111882691484491776,
-          "id_str": "1111882691484491776",
+          "screen_name": "zotam2",
+          "name": "\ud83e\udde0 Felipe Kosloski\ud83c\udf93\ud83d\udea9\ud83d\udea9",
+          "id": 1164957895282384897,
+          "id_str": "999762786342391809",
           "indices": [
-            0
+            142
           ]
         }
       ],
@@ -378,22 +378,22 @@
         {
           "text": "erah",
           "indices": [
-            0
+            11
           ]
         }
       ],
       "media": [
         {
-          "id": 1164678877274419200,
-          "id_str": "1164678877274419200",
+          "id": 1165050693192945666,
+          "id_str": "982778679271899137",
           "indices": [
-            80
+            140
           ],
-          "media_url": "http://pbs.twimg.com/media/ECnFRKVXsAA8AEl.jpg",
-          "media_url_https": "https://pbs.twimg.com/media/ECnFRKVXsAA8AEl.jpg",
-          "url": "https://t.co/qde6BxP1iF",
-          "display_url": "pic.twitter.com/qde6BxP1iF",
-          "expanded_url": "https://twitter.com/MarleneFFL/status/1164678883104440322/photo/1",
+          "media_url": "http://pbs.twimg.com/tweet_video_thumb/ECsWXgXXsAEmCOz.jpg",
+          "media_url_https": "https://pbs.twimg.com/tweet_video_thumb/ECsWXgXXsAEmCOz.jpg",
+          "url": "https://t.co/zzjSj6ZlAQ",
+          "display_url": "pic.twitter.com/zzjSj6ZlAQ",
+          "expanded_url": "https://twitter.com/zykab31/status/1154846071727755264/photo/1",
           "type": "photo",
           "sizes": {
             "thumb": {
@@ -402,32 +402,32 @@
               "resize": "crop"
             },
             "small": {
-              "w": 439,
+              "w": 680,
               "h": 680,
               "resize": "fit"
             },
             "medium": {
-              "w": 715,
-              "h": 1108,
+              "w": 1200,
+              "h": 1200,
               "resize": "fit"
             },
             "large": {
-              "w": 715,
-              "h": 1108,
+              "w": 2048,
+              "h": 2048,
               "resize": "fit"
             }
           },
           "additional_media_info": {
-            "monetizable": false,
-            "title": "",
-            "description": "",
+            "monetizable": true,
+            "title": "Video",
+            "description": "Powered by SnappyTV",
             "embeddable": true
           },
-          "source_status_id": 1157724062220787712,
-          "source_status_id_str": "1157724062220787712",
-          "source_user_id": 71971561,
-          "source_user_id_str": "71971561",
-          "description": "Tu\u00edtes de Macron. Bill de Blasio, Greta Thunberg e uma not\u00edcia do Papa pedindo uni\u00e3o para salvar a Amaz\u00f4nia"
+          "source_status_id": 1165047850545364993,
+          "source_status_id_str": "943534978607996928",
+          "source_user_id": 1158617296740540417,
+          "source_user_id_str": "989701351570640897",
+          "description": "Tweet de Jair Bolsonaro que diz que a Fran\u00e7a e o G7 n\u00e3o devem intervir nos assuntos da am\u00e9rica do sul e que essa ideia de interven\u00e7\u00e3o \u00e9 uma atitude colonial, colado sobre o livro \"Discurso sobre o Colonialismo\"."
         }
       ]
     },
@@ -435,60 +435,60 @@
     "retweeted": false,
     "filter_level": "low",
     "lang": "pt",
-    "possibly_sensitive": false,
+    "possibly_sensitive": true,
     "display_text_range": [
-      34
+      140
     ],
-    "quoted_status_id": 1164685732407119878,
-    "quoted_status_id_str": "1164685732407119878",
+    "quoted_status_id": 1165049850230165510,
+    "quoted_status_id_str": "988575401218920448",
     "quoted_status": {
-      "created_at": "2019-08-22 23:48:12",
-      "id": 1164685732407119878,
-      "id_str": "1164685732407119878",
-      "text": "A foto postada hoje pelo presidente franc\u00eas foi feita por Loren McIntyre, da revista National Geographic, morto h\u00e1\u2026 https://t.co/CmC7nHbIaa",
-      "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
+      "created_at": "2019-08-23 23:55:04",
+      "id": 1165049850230165510,
+      "id_str": "988575401218920448",
+      "text": "\ud83e\udd14\nAdrien Silva Rennes\nGelson Martins M\u00f3naco\nWilliam Carvalho Betis\nJo\u00e3o M\u00e1rio inter (Flop m\u00e1ximo)\nCedric Southampto\u2026 https://t.co/DR0KmHSn4M",
+      "source": "<a href=\"https://zapier.com/\" rel=\"nofollow\">Zapier.com</a>",
       "truncated": true,
-      "in_reply_to_status_id": 1164646349008199680,
-      "in_reply_to_status_id_str": "1164646349008199680",
-      "in_reply_to_user_id": 172574068,
-      "in_reply_to_user_id_str": "172574068",
-      "in_reply_to_screen_name": "LeitadasL0en",
+      "in_reply_to_status_id": 1165048826539008000,
+      "in_reply_to_status_id_str": "733238173308846080",
+      "in_reply_to_user_id": 1163792325186920448,
+      "in_reply_to_user_id_str": "999480402829041664",
+      "in_reply_to_screen_name": "zeantoniolima",
       "user": {
-        "id": 2880932962,
-        "id_str": "2880932962",
-        "name": "O Antagonista",
-        "screen_name": "o_antagonista",
-        "location": "Rio de Janeiro, Brazil",
-        "url": "https://www.oantagonista.com/",
-        "description": "Convite especial: O ANTAGONISTA+ de gra\u00e7a por 30 DIAS: http://bit.ly/2KIrAz2",
-        "translator_type": "none",
+        "id": 1164912726528761856,
+        "id_str": "998678675397795840",
+        "name": "\ud83e\uddda\ud83c\udffc\u200d\u2640\ufe0f",
+        "screen_name": "zotam2",
+        "location": "\ud83d\udce9| beafioroni@outlook.com.br",
+        "url": "https://youtube.com/canalquestionese",
+        "description": "\ud83e\udde1\ud83d\udc9a\ud83d\udc99\ud83c\udde7\ud83c\uddf7",
+        "translator_type": "regular",
         "protected": false,
         "verified": true,
-        "followers_count": 957158,
-        "friends_count": 749,
-        "listed_count": 1868,
-        "favourites_count": 974,
-        "statuses_count": 104643,
-        "created_at": "2014-11-17 12:22:32",
+        "followers_count": 79432260,
+        "friends_count": 406937,
+        "listed_count": 200395,
+        "favourites_count": 477939,
+        "statuses_count": 2033091,
+        "created_at": "2019-08-23 14:50:47",
         "utc_offset": null,
         "time_zone": null,
-        "geo_enabled": false,
+        "geo_enabled": true,
         "lang": null,
         "contributors_enabled": false,
-        "is_translator": false,
-        "profile_background_color": "000000",
-        "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
-        "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
-        "profile_background_tile": false,
-        "profile_link_color": "000000",
-        "profile_sidebar_border_color": "000000",
-        "profile_sidebar_fill_color": "000000",
-        "profile_text_color": "000000",
-        "profile_use_background_image": false,
-        "profile_image_url": "http://pbs.twimg.com/profile_images/545680042630447104/0mw8fVFF_normal.png",
-        "profile_image_url_https": "https://pbs.twimg.com/profile_images/545680042630447104/0mw8fVFF_normal.png",
-        "profile_banner_url": "https://pbs.twimg.com/profile_banners/2880932962/1563194132",
-        "default_profile": false,
+        "is_translator": true,
+        "profile_background_color": "FFFFFF",
+        "profile_background_image_url": "http://abs.twimg.com/images/themes/theme9/bg.gif",
+        "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme9/bg.gif",
+        "profile_background_tile": true,
+        "profile_link_color": "FFFFFF",
+        "profile_sidebar_border_color": "FFFFFF",
+        "profile_sidebar_fill_color": "FFFFFF",
+        "profile_text_color": "FFFFFF",
+        "profile_use_background_image": true,
+        "profile_image_url": "http://pbs.twimg.com/profile_images/999081889766952960/tOPizIIY_normal.jpg",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/999081889766952960/tOPizIIY_normal.jpg",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/998678675397795840/1541390865",
+        "default_profile": true,
         "default_profile_image": false,
         "following": null,
         "follow_request_sent": null,
@@ -503,23 +503,23 @@
       "coordinates": {
         "type": "Point",
         "coordinates": [
-          -9.09904258
+          38.74751841
         ]
       },
       "place": {
-        "id": "c1430b24da8e9229",
-        "url": "https://api.twitter.com/1.1/geo/id/c1430b24da8e9229.json",
-        "place_type": "city",
-        "name": "Lisbon",
-        "full_name": "Lisbon, Portugal",
-        "country_code": "PT",
-        "country": "Portugal",
+        "id": "f5e7c2a3edb0c324",
+        "url": "https://api.twitter.com/1.1/geo/id/f5e7c2a3edb0c324.json",
+        "place_type": "poi",
+        "name": "Washington",
+        "full_name": "Washington, DC",
+        "country_code": "US",
+        "country": "Spain",
         "bounding_box": {
           "type": "Polygon",
           "coordinates": [
             [
               [
-                -9.229826
+                50.177256
               ]
             ]
           ]
@@ -527,56 +527,56 @@
         "attributes": {}
       },
       "contributors": null,
-      "is_quote_status": false,
+      "is_quote_status": true,
       "extended_tweet": {
-        "full_text": "A foto postada hoje pelo presidente franc\u00eas foi feita por Loren McIntyre, da revista National Geographic, morto h\u00e1 16 anos.\n\nhttps://t.co/2fbvwWAB6e",
+        "full_text": "\ud83e\udd14\nAdrien Silva Rennes\nGelson Martins M\u00f3naco\nWilliam Carvalho Betis\nJo\u00e3o M\u00e1rio inter (Flop m\u00e1ximo)\nCedric Southampton\nMatheus Pereira west Brom\nPodence Olympiacos..\n\nEntre tantos outros... E tem lata de dizer isto? Lol https://t.co/Hcry2Xcy12",
         "display_text_range": [
-          0
+          575
         ],
         "entities": {
           "hashtags": [
             {
-              "text": "AmazonRainforest",
+              "text": "\u00daLTIMAHORA",
               "indices": [
-                28
+                307
               ]
             }
           ],
           "urls": [
             {
-              "url": "https://t.co/2fbvwWAB6e",
-              "expanded_url": "https://www.oantagonista.com/brasil/macron-usa-imagem-de-fotografo-que-morreu-em-2003-para-falar-de-queimadas-sob-bolsonaro/",
-              "display_url": "oantagonista.com/brasil/macron-\u2026",
+              "url": "https://t.co/zttyHWDkft",
+              "expanded_url": "https://youtube.com/watch?v=bDk1dE5nVQ0",
+              "display_url": "youtube.com/watch?v=bDk1dE\u2026",
               "indices": [
-                125
+                321
               ]
             }
           ],
           "user_mentions": [
             {
-              "screen_name": "NASAEarth",
-              "name": "NASA Earth",
-              "id": 24919888,
-              "id_str": "24919888",
+              "screen_name": "zerotoledo",
+              "name": "\ud83d\udc9a\ud83d\udc9bAdriana \ud83d\udc9b\ud83d\udc9a",
+              "id": 1164249816437854208,
+              "id_str": "999480402829041664",
               "indices": [
-                125
+                285
               ]
             }
           ],
           "symbols": [],
           "media": [
             {
-              "id": 1164632266825457665,
-              "id_str": "1164632266825457665",
+              "id": 1165048671483899909,
+              "id_str": "988575390515032064",
               "indices": [
-                204
+                599
               ],
-              "media_url": "http://pbs.twimg.com/media/ECma4E4W4AEkmPA.jpg",
-              "media_url_https": "https://pbs.twimg.com/media/ECma4E4W4AEkmPA.jpg",
-              "url": "https://t.co/EpFQVavD8K",
-              "display_url": "pic.twitter.com/EpFQVavD8K",
-              "expanded_url": "https://twitter.com/VICEBRASIL/status/1164632330507640832/photo/1",
-              "type": "photo",
+              "media_url": "http://pbs.twimg.com/tweet_video_thumb/ECrsLeCWwAAH-XG.jpg",
+              "media_url_https": "https://pbs.twimg.com/tweet_video_thumb/ECrsLeCWwAAH-XG.jpg",
+              "url": "https://t.co/zztIO6TU0a",
+              "display_url": "pic.twitter.com/zztIO6TU0a",
+              "expanded_url": "https://twitter.com/zooberlin/status/1164901384405291008/photo/1",
+              "type": "video",
               "sizes": {
                 "thumb": {
                   "w": 150,
@@ -585,60 +585,60 @@
                 },
                 "medium": {
                   "w": 1200,
-                  "h": 675,
+                  "h": 1200,
                   "resize": "fit"
                 },
                 "small": {
                   "w": 680,
-                  "h": 383,
+                  "h": 680,
                   "resize": "fit"
                 },
                 "large": {
-                  "w": 1200,
-                  "h": 675,
+                  "w": 2048,
+                  "h": 2048,
                   "resize": "fit"
                 }
               },
               "additional_media_info": {
-                "monetizable": false,
-                "title": "Video",
+                "monetizable": true,
+                "title": "\u00c1udio: Deltan comemora proibi\u00e7\u00e3o de entrevista de Lula",
                 "description": "See more at edition.cnn.com",
                 "embeddable": true
               },
               "video_info": {
                 "aspect_ratio": [
-                  427
+                  640
                 ],
-                "duration_millis": 109643,
+                "duration_millis": 376176,
                 "variants": [
                   {
-                    "content_type": "application/x-mpegURL",
-                    "url": "https://video.twimg.com/ext_tw_video/1164611409478656000/pu/pl/MqBgxFDurSWh9UgS.m3u8?tag=10",
+                    "content_type": "video/mp4",
+                    "url": "https://video.twimg.com/tweet_video/ECrsLeCWwAAH-XG.mp4",
                     "bitrate": 2176000
                   }
                 ]
               },
-              "source_status_id": 1126854322627731456,
-              "source_status_id_str": "1126854322627731456",
-              "source_user_id": 917085211732729856,
-              "source_user_id_str": "917085211732729856"
+              "source_status_id": 1164925117216043008,
+              "source_status_id_str": "947572864521330688",
+              "source_user_id": 1118220272203640833,
+              "source_user_id_str": "966112742666104832"
             }
           ]
         },
         "extended_entities": {
           "media": [
             {
-              "id": 1164632266825457665,
-              "id_str": "1164632266825457665",
+              "id": 1165048671483899909,
+              "id_str": "988575390515032064",
               "indices": [
-                204
+                599
               ],
-              "media_url": "http://pbs.twimg.com/media/ECma4E4W4AEkmPA.jpg",
-              "media_url_https": "https://pbs.twimg.com/media/ECma4E4W4AEkmPA.jpg",
-              "url": "https://t.co/EpFQVavD8K",
-              "display_url": "pic.twitter.com/EpFQVavD8K",
-              "expanded_url": "https://twitter.com/VICEBRASIL/status/1164632330507640832/photo/1",
-              "type": "photo",
+              "media_url": "http://pbs.twimg.com/tweet_video_thumb/ECrsLeCWwAAH-XG.jpg",
+              "media_url_https": "https://pbs.twimg.com/tweet_video_thumb/ECrsLeCWwAAH-XG.jpg",
+              "url": "https://t.co/zztIO6TU0a",
+              "display_url": "pic.twitter.com/zztIO6TU0a",
+              "expanded_url": "https://twitter.com/zooberlin/status/1164901384405291008/photo/1",
+              "type": "video",
               "sizes": {
                 "thumb": {
                   "w": 150,
@@ -647,99 +647,99 @@
                 },
                 "medium": {
                   "w": 1200,
-                  "h": 675,
+                  "h": 1200,
                   "resize": "fit"
                 },
                 "small": {
                   "w": 680,
-                  "h": 383,
+                  "h": 680,
                   "resize": "fit"
                 },
                 "large": {
-                  "w": 1200,
-                  "h": 675,
+                  "w": 2048,
+                  "h": 2048,
                   "resize": "fit"
                 }
               },
               "additional_media_info": {
-                "monetizable": false,
-                "title": "Video",
+                "monetizable": true,
+                "title": "\u00c1udio: Deltan comemora proibi\u00e7\u00e3o de entrevista de Lula",
                 "description": "See more at edition.cnn.com",
                 "embeddable": true
               },
               "video_info": {
                 "aspect_ratio": [
-                  427
+                  640
                 ],
-                "duration_millis": 109643,
+                "duration_millis": 376176,
                 "variants": [
                   {
-                    "content_type": "application/x-mpegURL",
-                    "url": "https://video.twimg.com/ext_tw_video/1164611409478656000/pu/pl/MqBgxFDurSWh9UgS.m3u8?tag=10",
+                    "content_type": "video/mp4",
+                    "url": "https://video.twimg.com/tweet_video/ECrsLeCWwAAH-XG.mp4",
                     "bitrate": 2176000
                   }
                 ]
               },
-              "source_status_id": 1126854322627731456,
-              "source_status_id_str": "1126854322627731456",
-              "source_user_id": 917085211732729856,
-              "source_user_id_str": "917085211732729856"
+              "source_status_id": 1164925117216043008,
+              "source_status_id_str": "947572864521330688",
+              "source_user_id": 1118220272203640833,
+              "source_user_id_str": "966112742666104832"
             }
           ]
         }
       },
-      "quote_count": 39,
-      "reply_count": 63,
-      "retweet_count": 233,
-      "favorite_count": 604,
+      "quote_count": 84443,
+      "reply_count": 61548,
+      "retweet_count": 174911,
+      "favorite_count": 359587,
       "entities": {
         "hashtags": [
           {
-            "text": "AmazonRainforest",
+            "text": "\u00daLTIMAHORA",
             "indices": [
-              28
+              135
             ]
           }
         ],
         "urls": [
           {
-            "url": "https://t.co/CmC7nHbIaa",
-            "expanded_url": "https://twitter.com/i/web/status/1164685732407119878",
-            "display_url": "twitter.com/i/web/status/1\u2026",
+            "url": "https://t.co/zxyznDfSA2",
+            "expanded_url": "https://youtube.com/watch?v=bDk1dE5nVQ0",
+            "display_url": "youtube.com/watch?v=xGf7a9\u2026",
             "indices": [
-              116
+              152
             ]
           }
         ],
         "user_mentions": [
           {
-            "screen_name": "exame",
-            "name": "Exame",
-            "id": 30070288,
-            "id_str": "30070288",
+            "screen_name": "zerotoledo",
+            "name": "\ud83e\udd29 \ud83d\udea9Volta Lula \ud83d\udea9\u2b50\ufe0f\ud83c\udf39\ud83c\udf37\ud83c\udf3c",
+            "id": 1163792325186920448,
+            "id_str": "999480402829041664",
             "indices": [
-              99
+              140
             ]
           }
         ],
         "symbols": [],
         "media": [
           {
-            "id": 1164246103916785667,
-            "id_str": "1164246103916785667",
+            "id": 1165048728174170112,
+            "id_str": "990036817943687168",
             "indices": [
-              16
+              140
             ],
-            "media_url": "http://pbs.twimg.com/media/ECg7qb8XsAMbFde.jpg",
-            "media_url_https": "https://pbs.twimg.com/media/ECg7qb8XsAMbFde.jpg",
-            "url": "https://t.co/THGXP8tymE",
-            "display_url": "pic.twitter.com/THGXP8tymE",
-            "expanded_url": "https://twitter.com/karlatalents/status/1164246108006211584/photo/1",
+            "media_url": "http://pbs.twimg.com/tweet_video_thumb/ECpx0s9X4AABAIx.jpg",
+            "media_url_https": "https://pbs.twimg.com/tweet_video_thumb/ECpx0s9X4AABAIx.jpg",
+            "url": "https://t.co/zs1qoRRw9X",
+            "display_url": "pic.twitter.com/zs1qoRRw9X",
+            "expanded_url": "https://twitter.com/zeppali/status/1164684677988474881/video/1",
             "type": "photo",
             "sizes": {
               "small": {
-                "w": 400,
-                "h": 399,
+                "w": 680,
+                "h": 680,
                 "resize": "fit"
               },
               "thumb": {
@@ -748,56 +748,56 @@
                 "resize": "crop"
               },
               "medium": {
-                "w": 400,
-                "h": 399,
+                "w": 1200,
+                "h": 1200,
                 "resize": "fit"
               },
               "large": {
-                "w": 400,
-                "h": 399,
+                "w": 2048,
+                "h": 2048,
                 "resize": "fit"
               }
             },
             "additional_media_info": {
-              "monetizable": false,
-              "title": "Bolsonaro culpa a ONGs de los incendios en la Amazon\u00eda",
-              "description": "Jair Bolsonaro acusa a las ONG de estar detr\u00e1s de los incendios en la Amazon\u00eda",
+              "monetizable": true,
+              "title": "Video",
+              "description": "Powered by SnappyTV",
               "embeddable": true
             },
-            "source_status_id": 1164304094187720704,
-            "source_status_id_str": "1164304094187720704",
-            "source_user_id": 105082141,
-            "source_user_id_str": "105082141",
-            "description": "Bolsonaro diz que o contrato da petrobras \u00e9 ruim pq p\u00f5e o nome da petrobras no capacete e os pilotos passam muito r\u00e1pido e ningu\u00e9m enxerga"
+            "source_status_id": 1164953107329179649,
+            "source_status_id_str": "990036826688761856",
+            "source_user_id": 1138532266009923584,
+            "source_user_id_str": "955586323452219393",
+            "description": "Uma manifestante verde-amarela com sorrisinho maroto de QI menos 2946282 ergue uma cartolina com os dizeres \u201cDilma devolva meu d\u00f3lar a R$ 1,99\u201d"
           }
         ]
       },
       "favorited": false,
       "retweeted": false,
-      "possibly_sensitive": false,
+      "possibly_sensitive": true,
       "filter_level": "low",
-      "lang": "pt",
+      "lang": "und",
       "display_text_range": [
-        0
+        140
       ],
       "extended_entities": {
         "media": [
           {
-            "id": 1164246103916785667,
-            "id_str": "1164246103916785667",
+            "id": 1165048728174170112,
+            "id_str": "990036817943687168",
             "indices": [
-              16
+              140
             ],
-            "media_url": "http://pbs.twimg.com/media/ECg7qb8XsAMbFde.jpg",
-            "media_url_https": "https://pbs.twimg.com/media/ECg7qb8XsAMbFde.jpg",
-            "url": "https://t.co/THGXP8tymE",
-            "display_url": "pic.twitter.com/THGXP8tymE",
-            "expanded_url": "https://twitter.com/karlatalents/status/1164246108006211584/photo/1",
-            "type": "photo",
+            "media_url": "http://pbs.twimg.com/tweet_video_thumb/ECpx0s9X4AABAIx.jpg",
+            "media_url_https": "https://pbs.twimg.com/tweet_video_thumb/ECpx0s9X4AABAIx.jpg",
+            "url": "https://t.co/zs1qoRRw9X",
+            "display_url": "pic.twitter.com/zs1qoRRw9X",
+            "expanded_url": "https://twitter.com/zeppali/status/1164684677988474881/video/1",
+            "type": "video",
             "sizes": {
               "small": {
-                "w": 400,
-                "h": 399,
+                "w": 680,
+                "h": 680,
                 "resize": "fit"
               },
               "thumb": {
@@ -806,68 +806,68 @@
                 "resize": "crop"
               },
               "medium": {
-                "w": 400,
-                "h": 399,
+                "w": 1200,
+                "h": 1200,
                 "resize": "fit"
               },
               "large": {
-                "w": 400,
-                "h": 399,
+                "w": 2048,
+                "h": 2048,
                 "resize": "fit"
               }
             },
             "additional_media_info": {
-              "monetizable": false,
-              "title": "Bolsonaro culpa a ONGs de los incendios en la Amazon\u00eda",
-              "description": "Jair Bolsonaro acusa a las ONG de estar detr\u00e1s de los incendios en la Amazon\u00eda",
+              "monetizable": true,
+              "title": "Video",
+              "description": "Powered by SnappyTV",
               "embeddable": true
             },
             "video_info": {
               "aspect_ratio": [
-                20
+                640
               ],
-              "duration_millis": 54764,
+              "duration_millis": 412234,
               "variants": [
                 {
-                  "bitrate": 256000,
+                  "bitrate": 2176000,
                   "content_type": "video/mp4",
-                  "url": "https://video.twimg.com/ext_tw_video/1161646291543371776/pu/vid/490x270/vm2lQ_EXoT2gg4q8.mp4?tag=10"
+                  "url": "https://video.twimg.com/tweet_video/ECpx0s9X4AABAIx.mp4"
                 }
               ]
             },
-            "source_status_id": 1164304094187720704,
-            "source_status_id_str": "1164304094187720704",
-            "source_user_id": 105082141,
-            "source_user_id_str": "105082141",
-            "description": "Bolsonaro diz que o contrato da petrobras \u00e9 ruim pq p\u00f5e o nome da petrobras no capacete e os pilotos passam muito r\u00e1pido e ningu\u00e9m enxerga"
+            "source_status_id": 1164953107329179649,
+            "source_status_id_str": "990036826688761856",
+            "source_user_id": 1138532266009923584,
+            "source_user_id_str": "955586323452219393",
+            "description": "Uma manifestante verde-amarela com sorrisinho maroto de QI menos 2946282 ergue uma cartolina com os dizeres \u201cDilma devolva meu d\u00f3lar a R$ 1,99\u201d"
           }
         ]
       },
-      "quoted_status_id": 1164386725025783809,
-      "quoted_status_id_str": "1164386725025783809",
+      "quoted_status_id": 1165031481359642629,
+      "quoted_status_id_str": "522794540487704576",
       "scopes": {
         "followers": false
       }
     },
     "quoted_status_permalink": {
-      "url": "https://t.co/JT96LQM1X4",
-      "expanded": "https://twitter.com/o_antagonista/status/1164685732407119878",
-      "display": "twitter.com/o_antagonista/\u2026"
+      "url": "https://t.co/zzKq29jZkn",
+      "expanded": "https://twitter.com/zotam2/status/1164940918610366469",
+      "display": "twitter.com/zotam2/status/\u2026"
     },
     "extended_entities": {
       "media": [
         {
-          "id": 1164678877274419200,
-          "id_str": "1164678877274419200",
+          "id": 1165050693192945666,
+          "id_str": "982778679271899137",
           "indices": [
-            80
+            140
           ],
-          "media_url": "http://pbs.twimg.com/media/ECnFRKVXsAA8AEl.jpg",
-          "media_url_https": "https://pbs.twimg.com/media/ECnFRKVXsAA8AEl.jpg",
-          "url": "https://t.co/qde6BxP1iF",
-          "display_url": "pic.twitter.com/qde6BxP1iF",
-          "expanded_url": "https://twitter.com/MarleneFFL/status/1164678883104440322/photo/1",
-          "type": "photo",
+          "media_url": "http://pbs.twimg.com/tweet_video_thumb/ECsWXgXXsAEmCOz.jpg",
+          "media_url_https": "https://pbs.twimg.com/tweet_video_thumb/ECsWXgXXsAEmCOz.jpg",
+          "url": "https://t.co/zzjSj6ZlAQ",
+          "display_url": "pic.twitter.com/zzjSj6ZlAQ",
+          "expanded_url": "https://twitter.com/zykab31/status/1154846071727755264/photo/1",
+          "type": "video",
           "sizes": {
             "thumb": {
               "w": 150,
@@ -875,45 +875,45 @@
               "resize": "crop"
             },
             "small": {
-              "w": 439,
+              "w": 680,
               "h": 680,
               "resize": "fit"
             },
             "medium": {
-              "w": 715,
-              "h": 1108,
+              "w": 1200,
+              "h": 1200,
               "resize": "fit"
             },
             "large": {
-              "w": 715,
-              "h": 1108,
+              "w": 2048,
+              "h": 2048,
               "resize": "fit"
             }
           },
           "additional_media_info": {
-            "monetizable": false,
-            "title": "",
-            "description": "",
+            "monetizable": true,
+            "title": "Video",
+            "description": "Powered by SnappyTV",
             "embeddable": true
           },
           "video_info": {
             "aspect_ratio": [
-              16
+              640
             ],
-            "duration_millis": 16952,
+            "duration_millis": 412234,
             "variants": [
               {
-                "bitrate": 256000,
+                "bitrate": 2176000,
                 "content_type": "video/mp4",
-                "url": "https://video.twimg.com/ext_tw_video/1163851870839943173/pu/vid/480x270/wMA-FiEUKOlOCwGk.mp4?tag=10"
+                "url": "https://video.twimg.com/tweet_video/ECsWXgXXsAEmCOz.mp4"
               }
             ]
           },
-          "source_status_id": 1157724062220787712,
-          "source_status_id_str": "1157724062220787712",
-          "source_user_id": 71971561,
-          "source_user_id_str": "71971561",
-          "description": "Tu\u00edtes de Macron. Bill de Blasio, Greta Thunberg e uma not\u00edcia do Papa pedindo uni\u00e3o para salvar a Amaz\u00f4nia"
+          "source_status_id": 1165047850545364993,
+          "source_status_id_str": "943534978607996928",
+          "source_user_id": 1158617296740540417,
+          "source_user_id_str": "989701351570640897",
+          "description": "Tweet de Jair Bolsonaro que diz que a Fran\u00e7a e o G7 n\u00e3o devem intervir nos assuntos da am\u00e9rica do sul e que essa ideia de interven\u00e7\u00e3o \u00e9 uma atitude colonial, colado sobre o livro \"Discurso sobre o Colonialismo\"."
         }
       ]
     },
@@ -921,7 +921,7 @@
       "followers": false
     }
   },
-  "is_quote_status": false,
+  "is_quote_status": true,
   "quote_count": 0,
   "reply_count": 0,
   "retweet_count": 0,
@@ -929,53 +929,53 @@
   "entities": {
     "hashtags": [
       {
-        "text": "NaoAoFundaoEleitoral",
+        "text": "\ud835\udc73\ud835\udc7c\ud835\udc73\ud835\udc68\ud835\udc74\ud835\udc76\ud835\udc73\ud835\udc7c\ud835\udc7a\ud835\udc6a\ud835\udc76",
         "indices": [
-          16
+          141
         ]
       }
     ],
     "urls": [
       {
-        "url": "https://t.co/b3IWSLTiUa",
-        "expanded_url": "http://corre.io/iDW13J",
-        "display_url": "corre.io/iDW13J",
+        "url": "https://t.co/zzym33mK8N",
+        "expanded_url": "https://zeluis50.blogspot.com/2019/08/macron-acusa-bolsonaro-de-mentir-o.html?spref=tw",
+        "display_url": "\u2026onverteparadvdhdpendrive.blogspot.com/2019/08/amazon\u2026",
         "indices": [
-          41
+          170
         ]
       }
     ],
     "user_mentions": [
       {
-        "screen_name": "CarlaZambelli17",
-        "name": "Carla Zambelli",
-        "id": 975127727501185025,
-        "id_str": "975127727501185025",
+        "screen_name": "zzzgaleno",
+        "name": "\ud83e\uddf8\u2744",
+        "id": 1165032879090556928,
+        "id_str": "999998164781490177",
         "indices": [
-          3
+          142
         ]
       }
     ],
     "symbols": [
       {
-        "text": "E",
+        "text": "lula",
         "indices": [
-          108
+          110
         ]
       }
     ],
     "media": [
       {
-        "id": 1164645763730825217,
-        "id_str": "1164645763730825217",
+        "id": 1165051034424741888,
+        "id_str": "988195452603559936",
         "indices": [
-          65
+          151
         ],
-        "media_url": "http://pbs.twimg.com/media/ECmnJsxW4AETbJq.jpg",
-        "media_url_https": "https://pbs.twimg.com/media/ECmnJsxW4AETbJq.jpg",
-        "url": "https://t.co/LY4JY0JCHK",
-        "display_url": "pic.twitter.com/LY4JY0JCHK",
-        "expanded_url": "https://twitter.com/correiopontocom/status/1164688702800420865/photo/1",
+        "media_url": "http://pbs.twimg.com/tweet_video_thumb/ECsXpi-XsAAIVom.jpg",
+        "media_url_https": "https://pbs.twimg.com/tweet_video_thumb/ECsXpi-XsAAIVom.jpg",
+        "url": "https://t.co/zzjSj6ZlAQ",
+        "display_url": "pic.twitter.com/zzjSj6ZlAQ",
+        "expanded_url": "https://twitter.com/zykab31/status/1154846071727755264/photo/1",
         "type": "photo",
         "sizes": {
           "thumb": {
@@ -985,31 +985,31 @@
           },
           "small": {
             "w": 680,
-            "h": 453,
+            "h": 680,
             "resize": "fit"
           },
           "medium": {
-            "w": 1140,
-            "h": 760,
+            "w": 1200,
+            "h": 1200,
             "resize": "fit"
           },
           "large": {
-            "w": 1140,
-            "h": 760,
+            "w": 2048,
+            "h": 2048,
             "resize": "fit"
           }
         },
-        "source_status_id": 1164678883104440322,
-        "source_status_id_str": "1164678883104440322",
-        "source_user_id": 36373308,
-        "source_user_id_str": "36373308",
+        "source_status_id": 1165050803763195904,
+        "source_status_id_str": "988195545033342976",
+        "source_user_id": 1164984548880502785,
+        "source_user_id_str": "99990022",
         "additional_media_info": {
-          "monetizable": false,
-          "title": "",
-          "description": "",
+          "monetizable": true,
+          "title": "Video",
+          "description": "Vai \u00e0 san\u00e7\u00e3o do presidente Jair Bolsonaro o texto da medida provis\u00f3ria da liberdade econ\u00f4mica.\n\n",
           "embeddable": true
         },
-        "description": "Tu\u00edtes de Macron. Bill de Blasio, Greta Thunberg e uma not\u00edcia do Papa pedindo uni\u00e3o para salvar a Amaz\u00f4nia"
+        "description": "Tweet de Jair Bolsonaro que diz que a Fran\u00e7a e o G7 n\u00e3o devem intervir nos assuntos da am\u00e9rica do sul e que essa ideia de interven\u00e7\u00e3o \u00e9 uma atitude colonial, colado sobre o livro \"Discurso sobre o Colonialismo\"."
       }
     ]
   },
@@ -1017,56 +1017,56 @@
   "retweeted": false,
   "filter_level": "low",
   "lang": "pt",
-  "timestamp_ms": "1566518400119",
-  "quoted_status_id": 1164577738650456064,
-  "quoted_status_id_str": "1164577738650456064",
+  "timestamp_ms": "1566604799964",
+  "quoted_status_id": 1165050681184673797,
+  "quoted_status_id_str": "996717215415140352",
   "quoted_status": {
-    "created_at": "2019-08-22 16:39:04",
-    "id": 1164577738650456064,
-    "id_str": "1164577738650456064",
-    "text": "a ignor\u00e2ncia da minha fam\u00edlia \u00e9 inadmiss\u00edvel, vou falar ignor\u00e2ncia pra n\u00e3o chamar de burros mesmo, eles s\u00e3o a favor\u2026 https://t.co/y2fjU0ZDHb",
-    "source": "<a href=\"http://twitter.com/download/android\" rel=\"nofollow\">Twitter for Android</a>",
+    "created_at": "2019-08-23 23:58:22",
+    "id": 1165050681184673797,
+    "id_str": "996717215415140352",
+    "text": "\ud83e\udd70Novas amizades do pop: \n\u2764\ufe0fBolsonaro ,Toffoli e Gilmar Mendes \u2764\ufe0f https://t.co/QYLt0KSZ6T",
+    "source": "<a href=\"https://zapier.com/\" rel=\"nofollow\">Zapier.com</a>",
     "truncated": true,
-    "in_reply_to_status_id": 1164667765799694345,
-    "in_reply_to_status_id_str": "1164667765799694345",
-    "in_reply_to_user_id": 128372940,
-    "in_reply_to_user_id_str": "128372940",
-    "in_reply_to_screen_name": "jairbolsonaro",
+    "in_reply_to_status_id": 1165049405063536640,
+    "in_reply_to_status_id_str": "936814217994256384",
+    "in_reply_to_user_id": 1164937502429450245,
+    "in_reply_to_user_id_str": "999617449",
+    "in_reply_to_screen_name": "zehdeabreu",
     "user": {
-      "id": 1110206287495774213,
-      "id_str": "1110206287495774213",
-      "name": "maduzinha \u2728\u2764\ufe0f",
-      "screen_name": "Madu_Bellon",
-      "location": "S\u00e3o Paulo",
-      "url": "http://www.folha.com.br/poder",
-      "description": "abstraindo e fingindo dem\u00eancia \ud83e\udd2a",
-      "translator_type": "none",
+      "id": 1164967715808919553,
+      "id_str": "999995170497101826",
+      "name": "\ud83e\uddda\ud83c\udffc\u200d\u2640\ufe0f",
+      "screen_name": "zzezeh",
+      "location": "\ud83e\udd2a\ud83e\udd2a\ud83e\udd2a\ud83e\udd2a\ud83e\udd2a",
+      "url": "https://youtube.com/sessaocomentada",
+      "description": "\ud83e\udde1\ud83d\udc9a\ud83d\udc99\ud83c\udde7\ud83c\uddf7",
+      "translator_type": "regular",
       "protected": false,
-      "verified": false,
-      "followers_count": 105,
-      "friends_count": 139,
-      "listed_count": 0,
-      "favourites_count": 907,
-      "statuses_count": 928,
-      "created_at": "2019-03-25 15:46:20",
+      "verified": true,
+      "followers_count": 79432559,
+      "friends_count": 406937,
+      "listed_count": 200395,
+      "favourites_count": 665574,
+      "statuses_count": 6785848,
+      "created_at": "2019-08-23 18:28:56",
       "utc_offset": null,
       "time_zone": null,
-      "geo_enabled": false,
+      "geo_enabled": true,
       "lang": null,
       "contributors_enabled": false,
-      "is_translator": false,
-      "profile_background_color": "F5F8FA",
-      "profile_background_image_url": "",
-      "profile_background_image_url_https": "",
-      "profile_background_tile": false,
-      "profile_link_color": "1DA1F2",
-      "profile_sidebar_border_color": "C0DEED",
-      "profile_sidebar_fill_color": "DDEEF6",
-      "profile_text_color": "333333",
+      "is_translator": true,
+      "profile_background_color": "FFFFFF",
+      "profile_background_image_url": "http://abs.twimg.com/images/themes/theme9/bg.gif",
+      "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme9/bg.gif",
+      "profile_background_tile": true,
+      "profile_link_color": "FFFFFF",
+      "profile_sidebar_border_color": "FFFFFF",
+      "profile_sidebar_fill_color": "FFFFFF",
+      "profile_text_color": "FFFFFF",
       "profile_use_background_image": true,
-      "profile_image_url": "http://pbs.twimg.com/profile_images/1164562504007204869/yaLMbVCp_normal.jpg",
-      "profile_image_url_https": "https://pbs.twimg.com/profile_images/1164562504007204869/yaLMbVCp_normal.jpg",
-      "profile_banner_url": "https://pbs.twimg.com/profile_banners/1110206287495774213/1553532397",
+      "profile_image_url": "http://pbs.twimg.com/profile_images/999129457041403905/fNhg5PEA_normal.jpg",
+      "profile_image_url_https": "https://pbs.twimg.com/profile_images/999129457041403905/fNhg5PEA_normal.jpg",
+      "profile_banner_url": "https://pbs.twimg.com/profile_banners/999995170497101826/1564952092",
       "default_profile": true,
       "default_profile_image": false,
       "following": null,
@@ -1076,29 +1076,29 @@
     "geo": {
       "type": "Point",
       "coordinates": [
-        -30.1085238
+        38.74751841
       ]
     },
     "coordinates": {
       "type": "Point",
       "coordinates": [
-        -51.325517
+        38.74751841
       ]
     },
     "place": {
-      "id": "6cbb3f4902362745",
-      "url": "https://api.twitter.com/1.1/geo/id/6cbb3f4902362745.json",
-      "place_type": "city",
-      "name": "Mossor\u00f3",
-      "full_name": "Mossor\u00f3, Brasil",
-      "country_code": "BR",
-      "country": "Brasil",
+      "id": "feca63c3e76a571c",
+      "url": "https://api.twitter.com/1.1/geo/id/feca63c3e76a571c.json",
+      "place_type": "poi",
+      "name": "Washington",
+      "full_name": "Washington, DC",
+      "country_code": "US",
+      "country": "United States",
       "bounding_box": {
         "type": "Polygon",
         "coordinates": [
           [
             [
-              -37.585037
+              52.592037
             ]
           ]
         ]
@@ -1106,39 +1106,39 @@
       "attributes": {}
     },
     "contributors": null,
-    "is_quote_status": false,
+    "is_quote_status": true,
     "extended_tweet": {
-      "full_text": "a ignor\u00e2ncia da minha fam\u00edlia \u00e9 inadmiss\u00edvel, vou falar ignor\u00e2ncia pra n\u00e3o chamar de burros mesmo, eles s\u00e3o a favor do Bolsonaro e falaram que \u00e9 pra deixar a Amaz\u00f4nia queimar que nada vai acontecer, gente eles realmente n\u00e3o tem no\u00e7\u00e3o do que t\u00e1 acontecendo e isso me desespera",
+      "full_text": "\ud83e\udd26\u200d\u2642\ufe0f Vejam s\u00f3: a mulher b\u00eabada agride policial (no v\u00eddeo anterior) e na delegacia se declara:\n\"Eu sou *ula! EU SOU ELE!\"\nComo se o presidi\u00e1rio fosse um deus!\nE, depois, n\u00f3s \u00e9 que somos \"uma SEITA\"...\nSeita demon\u00edaca \u00e9 a ESQUERDA! Tenha d\u00f3!\nComo dizem? \"Acuse-os do que voc\u00ea \u00e9\"... https://t.co/PffCe2CrwA",
       "display_text_range": [
-        0
+        833
       ],
       "entities": {
         "hashtags": [
           {
-            "text": "AmazonRainforest",
+            "text": "\uc218\ud638",
             "indices": [
-              28
+              569
             ]
           }
         ],
         "urls": [
           {
-            "url": "https://t.co/2fbvwWAB6e",
-            "expanded_url": "https://www.oantagonista.com/brasil/macron-usa-imagem-de-fotografo-que-morreu-em-2003-para-falar-de-queimadas-sob-bolsonaro/",
-            "display_url": "oantagonista.com/brasil/macron-\u2026",
+            "url": "https://t.co/zxJQ1tpC32",
+            "expanded_url": "https://youtube.com/watch?v=x-oDlFXIv_0",
+            "display_url": "\u2026theuspichonelli.blogosfera.uol.com.br/2019/08/22/aos\u2026",
             "indices": [
-              125
+              321
             ]
           }
         ],
         "user_mentions": [
           {
-            "screen_name": "jairbolsonaro",
-            "name": "Jair M. Bolsonaro",
-            "id": 128372940,
-            "id_str": "128372940",
+            "screen_name": "zerotoledo",
+            "name": "\ud83d\udea9 Marlene Mota\ud83d\udea9\ud83d\udea9\ud83d\udea9 \ud83c\udde7\ud83c\uddf7",
+            "id": 1164937502429450245,
+            "id_str": "999762786342391809",
             "indices": [
-              0
+              559
             ]
           }
         ],
@@ -1146,23 +1146,23 @@
           {
             "text": "E",
             "indices": [
-              18
+              20
             ]
           }
         ],
         "media": [
           {
-            "id": 1164632266825457665,
-            "id_str": "1164632266825457665",
+            "id": 1165049948985024513,
+            "id_str": "988575390515032064",
             "indices": [
-              204
+              599
             ],
-            "media_url": "http://pbs.twimg.com/media/ECma4E4W4AEkmPA.jpg",
-            "media_url_https": "https://pbs.twimg.com/media/ECma4E4W4AEkmPA.jpg",
-            "url": "https://t.co/EpFQVavD8K",
-            "display_url": "pic.twitter.com/EpFQVavD8K",
-            "expanded_url": "https://twitter.com/VICEBRASIL/status/1164632330507640832/photo/1",
-            "type": "photo",
+            "media_url": "http://pbs.twimg.com/tweet_video_thumb/ECsAt54XkAAdB6l.jpg",
+            "media_url_https": "https://pbs.twimg.com/tweet_video_thumb/ECsAt54XkAAdB6l.jpg",
+            "url": "https://t.co/zztIO6TU0a",
+            "display_url": "pic.twitter.com/zztIO6TU0a",
+            "expanded_url": "https://twitter.com/zykab31/status/1157034942003666948/photo/1",
+            "type": "video",
             "sizes": {
               "thumb": {
                 "w": 150,
@@ -1171,61 +1171,61 @@
               },
               "medium": {
                 "w": 1200,
-                "h": 675,
+                "h": 1200,
                 "resize": "fit"
               },
               "small": {
                 "w": 680,
-                "h": 383,
+                "h": 680,
                 "resize": "fit"
               },
               "large": {
-                "w": 1200,
-                "h": 675,
+                "w": 2048,
+                "h": 2048,
                 "resize": "fit"
               }
             },
             "additional_media_info": {
-              "monetizable": false,
-              "title": "Video",
-              "description": "See more at edition.cnn.com",
+              "monetizable": true,
+              "title": "\u00c1udio: Deltan comemora proibi\u00e7\u00e3o de entrevista de Lula",
+              "description": "The Amazon\u2019s record-breaking forest fires are endangering the region\u2019s Indigenous communities and millions of plant and animal species \u2014 here\u2019s how you can take action",
               "embeddable": true
             },
             "video_info": {
               "aspect_ratio": [
-                427
+                640
               ],
-              "duration_millis": 109643,
+              "duration_millis": 519000,
               "variants": [
                 {
-                  "content_type": "application/x-mpegURL",
-                  "url": "https://video.twimg.com/ext_tw_video/1164611409478656000/pu/pl/MqBgxFDurSWh9UgS.m3u8?tag=10",
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/tweet_video/ECsAt54XkAAdB6l.mp4",
                   "bitrate": 2176000
                 }
               ]
             },
-            "source_status_id": 1162090975805739008,
-            "source_status_id_str": "1162090975805739008",
-            "source_user_id": 966112742666104832,
+            "source_status_id": 1165028210234384385,
+            "source_status_id_str": "947572864521330688",
+            "source_user_id": 1149315458207748096,
             "source_user_id_str": "966112742666104832",
-            "description": "Um flyer com as datas e locais de v\u00e1rios atos. RJ:17h, Cinel\u00e2ndia/ SP:18, MASP/ Curitiba: 17:30, pra\u00e7a da mulher nua/ Salvador: 14h, Pelourinho/Atalanta: 9h col\u00e9gio Frederico Rolla/ Londrina: 15h, cal\u00e7ad\u00e3o/ Juazeiro do norte: 17h, praia do giradouro"
+            "description": "uma foto minha fazendo car\u00e3o, d\u00e1 pra ver que estou na rua. eu sou negro, tenho olhos castanhos, tra\u00e7os largos, cabelo azul com uma mecha loira maior em cima e raspado dos lados. uso piercing no septo, \u00f3culos roxo arredondado, batom preto, sombra amarela e delineador preto. uso um brinco em formato de gota roxo e uma blusa vermelha tamb\u00e9m. tem glitter no meu colo (embaixo do pesco\u00e7o)."
           }
         ]
       },
       "extended_entities": {
         "media": [
           {
-            "id": 1164632266825457665,
-            "id_str": "1164632266825457665",
+            "id": 1165049948985024513,
+            "id_str": "988575390515032064",
             "indices": [
-              204
+              599
             ],
-            "media_url": "http://pbs.twimg.com/media/ECma4E4W4AEkmPA.jpg",
-            "media_url_https": "https://pbs.twimg.com/media/ECma4E4W4AEkmPA.jpg",
-            "url": "https://t.co/EpFQVavD8K",
-            "display_url": "pic.twitter.com/EpFQVavD8K",
-            "expanded_url": "https://twitter.com/VICEBRASIL/status/1164632330507640832/photo/1",
-            "type": "photo",
+            "media_url": "http://pbs.twimg.com/tweet_video_thumb/ECsAt54XkAAdB6l.jpg",
+            "media_url_https": "https://pbs.twimg.com/tweet_video_thumb/ECsAt54XkAAdB6l.jpg",
+            "url": "https://t.co/zztIO6TU0a",
+            "display_url": "pic.twitter.com/zztIO6TU0a",
+            "expanded_url": "https://twitter.com/zykab31/status/1157034942003666948/photo/1",
+            "type": "video",
             "sizes": {
               "thumb": {
                 "w": 150,
@@ -1234,79 +1234,79 @@
               },
               "medium": {
                 "w": 1200,
-                "h": 675,
+                "h": 1200,
                 "resize": "fit"
               },
               "small": {
                 "w": 680,
-                "h": 383,
+                "h": 680,
                 "resize": "fit"
               },
               "large": {
-                "w": 1200,
-                "h": 675,
+                "w": 2048,
+                "h": 2048,
                 "resize": "fit"
               }
             },
             "additional_media_info": {
-              "monetizable": false,
-              "title": "Video",
-              "description": "See more at edition.cnn.com",
+              "monetizable": true,
+              "title": "\u00c1udio: Deltan comemora proibi\u00e7\u00e3o de entrevista de Lula",
+              "description": "The Amazon\u2019s record-breaking forest fires are endangering the region\u2019s Indigenous communities and millions of plant and animal species \u2014 here\u2019s how you can take action",
               "embeddable": true
             },
             "video_info": {
               "aspect_ratio": [
-                427
+                640
               ],
-              "duration_millis": 109643,
+              "duration_millis": 519000,
               "variants": [
                 {
-                  "content_type": "application/x-mpegURL",
-                  "url": "https://video.twimg.com/ext_tw_video/1164611409478656000/pu/pl/MqBgxFDurSWh9UgS.m3u8?tag=10",
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/tweet_video/ECsAt54XkAAdB6l.mp4",
                   "bitrate": 2176000
                 }
               ]
             },
-            "source_status_id": 1162090975805739008,
-            "source_status_id_str": "1162090975805739008",
-            "source_user_id": 966112742666104832,
+            "source_status_id": 1165028210234384385,
+            "source_status_id_str": "947572864521330688",
+            "source_user_id": 1149315458207748096,
             "source_user_id_str": "966112742666104832",
-            "description": "Um flyer com as datas e locais de v\u00e1rios atos. RJ:17h, Cinel\u00e2ndia/ SP:18, MASP/ Curitiba: 17:30, pra\u00e7a da mulher nua/ Salvador: 14h, Pelourinho/Atalanta: 9h col\u00e9gio Frederico Rolla/ Londrina: 15h, cal\u00e7ad\u00e3o/ Juazeiro do norte: 17h, praia do giradouro"
+            "description": "uma foto minha fazendo car\u00e3o, d\u00e1 pra ver que estou na rua. eu sou negro, tenho olhos castanhos, tra\u00e7os largos, cabelo azul com uma mecha loira maior em cima e raspado dos lados. uso piercing no septo, \u00f3culos roxo arredondado, batom preto, sombra amarela e delineador preto. uso um brinco em formato de gota roxo e uma blusa vermelha tamb\u00e9m. tem glitter no meu colo (embaixo do pesco\u00e7o)."
           }
         ]
       }
     },
-    "quote_count": 0,
-    "reply_count": 0,
-    "retweet_count": 0,
-    "favorite_count": 0,
+    "quote_count": 84443,
+    "reply_count": 61548,
+    "retweet_count": 487276,
+    "favorite_count": 1180302,
     "entities": {
       "hashtags": [
         {
-          "text": "AmazonRainforest",
+          "text": "\uc870\uc774",
           "indices": [
-            28
+            140
           ]
         }
       ],
       "urls": [
         {
-          "url": "https://t.co/y2fjU0ZDHb",
-          "expanded_url": "https://twitter.com/i/web/status/1164577738650456064",
-          "display_url": "twitter.com/i/web/status/1\u2026",
+          "url": "https://t.co/zzQELdoL2A",
+          "expanded_url": "https://youtubersdedireita.com/bolsonaro-e-o-mais-novo-membro-dos-youtubers-de-direita/",
+          "display_url": "zpr.io/tUtw6",
           "indices": [
-            117
+            170
           ]
         }
       ],
       "user_mentions": [
         {
-          "screen_name": "exame",
-          "name": "Exame",
-          "id": 30070288,
-          "id_str": "30070288",
+          "screen_name": "zerotoledo",
+          "name": "\ud83e\udd8aFurry_God\ud83e\udd8a #ProjectLW",
+          "id": 1164937502429450245,
+          "id_str": "999762786342391809",
           "indices": [
-            99
+            140
           ]
         }
       ],
@@ -1314,27 +1314,27 @@
         {
           "text": "E",
           "indices": [
-            18
+            20
           ]
         }
       ],
       "media": [
         {
-          "id": 1164246103916785667,
-          "id_str": "1164246103916785667",
+          "id": 1165050011970940929,
+          "id_str": "998265099423907840",
           "indices": [
-            16
+            140
           ],
-          "media_url": "http://pbs.twimg.com/media/ECg7qb8XsAMbFde.jpg",
-          "media_url_https": "https://pbs.twimg.com/media/ECg7qb8XsAMbFde.jpg",
-          "url": "https://t.co/THGXP8tymE",
-          "display_url": "pic.twitter.com/THGXP8tymE",
-          "expanded_url": "https://twitter.com/karlatalents/status/1164246108006211584/photo/1",
+          "media_url": "http://pbs.twimg.com/tweet_video_thumb/ECsTPziX4AAGX5N.jpg",
+          "media_url_https": "https://pbs.twimg.com/tweet_video_thumb/ECsTPziX4AAGX5N.jpg",
+          "url": "https://t.co/zs1qoRRw9X",
+          "display_url": "pic.twitter.com/zs1qoRRw9X",
+          "expanded_url": "https://twitter.com/zoemartinez_05/status/1164913058445242368/photo/1",
           "type": "photo",
           "sizes": {
             "small": {
-              "w": 400,
-              "h": 399,
+              "w": 680,
+              "h": 680,
               "resize": "fit"
             },
             "thumb": {
@@ -1343,56 +1343,56 @@
               "resize": "crop"
             },
             "medium": {
-              "w": 400,
-              "h": 399,
+              "w": 1200,
+              "h": 1200,
               "resize": "fit"
             },
             "large": {
-              "w": 400,
-              "h": 399,
+              "w": 2048,
+              "h": 2048,
               "resize": "fit"
             }
           },
           "additional_media_info": {
-            "monetizable": false,
-            "title": "",
-            "description": "",
+            "monetizable": true,
+            "title": "Video",
+            "description": "Powered by SnappyTV",
             "embeddable": true
           },
-          "source_status_id": 1157724062220787712,
-          "source_status_id_str": "1157724062220787712",
-          "source_user_id": 71971561,
-          "source_user_id_str": "71971561",
-          "description": "Bolsonaro diz que o contrato da petrobras \u00e9 ruim pq p\u00f5e o nome da petrobras no capacete e os pilotos passam muito r\u00e1pido e ningu\u00e9m enxerga"
+          "source_status_id": 1165045388203692032,
+          "source_status_id_str": "998265291829383168",
+          "source_user_id": 1149968585848004609,
+          "source_user_id_str": "983819577351012353",
+          "description": "meme do c\u00e9rebro se expandindo, em que as quatro etapas, desde o c\u00e9rebro \u00ednfimo at\u00e9 a expans\u00e3o total da consci\u00eancia, s\u00e3o as seguintes: ensinar pink floyd pro roger waters; ensinar cristianismo pro papa; ensinar nazismo pros alem\u00e3es; ensinar ci\u00eancia pra nasa. em casa etapa, o tweet de um bolsominion pra exemplificar."
         }
       ]
     },
     "favorited": false,
     "retweeted": false,
     "filter_level": "low",
-    "lang": "pt",
-    "possibly_sensitive": false,
+    "lang": "und",
+    "possibly_sensitive": true,
     "display_text_range": [
-      0
+      140
     ],
     "extended_entities": {
       "media": [
         {
-          "id": 1164246103916785667,
-          "id_str": "1164246103916785667",
+          "id": 1165050011970940929,
+          "id_str": "998265099423907840",
           "indices": [
-            16
+            140
           ],
-          "media_url": "http://pbs.twimg.com/media/ECg7qb8XsAMbFde.jpg",
-          "media_url_https": "https://pbs.twimg.com/media/ECg7qb8XsAMbFde.jpg",
-          "url": "https://t.co/THGXP8tymE",
-          "display_url": "pic.twitter.com/THGXP8tymE",
-          "expanded_url": "https://twitter.com/karlatalents/status/1164246108006211584/photo/1",
-          "type": "photo",
+          "media_url": "http://pbs.twimg.com/tweet_video_thumb/ECsTPziX4AAGX5N.jpg",
+          "media_url_https": "https://pbs.twimg.com/tweet_video_thumb/ECsTPziX4AAGX5N.jpg",
+          "url": "https://t.co/zs1qoRRw9X",
+          "display_url": "pic.twitter.com/zs1qoRRw9X",
+          "expanded_url": "https://twitter.com/zoemartinez_05/status/1164913058445242368/photo/1",
+          "type": "video",
           "sizes": {
             "small": {
-              "w": 400,
-              "h": 399,
+              "w": 680,
+              "h": 680,
               "resize": "fit"
             },
             "thumb": {
@@ -1401,74 +1401,74 @@
               "resize": "crop"
             },
             "medium": {
-              "w": 400,
-              "h": 399,
+              "w": 1200,
+              "h": 1200,
               "resize": "fit"
             },
             "large": {
-              "w": 400,
-              "h": 399,
+              "w": 2048,
+              "h": 2048,
               "resize": "fit"
             }
           },
           "additional_media_info": {
-            "monetizable": false,
-            "title": "",
-            "description": "",
+            "monetizable": true,
+            "title": "Video",
+            "description": "Powered by SnappyTV",
             "embeddable": true
           },
           "video_info": {
             "aspect_ratio": [
-              20
+              640
             ],
-            "duration_millis": 54764,
+            "duration_millis": 412234,
             "variants": [
               {
-                "bitrate": 256000,
+                "bitrate": 2176000,
                 "content_type": "video/mp4",
-                "url": "https://video.twimg.com/ext_tw_video/1161646291543371776/pu/vid/490x270/vm2lQ_EXoT2gg4q8.mp4?tag=10"
+                "url": "https://video.twimg.com/tweet_video/ECsTPziX4AAGX5N.mp4"
               }
             ]
           },
-          "source_status_id": 1157724062220787712,
-          "source_status_id_str": "1157724062220787712",
-          "source_user_id": 71971561,
-          "source_user_id_str": "71971561",
-          "description": "Bolsonaro diz que o contrato da petrobras \u00e9 ruim pq p\u00f5e o nome da petrobras no capacete e os pilotos passam muito r\u00e1pido e ningu\u00e9m enxerga"
+          "source_status_id": 1165045388203692032,
+          "source_status_id_str": "998265291829383168",
+          "source_user_id": 1149968585848004609,
+          "source_user_id_str": "983819577351012353",
+          "description": "meme do c\u00e9rebro se expandindo, em que as quatro etapas, desde o c\u00e9rebro \u00ednfimo at\u00e9 a expans\u00e3o total da consci\u00eancia, s\u00e3o as seguintes: ensinar pink floyd pro roger waters; ensinar cristianismo pro papa; ensinar nazismo pros alem\u00e3es; ensinar ci\u00eancia pra nasa. em casa etapa, o tweet de um bolsominion pra exemplificar."
         }
       ]
     },
-    "quoted_status_id": 1164386725025783809,
-    "quoted_status_id_str": "1164386725025783809",
+    "quoted_status_id": 1165046285474422786,
+    "quoted_status_id_str": "996700730919616512",
     "withheld_in_countries": [
-      "DE"
+      "FR"
     ],
     "scopes": {
       "followers": false
     }
   },
   "quoted_status_permalink": {
-    "url": "https://t.co/JSv5sbcnSs",
-    "expanded": "https://twitter.com/Madu_Bellon/status/1164577738650456064",
-    "display": "twitter.com/Madu_Bellon/st\u2026"
+    "url": "https://t.co/zzxdhM3IJ9",
+    "expanded": "https://twitter.com/zzimo11/status/1164904245612699649",
+    "display": "twitter.com/zzimo11/status\u2026"
   },
   "display_text_range": [
-    0
+    175
   ],
   "extended_entities": {
     "media": [
       {
-        "id": 1164645763730825217,
-        "id_str": "1164645763730825217",
+        "id": 1165051034424741888,
+        "id_str": "988195452603559936",
         "indices": [
-          65
+          151
         ],
-        "media_url": "http://pbs.twimg.com/media/ECmnJsxW4AETbJq.jpg",
-        "media_url_https": "https://pbs.twimg.com/media/ECmnJsxW4AETbJq.jpg",
-        "url": "https://t.co/LY4JY0JCHK",
-        "display_url": "pic.twitter.com/LY4JY0JCHK",
-        "expanded_url": "https://twitter.com/correiopontocom/status/1164688702800420865/photo/1",
-        "type": "photo",
+        "media_url": "http://pbs.twimg.com/tweet_video_thumb/ECsXpi-XsAAIVom.jpg",
+        "media_url_https": "https://pbs.twimg.com/tweet_video_thumb/ECsXpi-XsAAIVom.jpg",
+        "url": "https://t.co/zzjSj6ZlAQ",
+        "display_url": "pic.twitter.com/zzjSj6ZlAQ",
+        "expanded_url": "https://twitter.com/zykab31/status/1154846071727755264/photo/1",
+        "type": "video",
         "sizes": {
           "thumb": {
             "w": 150,
@@ -1477,147 +1477,147 @@
           },
           "small": {
             "w": 680,
-            "h": 453,
+            "h": 680,
             "resize": "fit"
           },
           "medium": {
-            "w": 1140,
-            "h": 760,
+            "w": 1200,
+            "h": 1200,
             "resize": "fit"
           },
           "large": {
-            "w": 1140,
-            "h": 760,
+            "w": 2048,
+            "h": 2048,
             "resize": "fit"
           }
         },
-        "source_status_id": 1164678883104440322,
-        "source_status_id_str": "1164678883104440322",
-        "source_user_id": 36373308,
-        "source_user_id_str": "36373308",
+        "source_status_id": 1165050803763195904,
+        "source_status_id_str": "988195545033342976",
+        "source_user_id": 1164984548880502785,
+        "source_user_id_str": "99990022",
         "additional_media_info": {
-          "monetizable": false,
-          "title": "",
-          "description": "",
+          "monetizable": true,
+          "title": "Video",
+          "description": "Vai \u00e0 san\u00e7\u00e3o do presidente Jair Bolsonaro o texto da medida provis\u00f3ria da liberdade econ\u00f4mica.\n\n",
           "embeddable": true
         },
         "video_info": {
           "aspect_ratio": [
-            16
+            640
           ],
-          "duration_millis": 16952,
+          "duration_millis": 412234,
           "variants": [
             {
-              "bitrate": 256000,
+              "bitrate": 2176000,
               "content_type": "video/mp4",
-              "url": "https://video.twimg.com/ext_tw_video/1163851870839943173/pu/vid/480x270/wMA-FiEUKOlOCwGk.mp4?tag=10"
+              "url": "https://video.twimg.com/tweet_video/ECsXpi-XsAAIVom.mp4"
             }
           ]
         },
-        "description": "Tu\u00edtes de Macron. Bill de Blasio, Greta Thunberg e uma not\u00edcia do Papa pedindo uni\u00e3o para salvar a Amaz\u00f4nia"
+        "description": "Tweet de Jair Bolsonaro que diz que a Fran\u00e7a e o G7 n\u00e3o devem intervir nos assuntos da am\u00e9rica do sul e que essa ideia de interven\u00e7\u00e3o \u00e9 uma atitude colonial, colado sobre o livro \"Discurso sobre o Colonialismo\"."
       }
     ]
   },
-  "possibly_sensitive": false,
+  "possibly_sensitive": true,
   "extended_tweet": {
-    "full_text": "Reunidos em Belo Horizonte, magistrados pedem que o presidente Jair Bolsonaro (PSL) vete o projeto aprovado pela C\u00e2mara\n\nhttps://t.co/wRI16iaA0O",
+    "full_text": "\ud83e\udd37\u200d\u2642\ufe0f\n\nRodrigo Maia: prop\u00f5e usar o fund\u00e3o da Petrobr\u00e1s para investir na Amaz\u00f4nia.\n\nBolsonaro: prop\u00f5e usar o fundo eleitoral para investir na Amaz\u00f4nia.\n\nObs: o destino do Fund\u00e3o da Petrobr\u00e1s seria investido na educa\u00e7\u00e3o.",
     "display_text_range": [
-      0
+      904
     ],
     "entities": {
       "hashtags": [
         {
-          "text": "Bolsonaro",
+          "text": "\ud835\udc73\ud835\udc7c\ud835\udc73\ud835\udc68\ud835\udc74\ud835\udc76\ud835\udc73\ud835\udc7c\ud835\udc7a\ud835\udc6a\ud835\udc76",
           "indices": [
-            121
+            832
           ]
         }
       ],
       "urls": [
         {
-          "url": "https://t.co/wRI16iaA0O",
-          "expanded_url": "https://bit.ly/2ZmAcRs",
-          "display_url": "bit.ly/2ZmAcRs",
+          "url": "https://t.co/zzmztKql8Y",
+          "expanded_url": "https://zeronet.io/",
+          "display_url": "\u2026theuspichonelli.blogosfera.uol.com.br/2019/08/22/aos\u2026",
           "indices": [
-            121
+            878
           ]
         }
       ],
       "user_mentions": [
         {
-          "screen_name": "RedeGlobo",
-          "name": "Globo",
-          "id": 18219976,
-          "id_str": "18219976",
+          "screen_name": "zotam2",
+          "name": "\ud83e\uddda\u200d\u2640\ufe0f",
+          "id": 1165007433816846336,
+          "id_str": "999996089569865729",
           "indices": [
-            28
+            853
           ]
         }
       ],
       "symbols": [
         {
-          "text": "istema",
+          "text": "ou",
           "indices": [
-            155
+            221
           ]
         }
       ],
       "media": [
         {
-          "id": 1164688746945470466,
-          "id_str": "1164688746945470466",
+          "id": 1165050993635155968,
+          "id_str": "947572659503673345",
           "indices": [
-            130
+            928
           ],
-          "media_url": "http://pbs.twimg.com/tweet_video_thumb/ECnOPpuUYAI2ay4.jpg",
-          "media_url_https": "https://pbs.twimg.com/tweet_video_thumb/ECnOPpuUYAI2ay4.jpg",
-          "url": "https://t.co/ojYP3PhzlQ",
-          "display_url": "pic.twitter.com/ojYP3PhzlQ",
-          "expanded_url": "https://twitter.com/hannahwelsy/status/1164688773566926848/photo/1",
-          "type": "animated_gif",
+          "media_url": "http://pbs.twimg.com/tweet_video_thumb/ECsXYg2WsAAzUwH.jpg",
+          "media_url_https": "https://pbs.twimg.com/tweet_video_thumb/ECsXYg2WsAAzUwH.jpg",
+          "url": "https://t.co/zzpe39Sxns",
+          "display_url": "pic.twitter.com/zzpe39Sxns",
+          "expanded_url": "https://twitter.com/zykab31/status/1157034942003666948/photo/1",
+          "type": "video",
           "video_info": {
             "aspect_ratio": [
-              1
+              640
             ],
             "variants": [
               {
-                "bitrate": 0,
+                "bitrate": 2176000,
                 "content_type": "video/mp4",
-                "url": "https://video.twimg.com/tweet_video/ECnOPpuUYAI2ay4.mp4"
+                "url": "https://video.twimg.com/tweet_video/ECsXYg2WsAAzUwH.mp4"
               }
             ],
-            "duration_millis": 115533
+            "duration_millis": 519000
           },
           "sizes": {
             "small": {
-              "w": 90,
-              "h": 90,
+              "w": 680,
+              "h": 680,
               "resize": "fit"
             },
             "thumb": {
-              "w": 90,
-              "h": 90,
+              "w": 150,
+              "h": 150,
               "resize": "crop"
             },
             "large": {
-              "w": 90,
-              "h": 90,
+              "w": 2048,
+              "h": 2048,
               "resize": "fit"
             },
             "medium": {
-              "w": 90,
-              "h": 90,
+              "w": 1200,
+              "h": 1200,
               "resize": "fit"
             }
           },
-          "source_status_id": 1164669796778172417,
-          "source_status_id_str": "1164669796778172417",
-          "source_user_id": 1091167911308419072,
-          "source_user_id_str": "1091167911308419072",
+          "source_status_id": 1165040574296199170,
+          "source_status_id_str": "947572864521330688",
+          "source_user_id": 1160558471781240833,
+          "source_user_id_str": "983730054122364928",
           "additional_media_info": {
-            "monetizable": false,
-            "title": "Jair Bolsonaro fala sobre queimadas na Amaz\u00f4nia",
-            "description": "",
+            "monetizable": true,
+            "title": "frescura de ambientalista, \u00e9 uma necessidade\"",
+            "description": "Protestos em v\u00e1rias cidades na Europa exp\u00f5em o projeto da extrema-direita brasileira de devastar o meio ambiente para aumentar os lucros do agroneg\u00f3cio, setor que apoiou Bolsonaro em peso nas elei\u00e7\u00f5es",
             "embeddable": true
           },
           "description": "capa do washington post, sobre os inc\u00eandios na amaz\u00f4nia e a tosca resposta do bolsonaro"
@@ -1627,60 +1627,60 @@
     "extended_entities": {
       "media": [
         {
-          "id": 1164688746945470466,
-          "id_str": "1164688746945470466",
+          "id": 1165050993635155968,
+          "id_str": "947572659503673345",
           "indices": [
-            130
+            928
           ],
-          "media_url": "http://pbs.twimg.com/tweet_video_thumb/ECnOPpuUYAI2ay4.jpg",
-          "media_url_https": "https://pbs.twimg.com/tweet_video_thumb/ECnOPpuUYAI2ay4.jpg",
-          "url": "https://t.co/ojYP3PhzlQ",
-          "display_url": "pic.twitter.com/ojYP3PhzlQ",
-          "expanded_url": "https://twitter.com/hannahwelsy/status/1164688773566926848/photo/1",
-          "type": "animated_gif",
+          "media_url": "http://pbs.twimg.com/tweet_video_thumb/ECsXYg2WsAAzUwH.jpg",
+          "media_url_https": "https://pbs.twimg.com/tweet_video_thumb/ECsXYg2WsAAzUwH.jpg",
+          "url": "https://t.co/zzpe39Sxns",
+          "display_url": "pic.twitter.com/zzpe39Sxns",
+          "expanded_url": "https://twitter.com/zykab31/status/1157034942003666948/photo/1",
+          "type": "video",
           "video_info": {
             "aspect_ratio": [
-              1
+              640
             ],
             "variants": [
               {
-                "bitrate": 0,
+                "bitrate": 2176000,
                 "content_type": "video/mp4",
-                "url": "https://video.twimg.com/tweet_video/ECnOPpuUYAI2ay4.mp4"
+                "url": "https://video.twimg.com/tweet_video/ECsXYg2WsAAzUwH.mp4"
               }
             ],
-            "duration_millis": 115533
+            "duration_millis": 519000
           },
           "sizes": {
             "small": {
-              "w": 90,
-              "h": 90,
+              "w": 680,
+              "h": 680,
               "resize": "fit"
             },
             "thumb": {
-              "w": 90,
-              "h": 90,
+              "w": 150,
+              "h": 150,
               "resize": "crop"
             },
             "large": {
-              "w": 90,
-              "h": 90,
+              "w": 2048,
+              "h": 2048,
               "resize": "fit"
             },
             "medium": {
-              "w": 90,
-              "h": 90,
+              "w": 1200,
+              "h": 1200,
               "resize": "fit"
             }
           },
-          "source_status_id": 1164669796778172417,
-          "source_status_id_str": "1164669796778172417",
-          "source_user_id": 1091167911308419072,
-          "source_user_id_str": "1091167911308419072",
+          "source_status_id": 1165040574296199170,
+          "source_status_id_str": "947572864521330688",
+          "source_user_id": 1160558471781240833,
+          "source_user_id_str": "983730054122364928",
           "additional_media_info": {
-            "monetizable": false,
-            "title": "Jair Bolsonaro fala sobre queimadas na Amaz\u00f4nia",
-            "description": "",
+            "monetizable": true,
+            "title": "frescura de ambientalista, \u00e9 uma necessidade\"",
+            "description": "Protestos em v\u00e1rias cidades na Europa exp\u00f5em o projeto da extrema-direita brasileira de devastar o meio ambiente para aumentar os lucros do agroneg\u00f3cio, setor que apoiou Bolsonaro em peso nas elei\u00e7\u00f5es",
             "embeddable": true
           },
           "description": "capa do washington post, sobre os inc\u00eandios na amaz\u00f4nia e a tosca resposta do bolsonaro"
