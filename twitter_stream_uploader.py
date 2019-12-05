@@ -349,6 +349,7 @@ tblproperties ("orc.compress"="ZLIB");
 
 ATHENA_CREATE_TWITTER_STREAM_RAW = """
 CREATE EXTERNAL TABLE IF NOT EXISTS twitter_stream_raw (
+timestamp_ms bigint,
 {structure}
 )
 PARTITIONED BY (filter String, creation_date String)
