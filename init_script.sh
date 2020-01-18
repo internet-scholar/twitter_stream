@@ -4,7 +4,7 @@ sudo apt update -y
 sudo apt install -y python3-pip openjdk-8-jre
 cd /home/ubuntu
 mkdir tmp
-wget http://repo1.maven.org/maven2/org/apache/orc/orc-tools/1.5.6/orc-tools-1.5.6-uber.jar -P ./tmp/
+wget https://repo1.maven.org/maven2/org/apache/orc/orc-tools/1.5.6/orc-tools-1.5.6-uber.jar -P ./tmp/
 wget https://raw.githubusercontent.com/internet-scholar/twitter_stream/master/requirements.txt
 wget https://raw.githubusercontent.com/internet-scholar/twitter_stream/master/twitter_stream.py
 wget https://raw.githubusercontent.com/internet-scholar/twitter_stream/master/twitter_stream_uploader.py
