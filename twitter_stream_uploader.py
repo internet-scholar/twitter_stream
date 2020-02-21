@@ -484,7 +484,7 @@ def main():
                      total / (2 ** 30), used / (2 ** 30), free / (2 ** 30))
     finally:
         logger.save_to_s3()
-        logger.recreate_athena_table()
+        #logger.recreate_athena_table()
 
 
 if __name__ == '__main__':
