@@ -142,7 +142,8 @@ class TwitterStream:
                 raise
             else:
                 num_exceptions = num_exceptions + 1
-                logging.info("Exception number %d while listening to tweets: resume listening", num_exceptions)
+                logging.info("Exception number %d while listening to tweets: resume listening.", num_exceptions)
+                logging.info("Exception: %s", repr(e))
                 self.__recursive_listen()
 
     def listen_to_tweets(self):
