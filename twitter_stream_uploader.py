@@ -415,6 +415,7 @@ class TwitterStreamUploader:
         s3 = boto3.resource('s3')
 
         bz2_file = Path(Path(__file__).parent, 'tmp', 'twitter_stream.json.bz2')
+        orc_file = Path(Path(__file__).parent, 'tmp', 'twitter_stream.orc')
         s3_filename = "twitter_stream_raw/filter={}/creation_date={}/{}.json.bz2".format(athena_prefix['filter'],
                                                                                          athena_prefix['creation_date'],
                                                                                          'twitter_stream')
@@ -425,8 +426,6 @@ class TwitterStreamUploader:
             saved = True
             logging.info("Upload file %s to bucket %s at %s", bz2_file, self.s3_bucket, s3_filename)
             s3.Bucket(self.s3_bucket).upload_file(str(bz2_file), s3_filename)
-
-            orc_file = Path(Path(__file__).parent, 'tmp', 'twitter_stream.orc')
             s3_filename = "twitter_stream/filter={}/creation_date={}/{}.orc".format(athena_prefix['filter'],
                                                                                     athena_prefix['creation_date'],
                                                                                     'twitter_stream')
