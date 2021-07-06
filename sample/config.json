@@ -20,6 +20,9 @@
       "access_token_secret": ""
     }
   },
+  "twitter_stream": {
+    "delay": 0
+  },
   "aws": {
     "s3-admin": "",
     "s3-data": "",

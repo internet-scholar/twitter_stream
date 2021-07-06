@@ -1,6 +1,6 @@
 import argparse
-import uuid
-from internet_scholar import AthenaLogger, read_dict_from_s3_url, AthenaDatabase
+import time
+from internet_scholar import AthenaLogger, read_dict_from_s3_url, AthenaDatabase, s3_file_size_in_bytes
 import logging
 import shutil
 import boto3
@@ -398,9 +398,11 @@ class TwitterStreamUploader:
         self.s3_bucket = s3_bucket
         self.athena_db = athena_db
 
-    def save_to_s3(self):
+    def save_to_s3(self, delay=0):
         logging.info("BEGIN: Save twitter_stream to S3")
 
+        if delay != 0:
+            time.sleep(delay*60)
         db_name = Path(Path(__file__).parent, 'tmp', 'tweets.sqlite')
         logging.info("Obtain athena prefix from database %s", db_name)
         database = sqlite3.connect(str(db_name), isolation_level=None)
@@ -415,16 +417,21 @@ class TwitterStreamUploader:
         bz2_file = Path(Path(__file__).parent, 'tmp', 'twitter_stream.json.bz2')
         s3_filename = "twitter_stream_raw/filter={}/creation_date={}/{}.json.bz2".format(athena_prefix['filter'],
                                                                                          athena_prefix['creation_date'],
-                                                                                         uuid.uuid4().hex)
-        logging.info("Upload file %s to bucket %s at %s", bz2_file, self.s3_bucket, s3_filename)
-        s3.Bucket(self.s3_bucket).upload_file(str(bz2_file), s3_filename)
+                                                                                         'twitter_stream')
+        saved = False
+        if s3_file_size_in_bytes(bucket=self.s3_bucket, key=s3_filename) > bz2_file.stat().st_size:
+            logging.info("Will not upload because current file on S3 is bigger")
+        else:
+            saved = True
+            logging.info("Upload file %s to bucket %s at %s", bz2_file, self.s3_bucket, s3_filename)
+            s3.Bucket(self.s3_bucket).upload_file(str(bz2_file), s3_filename)
 
-        orc_file = Path(Path(__file__).parent, 'tmp', 'twitter_stream.orc')
-        s3_filename = "twitter_stream/filter={}/creation_date={}/{}.orc".format(athena_prefix['filter'],
-                                                                                athena_prefix['creation_date'],
-                                                                                uuid.uuid4().hex)
-        logging.info("Upload file %s to bucket %s at %s", orc_file, self.s3_bucket, s3_filename)
-        s3.Bucket(self.s3_bucket).upload_file(str(orc_file), s3_filename)
+            orc_file = Path(Path(__file__).parent, 'tmp', 'twitter_stream.orc')
+            s3_filename = "twitter_stream/filter={}/creation_date={}/{}.orc".format(athena_prefix['filter'],
+                                                                                    athena_prefix['creation_date'],
+                                                                                    'twitter_stream')
+            logging.info("Upload file %s to bucket %s at %s", orc_file, self.s3_bucket, s3_filename)
+            s3.Bucket(self.s3_bucket).upload_file(str(orc_file), s3_filename)
 
         logging.info("File sizes - SQLite: %.1f Mb - BZIP2: %.1f Mb - ORC: %.1f Mb",
                      db_name.stat().st_size / 2**20,
@@ -432,6 +439,7 @@ class TwitterStreamUploader:
                      orc_file.stat().st_size / 2**20)
 
         logging.info("END: Save twitter_stream to S3")
+        return saved
 
     def recreate_athena_table(self):
         logging.info("BEGIN: Recreate Athena tables for twitter_stream")
@@ -469,14 +477,15 @@ def main():
     try:
         twitter_stream_uploader = TwitterStreamUploader(s3_bucket=config['aws']['s3-data'],
                                                         athena_db=config['aws']['athena-data'])
-        twitter_stream_uploader.save_to_s3()
+        saved_twitter_stream = twitter_stream_uploader.save_to_s3(delay=config['twitter_stream']['delay'])
 
         twitter_filter = TwitterFilter(twitter_filter=config['twitter_filter'],
                                        s3_bucket=config['aws']['s3-data'],
                                        athena_db=config['aws']['athena-data'])
         twitter_filter.save_to_s3()
 
-        twitter_stream_uploader.recreate_athena_table()
+        if saved_twitter_stream:
+            twitter_stream_uploader.recreate_athena_table()
         twitter_filter.recreate_athena_table()
 
         total, used, free = shutil.disk_usage("/")
