@@ -394,9 +394,10 @@ class TwitterFilter:
 
 
 class TwitterStreamUploader:
-    def __init__(self, s3_bucket, athena_db):
+    def __init__(self, s3_bucket, athena_db, aws_region):
         self.s3_bucket = s3_bucket
         self.athena_db = athena_db
+        self.aws_region = aws_region
 
     def save_to_s3(self, delay=0):
         logging.info("BEGIN: Save twitter_stream to S3")
@@ -442,25 +443,36 @@ class TwitterStreamUploader:
 
     def recreate_athena_table(self):
         logging.info("BEGIN: Recreate Athena tables for twitter_stream")
-        athena = AthenaDatabase(s3_output=self.s3_bucket, database=self.athena_db)
 
-        logging.info("Drop tables if they exist")
-        athena.query_athena_and_wait(query_string="drop table if exists twitter_stream")
-        athena.query_athena_and_wait(query_string="drop table if exists twitter_stream_raw")
+        s3_client = boto3.client('s3')
+        s3_region_response = s3_client.get_bucket_location(Bucket=self.s3_bucket)
+        if s3_region_response is None:
+            logging.info(f"Bucket {self.s3_bucket} probably does not exist or user is not allowed to access it.")
+        else:
+            s3_region = s3_region_response.get('LocationConstraint','')
+            if self.aws_region != s3_region:
+                logging.info(f"Athena region {self.aws_region} differs from S3 region {s3_region}. "
+                             f"Will not recreate tables.")
+            else:
+                athena = AthenaDatabase(s3_output=self.s3_bucket, database=self.athena_db)
 
-        logging.info("Recreate tables")
-        athena.query_athena_and_wait(
-            query_string=ATHENA_CREATE_TWITTER_STREAM.format(
-                structure=STRUCTURE_TWEET_ATHENA,
-                bucket="s3://{}/twitter_stream/".format(self.s3_bucket)))
-        athena.query_athena_and_wait(
-            query_string=ATHENA_CREATE_TWITTER_STREAM_RAW.format(
-                structure=STRUCTURE_TWEET_ATHENA,
-                bucket="s3://{}/twitter_stream_raw/".format(self.s3_bucket)))
+                logging.info("Drop tables if they exist")
+                athena.query_athena_and_wait(query_string="drop table if exists twitter_stream")
+                athena.query_athena_and_wait(query_string="drop table if exists twitter_stream_raw")
 
-        logging.info("Add new partitions")
-        athena.query_athena_and_wait(query_string="MSCK REPAIR TABLE twitter_stream")
-        athena.query_athena_and_wait(query_string="MSCK REPAIR TABLE twitter_stream_raw")
+                logging.info("Recreate tables")
+                athena.query_athena_and_wait(
+                    query_string=ATHENA_CREATE_TWITTER_STREAM.format(
+                        structure=STRUCTURE_TWEET_ATHENA,
+                        bucket="s3://{}/twitter_stream/".format(self.s3_bucket)))
+                athena.query_athena_and_wait(
+                    query_string=ATHENA_CREATE_TWITTER_STREAM_RAW.format(
+                        structure=STRUCTURE_TWEET_ATHENA,
+                        bucket="s3://{}/twitter_stream_raw/".format(self.s3_bucket)))
+
+                logging.info("Add new partitions")
+                athena.query_athena_and_wait(query_string="MSCK REPAIR TABLE twitter_stream")
+                athena.query_athena_and_wait(query_string="MSCK REPAIR TABLE twitter_stream_raw")
         logging.info("END: Recreate Athena tables for twitter_stream")
 
 
@@ -475,7 +487,8 @@ def main():
                           athena_db=config['aws']['athena-admin'])
     try:
         twitter_stream_uploader = TwitterStreamUploader(s3_bucket=config['aws']['s3-data'],
-                                                        athena_db=config['aws']['athena-data'])
+                                                        athena_db=config['aws']['athena-data'],
+                                                        aws_region=config['aws']['default_region'])
         saved_twitter_stream = twitter_stream_uploader.save_to_s3(delay=config['twitter_stream']['delay'])
 
         twitter_filter = TwitterFilter(twitter_filter=config['twitter_filter'],
