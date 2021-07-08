@@ -386,7 +386,7 @@ class TwitterFilter:
 
     def recreate_athena_table(self):
         logging.info("Create Athena instance.")
-        athena = AthenaDatabase(s3_output=self.s3_bucket, database=self.athena_db)
+        athena = AthenaDatabase(s3_output=self.s3_admin, database=self.athena_db)
         logging.info("Delete table twitter_filter if exists")
         athena.query_athena_and_wait(query_string='DROP TABLE if exists twitter_filter')
         logging.info("Recreate table twitter_filter on %s", self.s3_bucket)
@@ -394,10 +394,11 @@ class TwitterFilter:
 
 
 class TwitterStreamUploader:
-    def __init__(self, s3_bucket, athena_db, aws_region):
+    def __init__(self, s3_bucket, athena_db, aws_region, s3_admin):
         self.s3_bucket = s3_bucket
         self.athena_db = athena_db
         self.aws_region = aws_region
+        self.s3_admin = s3_admin
 
     def save_to_s3(self, delay=0):
         logging.info("BEGIN: Save twitter_stream to S3")
@@ -454,7 +455,7 @@ class TwitterStreamUploader:
                 logging.info(f"Athena region {self.aws_region} differs from S3 region {s3_region}. "
                              f"Will not recreate tables.")
             else:
-                athena = AthenaDatabase(s3_output=self.s3_bucket, database=self.athena_db)
+                athena = AthenaDatabase(s3_output=self.s3_admin, database=self.athena_db)
 
                 logging.info("Drop tables if they exist")
                 athena.query_athena_and_wait(query_string="drop table if exists twitter_stream")
@@ -488,7 +489,8 @@ def main():
     try:
         twitter_stream_uploader = TwitterStreamUploader(s3_bucket=config['aws']['s3-data'],
                                                         athena_db=config['aws']['athena-data'],
-                                                        aws_region=config['aws']['default_region'])
+                                                        aws_region=config['aws']['default_region'],
+                                                        s3_admin=config['aws']['s3-admin'])
         saved_twitter_stream = twitter_stream_uploader.save_to_s3(delay=config['twitter_stream']['delay'])
 
         twitter_filter = TwitterFilter(twitter_filter=config['twitter_filter'],
