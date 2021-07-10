@@ -421,7 +421,10 @@ class TwitterStreamUploader:
                                                                                          athena_prefix['creation_date'],
                                                                                          'twitter_stream')
         saved = False
-        if s3_file_size_in_bytes(bucket=self.s3_bucket, key=s3_filename) > bz2_file.stat().st_size:
+        s3_size = s3_file_size_in_bytes(bucket=self.s3_bucket, key=s3_filename)
+        file_size = bz2_file.stat().st_size
+        logging.info(f"S3 file size: {s3_size}. Local file size: {file_size}.")
+        if s3_size > file_size:
             logging.info("Will not upload because current file on S3 is bigger")
         else:
             saved = True
