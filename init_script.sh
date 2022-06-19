@@ -1,7 +1,7 @@
 #!/bin/bash
 sudo timedatectl set-timezone UTC
-sudo apt update -y
-sudo apt install -y python3-pip openjdk-8-jre
+sudo apt-get update -y
+sudo apt-get install -y python3-pip openjdk-8-jre
 cd /home/ubuntu
 mkdir tmp
 wget https://repo1.maven.org/maven2/org/apache/orc/orc-tools/1.6.2/orc-tools-1.6.2-uber.jar -P ./tmp/
